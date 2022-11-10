@@ -1,11 +1,10 @@
 <template>
   <div>
-    <v-btn />
+    <SvgTest />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage',
 }
 </script>
