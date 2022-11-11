@@ -5,7 +5,6 @@
       <a href="javascript:void(0);">
         <path
           id="seat-1"
-          class="seat"
           d="M25 0c13.8 0 25 11.2 25 25S38.8 50 25 50 0 38.8 0 25 11.2 0 25 0z"
           style="stroke:#cd792e;stroke-width:0;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill:#fff;fill-rule:nonzero;opacity:.5" transform="translate(703.4 485.46)"
           vector-effect="non-scaling-stroke"
@@ -13,7 +12,6 @@
         />
         <path
           id="seat-2"
-          class="seat"
           d="M25 0c13.8 0 25 11.2 25 25S38.8 50 25 50 0 38.8 0 25 11.2 0 25 0z"
           style="stroke:#cd792e;stroke-width:0;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill:#fff;fill-rule:nonzero;opacity:.5" transform="translate(767.4 522.46)"
           vector-effect="non-scaling-stroke"
@@ -21,7 +19,6 @@
         />
         <path
           id="seat-3"
-          class="seat"
           d="M25 0c13.8 0 25 11.2 25 25S38.8 50 25 50 0 38.8 0 25 11.2 0 25 0z"
           style="stroke:#cd792e;stroke-width:0;stroke-dasharray:none;stroke-linecap:butt;stroke-dashoffset:0;stroke-linejoin:miter;stroke-miterlimit:4;fill:#fff;fill-rule:nonzero;opacity:.5" transform="translate(834.4 560.46)"
           vector-effect="non-scaling-stroke"
@@ -32,6 +29,7 @@
     <UserAvatar
       :x="x"
       :y="y"
+      :size="size"
     >
     </UserAvatar>
   </div>
@@ -42,7 +40,8 @@ export default {
   data () {
     return {
       x: 100,
-      y: 100
+      y: 100,
+      size: 50
     }
   },
   methods: {

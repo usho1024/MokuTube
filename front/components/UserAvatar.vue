@@ -2,7 +2,7 @@
   <v-avatar
     class="avatar"
     color="primary"
-    size="50"
+    :size="size"
     :style="{
       transform: `translate(${x}px, ${y}px)`
     }"
@@ -13,7 +13,8 @@
 export default {
   props: {
     x: { type: Number, default: 100 },
-    y: { type: Number, default: 100 }
+    y: { type: Number, default: 100 },
+    size: { type: Number, default: 50 }
   }
 }
 </script>
