@@ -1,19 +1,16 @@
 <template>
-  <div
-    class="brown lighten-3 main"
-  >
+  <div class="main">
     <SvgTest />
   </div>
 </template>
 
 <script>
-export default {
-}
+export default {}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .main {
-  position: relative;
-  transform: scale(0.95);
+  height: 100vh;
+  background-color: #B3E5FC;
 }
 </style>
