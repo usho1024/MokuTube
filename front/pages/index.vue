@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <SvgTest />
+    <RoomCafe />
   </div>
 </template>
 
@@ -11,6 +11,6 @@ export default {}
 <style lang="scss" scoped>
 .main {
   height: 100vh;
-  background-color: #B3E5FC;
+  background-color: #b3e5fc;
 }
 </style>

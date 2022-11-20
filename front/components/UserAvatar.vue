@@ -12,9 +12,18 @@
 <script>
 export default {
   props: {
-    x: { type: Number },
-    y: { type: Number },
-    size: { type: Number },
+    x: {
+      type: Number,
+      default: 0,
+    },
+    y: {
+      type: Number,
+      default: 0,
+    },
+    size: {
+      type: Number,
+      default: 0,
+    },
   },
 }
 </script>
