@@ -4,8 +4,8 @@
     <map name="ImageMap" @click.prevent="getSeat">
       <area
         v-for="(coord, i) in coords"
-        :id="`seat-${i + 1}`"
-        :key="`seat-${i + 1}`"
+        :id="`seat-${i}`"
+        :key="`seat-${i}`"
         shape="poly"
         :coords="coord"
         href=""
