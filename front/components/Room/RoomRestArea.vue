@@ -11,7 +11,7 @@
         href=""
       />
     </map>
-    <UserAvatar :x="x" :y="y" :size="size"></UserAvatar>
+    <user-avatar :x="x" :y="y" :size="size" />
   </div>
 </template>
 
@@ -19,7 +19,7 @@
 export default {
   data() {
     return {
-      image: 'rest_area',
+      image: 'rest-area',
       x: 0,
       y: 0,
       size: 50,

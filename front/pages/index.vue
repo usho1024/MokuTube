@@ -1,5 +1,6 @@
 <template>
   <div>
+    <room-small-office />
     <h2>
       Usersテーブルの取得
     </h2>

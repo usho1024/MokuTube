@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <RoomSmallOffice />
+    <room-small-office />
   </div>
 </template>
 

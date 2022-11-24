@@ -11,7 +11,7 @@
         href=""
       />
     </map>
-    <UserAvatar :x="x" :y="y" :size="size"></UserAvatar>
+    <user-avatar :x="x" :y="y" :size="size" />
   </div>
 </template>
 

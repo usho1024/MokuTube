@@ -1,11 +1,11 @@
 rooms = [
-  ["個室", "private_room", 1],
-  ["小さいオフィス", "small_office", 2],
-  ["大きいオフィス", "large_office", 4],
-  ["夜のバー", "night_bar", 4],
-  ["休憩スペース", "rest_area", 5],
+  ["個室", "private-room", 1],
+  ["小さいオフィス", "small-office", 2],
+  ["大きいオフィス", "large-office", 4],
+  ["夜のバー", "night-bar", 4],
+  ["休憩スペース", "rest-area", 5],
   ["キッチン", "kitchen", 6],
-  ["ブックカフェ", "book_cafe", 7],
+  ["ブックカフェ", "book-cafe", 7],
   ["教室", "classroom", 10],
   ["カフェ", "cafe", 16],
   ["ラウンジ", "lounge", 20]
