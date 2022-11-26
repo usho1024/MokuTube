@@ -67,7 +67,8 @@ export default {
           },
           logout: {
             url: '/api/v1/auth/sign_out',
-            method: 'delete'
+            method: 'delete',
+            propertyName: false
           },
           user: false
         }

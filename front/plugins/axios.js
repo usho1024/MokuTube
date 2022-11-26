@@ -9,7 +9,7 @@ export default ({ $axios, isDev }) => {
     }
   })
 
-  $axios.onResponse((response, config) => {
+  $axios.onResponse(response => {
     if (response.headers.client) {
       localStorage.setItem("access-token", response.headers["access-token"])
       localStorage.setItem("client", response.headers.client)
@@ -17,7 +17,7 @@ export default ({ $axios, isDev }) => {
       localStorage.setItem("token-type", response.headers["token-type"])
     }
     if (isDev) {
-      console.log(config)
+      console.log(response)
     }
   })
 
