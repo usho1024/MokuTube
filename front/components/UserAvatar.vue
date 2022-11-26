@@ -6,7 +6,7 @@
     :style="{
       transform: `translate(${x}px, ${y}px)`,
     }"
-  ></v-avatar>
+  />
 </template>
 
 <script>
@@ -14,17 +14,17 @@ export default {
   props: {
     x: {
       type: Number,
-      default: 0,
+      default: 0
     },
     y: {
       type: Number,
-      default: 0,
+      default: 0
     },
     size: {
       type: Number,
-      default: 0,
-    },
-  },
+      default: 0
+    }
+  }
 }
 </script>
 
