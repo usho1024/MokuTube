@@ -1,6 +1,12 @@
 <template>
   <div class="main">
     <div :is="`room-${room}`"/>
+    <v-btn
+      class="mr-4 warning white--text"
+      @click="$auth.logout()"
+    >
+      ログアウト
+    </v-btn>
   </div>
 </template>
 

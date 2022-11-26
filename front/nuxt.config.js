@@ -18,10 +18,14 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/sass/main.scss'],
+  css: [
+    '~/assets/sass/main.scss'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['plugins/axios'],
+  plugins: [
+    'plugins/axios'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -42,24 +46,37 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http:localhost:3000'
+  },
 
   auth: {
     redirect: {
-        login: '/login',
-        logout: '/',
-        callback: false,
-        home: '/profile'
+      login: '/login',
+      logout: '/',
+      callback: false,
+      home: '/room'
     },
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/api/v1/auth/sign_in', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/v1/auth/sign_out', method: 'post' },
-          user: false,
+          login: {
+            url: 'api/v1/auth/sign_in',
+            method: 'post',
+            propertyName: false
+          },
+          logout: {
+            url: '/api/v1/auth/sign_out',
+            method: 'delete'
+          },
+          user: false
         }
       }
     }
+  },
+
+  router: {
+    middleware: ['auth']
   },
 
   vuetify: {
