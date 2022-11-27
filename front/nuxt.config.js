@@ -24,7 +24,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/axios'
+    'plugins/axios',
+    { src: '~/plugins/persistedState.client.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,12 +64,11 @@ export default {
           login: {
             url: 'api/v1/auth/sign_in',
             method: 'post',
-            propertyName: false
+            propertyName: 'token'
           },
           logout: {
             url: '/api/v1/auth/sign_out',
-            method: 'delete',
-            propertyName: false
+            method: 'delete'
           },
           user: false
         }

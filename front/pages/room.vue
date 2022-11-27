@@ -7,6 +7,7 @@
     >
       ログアウト
     </v-btn>
+    {{ $store.state.currentUser.email }}
   </div>
 </template>
 

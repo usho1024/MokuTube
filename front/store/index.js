@@ -1,11 +1,17 @@
-// export const state = () => ({
-// })
+export const state = () => ({
+  currentUser: null
+})
 
-// export const mutations = {
-// }
+export const getters = {}
 
-// export const actions = {
-// }
+export const mutations = {
+  setCurrentUser (state, payload) {
+    state.currentUser = payload
+  }
+}
 
-// export const getters = {
-// }
+export const actions = {
+  getCurrentUser ({ commit }, user) {
+    commit('setCurrentUser', user)
+  }
+}

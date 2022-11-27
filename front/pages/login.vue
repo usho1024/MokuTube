@@ -60,7 +60,8 @@ export default {
         }
       })
         .then((res) => {
-          return res
+          const user = res.data.data
+          this.$store.dispatch('getCurrentUser', user)
         },
         (error) => {
           return error
