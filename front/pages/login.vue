@@ -59,8 +59,8 @@ export default {
           password: this.password
         }
       })
-        .then((res) => {
-          const user = res.data.data
+        .then((response) => {
+          const user = response.data.data
           this.$store.dispatch('getCurrentUser', user)
         },
         (error) => {
