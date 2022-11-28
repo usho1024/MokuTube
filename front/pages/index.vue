@@ -33,10 +33,11 @@
 
 <script>
 export default {
+  auth: false,
   async asyncData ({ $axios }) {
     let users = []
     await $axios.$get('/api/v1/users')
-      .then(res => (users = res))
+      .then(response => (users = response))
     return { users }
   },
   computed: {
