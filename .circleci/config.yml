@@ -1,36 +1,38 @@
-version:                     2.1
+version: 2.1
 
 # 実行するjob
 jobs:
   # buildするjob
   build:
-    machine: true
+    machine:
+      image: ubuntu-2004:2022.10.1
     steps:
       - checkout
       - run:
-          name:              docker-compose build
-          command:           docker-compose build
+          name: docker-compose build
+          command: docker-compose build
   # testするjob
   test:
-    machine: true
+    machine:
+      image: ubuntu-2004:2022.10.1
     steps:
       - checkout
       - run:
-          name:              docker-compose up -d
-          command:           docker-compose up -d
-      - run:                 sleep 30
+          name: docker-compose up -d
+          command: docker-compose up -d
+      - run: sleep 30
       - run:
-          name:              docker-compose run back rails db:create RAILS_ENV=test
-          command:           docker-compose run back rails db:create RAILS_ENV=test
+          name: docker-compose run api rails db:create RAILS_ENV=test
+          command: docker-compose run api rails db:create RAILS_ENV=test
       - run:
-          name:              docker-compose run back rails db:migrate RAILS_ENV=test
-          command:           docker-compose run back rails db:migrate RAILS_ENV=test
+          name: docker-compose run api rails db:migrate RAILS_ENV=test
+          command: docker-compose run api rails db:migrate RAILS_ENV=test
       - run:
-          name:              docker-compose run back bundle exec rspec spec
-          command:           docker-compose run back bundle exec rspec spec
+          name: docker-compose run api rspec
+          command: docker-compose run api rspec
       - run:
-          name:              docker-compose down
-          command:           docker-compose down
+          name: docker-compose down
+          command: docker-compose down
 
 # 順番を制御するworkflow
 workflows:
