@@ -1,13 +1,6 @@
 <template>
   <div class="main">
     <div :is="`room-${room}`"/>
-    <v-btn
-      class="mr-4 warning white--text"
-      @click="$auth.logout()"
-    >
-      ログアウト
-    </v-btn>
-    {{ $store.state.currentUser.email }}
   </div>
 </template>
 
@@ -36,6 +29,7 @@ export default {
     RoomRestArea,
     RoomSmallOffice
   },
+  layout: 'logged-in',
   data() {
     return {
       room: 'private-room'
@@ -46,7 +40,6 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  height: 100vh;
   background-color: #b3e5fc;
 }
 </style>

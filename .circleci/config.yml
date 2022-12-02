@@ -27,12 +27,14 @@ jobs:
       - run:
           name: docker-compose run api rails db:migrate RAILS_ENV=test
           command: docker-compose run api rails db:migrate RAILS_ENV=test
+      # api側テスト
       - run:
           name: docker-compose run api rspec
           command: docker-compose run api rspec
       - run:
           name: docker-compose run front yarn install
           command: docker-compose run front yarn install
+      # front側テスト
       - run:
           name: docker-compose run front yarn test
           command: docker-compose run front yarn test
