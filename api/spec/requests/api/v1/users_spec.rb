@@ -1,7 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Users", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
+RSpec.describe User, type: :request do
+  describe 'ユーザーに関するリクエストのテスト' do
+    it 'GET /api/v1/usersは成功すること' do
+      get '/api/v1/users'
+      expect(response).to have_http_status(:success)
+    end
   end
 end
