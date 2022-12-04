@@ -58,7 +58,7 @@ export default {
     return {
       room: 'rest-area',
       videoId: 'uZ0dceZdSK8',
-      media: 20,
+      media: 5,
       isMuted: true
     }
   },
@@ -75,7 +75,7 @@ export default {
   mounted() {
     this.playVideo()
     this.mute()
-    this.player.addEventListener('onStateChange', this.youtubeStateChange)
+    this.player.addEventListener('onStateChange', this.runByState)
   },
   methods: {
     playVideo() {
@@ -98,9 +98,14 @@ export default {
     toggle() {
       this.isMuted ? this.unMute() : this.mute()
     },
-    youtubeStateChange (youtubeState) {
-      if (youtubeState.data === 0) {
-        this.loop()
+    runByState(playerState) {
+      switch (playerState.data) {
+        case 0:
+          this.loop()
+          break
+        case 1:
+          this.setVolume(5)
+          break
       }
     }
   }
