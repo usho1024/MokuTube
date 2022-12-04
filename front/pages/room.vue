@@ -7,6 +7,8 @@
         :video-id="videoId"
         width=0
         height=0
+        @playing="playing"
+        @ended="ended"
       />
       <v-slider
         v-model="media"
@@ -75,7 +77,6 @@ export default {
   mounted() {
     this.playVideo()
     this.mute()
-    this.player.addEventListener('onStateChange', this.runByState)
   },
   methods: {
     playVideo() {
@@ -98,15 +99,11 @@ export default {
     toggle() {
       this.isMuted ? this.unMute() : this.mute()
     },
-    runByState(playerState) {
-      switch (playerState.data) {
-        case 0:
-          this.loop()
-          break
-        case 1:
-          this.setVolume(5)
-          break
-      }
+    playing() {
+      this.setVolume(5)
+    },
+    ended() {
+      this.loop()
     }
   }
 }
