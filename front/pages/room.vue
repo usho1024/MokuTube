@@ -5,6 +5,8 @@
       <youtube
         ref="youtube"
         :video-id="videoId"
+        width=0
+        height=0
       />
       <v-slider
         v-model="media"
@@ -73,10 +75,14 @@ export default {
   mounted() {
     this.playVideo()
     this.mute()
+    this.player.addEventListener('onStateChange', this.youtubeStateChange)
   },
   methods: {
     playVideo() {
       this.player.playVideo()
+    },
+    loop() {
+      this.player.seekTo(0)
     },
     setVolume(val) {
       this.player.setVolume(val)
@@ -91,6 +97,11 @@ export default {
     },
     toggle() {
       this.isMuted ? this.unMute() : this.mute()
+    },
+    youtubeStateChange (youtubeState) {
+      if (youtubeState.data === 0) {
+        this.loop()
+      }
     }
   }
 }
