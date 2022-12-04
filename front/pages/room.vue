@@ -84,8 +84,8 @@ export default {
     loop() {
       this.player.seekTo(0)
     },
-    setVolume(val) {
-      this.player.setVolume(val)
+    setVolume(int) {
+      this.player.setVolume(int)
     },
     mute() {
       this.player.mute()
