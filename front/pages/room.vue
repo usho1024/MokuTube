@@ -1,6 +1,27 @@
 <template>
   <div class="main">
-    <div :is="`room-${room}`"/>
+    <v-row no-gutters>
+      <div :is="`room-${room}`" />
+      <youtube
+        ref="youtube"
+        :video-id="videoId"
+        width=0
+        height=0
+        @playing="playing"
+        @ended="ended"
+      />
+      <v-slider
+        v-model="media"
+      >
+        <template #prepend>
+          <v-icon
+            @click="toggle"
+          >
+          {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+          </v-icon>
+        </template>
+      </v-slider>
+    </v-row>
   </div>
 </template>
 
@@ -32,7 +53,52 @@ export default {
   layout: 'logged-in',
   data() {
     return {
-      room: 'private-room'
+      room: 'rest-area',
+      videoId: 'uZ0dceZdSK8',
+      media: 5,
+      isMuted: true
+    }
+  },
+  computed: {
+    player() {
+      return this.$refs.youtube.player
+    }
+  },
+  watch: {
+    media(newVal) {
+      this.setVolume(newVal)
+    }
+  },
+  mounted() {
+    this.playVideo()
+    this.mute()
+  },
+  methods: {
+    playVideo() {
+      this.player.playVideo()
+    },
+    loop() {
+      this.player.seekTo(0)
+    },
+    setVolume(int) {
+      this.player.setVolume(int)
+    },
+    mute() {
+      this.player.mute()
+      this.isMuted = true
+    },
+    unMute() {
+      this.player.unMute()
+      this.isMuted = false
+    },
+    toggle() {
+      this.isMuted ? this.unMute() : this.mute()
+    },
+    playing() {
+      this.setVolume(5)
+    },
+    ended() {
+      this.loop()
     }
   }
 }
@@ -40,6 +106,7 @@ export default {
 
 <style lang="scss" scoped>
 .main {
+  height: 100%;
   background-color: #b3e5fc;
 }
 </style>
