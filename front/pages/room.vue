@@ -26,9 +26,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueYoutube from 'vue-youtube'
-
 import RoomBookCafe from '~/components/Room/RoomBookCafe'
 import RoomCafe from '~/components/Room/RoomCafe'
 import RoomClassroom from '~/components/Room/RoomClassroom'
@@ -39,8 +36,6 @@ import RoomNightBar from '~/components/Room/RoomNightBar'
 import RoomPrivateRoom from '~/components/Room/RoomPrivateRoom'
 import RoomRestArea from '~/components/Room/RoomRestArea'
 import RoomSmallOffice from '~/components/Room/RoomSmallOffice'
-
-Vue.use(VueYoutube)
 
 export default {
   components: {
