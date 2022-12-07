@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <v-row no-gutters>
+    <v-row
+      no-gutters
+    >
       <div :is="`room-${room}`" />
       <youtube
         ref="youtube"
@@ -10,17 +12,23 @@
         @playing="playing"
         @ended="ended"
       />
-      <v-slider
-        v-model="media"
+      <v-col
+        cols=3
+        class="ml-auto pa-5"
       >
-        <template #prepend>
-          <v-icon
-            @click="toggle"
-          >
-          {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
-          </v-icon>
-        </template>
-      </v-slider>
+        <v-slider
+          v-model="media"
+        >
+          <template #prepend>
+            <v-icon
+              @click="toggle"
+            >
+            {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+            </v-icon>
+          </template>
+        </v-slider>
+        {{ this.$route.params.id }}
+      </v-col>
     </v-row>
   </div>
 </template>
