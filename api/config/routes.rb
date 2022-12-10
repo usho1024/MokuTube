@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         registrations: 'auth/registrations'
       }
       resources :users, only:[:index]
+      resources :messages, only:[:index]
     end
   end
 end

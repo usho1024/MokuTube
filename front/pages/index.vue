@@ -1,32 +1,32 @@
 <template>
   <div>
     <h2>
-      Usersテーブルの取得
+      Messageテーブルの取得
     </h2>
-    <table v-if="users.length">
+    <table v-if="messages.length">
       <thead>
         <tr>
           <th>id</th>
-          <th>name</th>
-          <th>email</th>
+          <th>投稿者</th>
+          <th>body</th>
           <th>created_at</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="(user, i) in users"
-          :key="`user-${i}`"
+          v-for="(message, i) in messages"
+          :key="`message-${i}`"
         >
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ dateFormat(user.created_at) }}</td>
+          <td>{{ message.id }}</td>
+          <td>{{ message.name }}</td>
+          <td>{{ message.body }}</td>
+          <td>{{ dateFormat(message.created_at) }}</td>
         </tr>
       </tbody>
     </table>
 
     <div v-else>
-      ユーザーが取得できませんでした
+      メッセージが取得できませんでした
     </div>
   </div>
 </template>
@@ -35,10 +35,10 @@
 export default {
   auth: false,
   async asyncData ({ $axios }) {
-    let users = []
-    await $axios.$get('/api/v1/users')
-      .then(response => (users = response))
-    return { users }
+    let messages = []
+    await $axios.$get('/api/v1/messages')
+      .then(response => (messages = response))
+    return { messages }
   },
   computed: {
     dateFormat () {
