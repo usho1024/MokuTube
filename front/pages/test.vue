@@ -69,6 +69,7 @@ export default {
     const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
     // chatチャンネルのサブスクリプションを作成
     this.chatChannel = cable.subscriptions.create(
+      // TODO 後でroomにthis.$route.params.idを代入してルーム毎にチャットを別けるようにする
       { channel: 'ChatChannel', room: 'チャットルーム１' },
       {
         received({ type, body }) {
