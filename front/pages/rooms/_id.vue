@@ -18,6 +18,7 @@
       >
         <v-slider
           v-model="media"
+          thumb-label
         >
           <template #prepend>
             <v-icon

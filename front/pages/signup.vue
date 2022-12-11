@@ -80,7 +80,7 @@ export default {
         password: this.password,
         password_confirmation: this.password_confirmation
       })
-        .then((response) => {
+        .then(response => {
           this.$auth.loginWith('local', {
             data: {
               password: this.password,
@@ -89,7 +89,7 @@ export default {
           })
           const user = response.data.data
           this.$store.dispatch('getCurrentUser', user)
-          this.$router.push('/')
+          this.$router.push('/rooms/1')
         })
     }
   }

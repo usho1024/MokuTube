@@ -13,11 +13,16 @@
     >
       ログアウト
     </v-btn>
-    {{ $store.state.currentUser.email }}
+    {{ userInfo }}
   </v-app-bar>
 </template>
 
 <script>
 export default {
+  computed: {
+    userInfo() {
+      return this.$store.state.currentUser.email
+    }
+  }
 }
 </script>

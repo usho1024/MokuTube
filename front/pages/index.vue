@@ -34,13 +34,14 @@
 <script>
 export default {
   auth: false,
-  async asyncData ({ $axios }) {
-    let messages = []
+  async asyncData ({ $axios, store }) {
     await $axios.$get('/api/v1/messages')
-      .then(response => (messages = response))
-    return { messages }
+      .then(response => store.dispatch('getChatMessages', response))
   },
   computed: {
+    messages() {
+      return this.$store.state.chatMessages
+    },
     dateFormat () {
       return (date) => {
         const dateTimeFormat = new Intl.DateTimeFormat(
