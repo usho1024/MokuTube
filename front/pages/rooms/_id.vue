@@ -1,9 +1,11 @@
 <template>
-  <div class="main">
+  <v-sheet
+    class="light-blue lighten-4 vh-100"
+  >
     <v-row
       no-gutters
     >
-      <div :is="`room-${room}`" />
+      <v-sheet :is="`room-${room}`" />
       <youtube
         ref="youtube"
         :video-id="videoId"
@@ -14,24 +16,59 @@
       />
       <v-col
         cols=3
-        class="ml-auto pa-5"
+        class="ml-auto"
       >
-        <v-slider
-          v-model="media"
-          thumb-label
+        <v-sheet
+          elevation="1"
+          class="vh-100"
         >
-          <template #prepend>
-            <v-icon
-              @click="toggle"
+          <v-list
+            id="chat-list"
+            class="overflow-y-auto"
+            dense
+            max-height=70%
+          >
+            <v-list-item
+              v-for="(message, i) in messages"
+              :key="`message-${i}`"
             >
-            {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
-            </v-icon>
-          </template>
-        </v-slider>
-        {{ this.$route.params.id }}
+              <v-list-item-content
+              >
+                <v-list-item-title
+                  class="font-weight-bold grey--text text--darken-1"
+                >
+                  {{ message.name }}
+                </v-list-item-title>
+                <v-list-item-action-text
+                  class="grey--text text--darken-4"
+                >
+                  {{ message.body }}
+                </v-list-item-action-text>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-divider/>
+          <v-sheet
+            class="pa-3"
+            height=30%
+          >
+            <v-slider
+              v-model="media"
+              thumb-label
+            >
+              <template #prepend>
+                <v-icon
+                  @click="toggle"
+                >
+                {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+                </v-icon>
+              </template>
+            </v-slider>
+          </v-sheet>
+        </v-sheet>
       </v-col>
     </v-row>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
@@ -60,6 +97,10 @@ export default {
     RoomSmallOffice
   },
   layout: 'logged-in',
+  async asyncData ({ $axios, store }) {
+    await $axios.$get('/api/v1/messages')
+      .then(response => store.dispatch('getChatMessages', response))
+  },
   data() {
     return {
       room: 'rest-area',
@@ -69,6 +110,9 @@ export default {
     }
   },
   computed: {
+    messages() {
+      return this.$store.state.chatMessages
+    },
     player() {
       return this.$refs.youtube.player
     }
@@ -81,6 +125,7 @@ export default {
   mounted() {
     this.playVideo()
     this.mute()
+    this.scrollToBottom()
   },
   methods: {
     playVideo() {
@@ -108,14 +153,17 @@ export default {
     },
     ended() {
       this.loop()
+    },
+    scrollToBottom() {
+      const el = document.getElementById('chat-list')
+      el.scrollTo(0, el.scrollHeight)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.main {
-  height: 100%;
-  background-color: #b3e5fc;
+.vh-100 {
+  height: calc(100vh - 48px);
 }
 </style>
