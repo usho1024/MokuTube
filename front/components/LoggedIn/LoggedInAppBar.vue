@@ -7,7 +7,11 @@
   >
     MokuTube
     <v-spacer />
-    {{ userInfo }}
+    <span
+      class="mr-5"
+    >
+      {{ userInfo }}
+    </span>
     <v-btn
       class="mr-4 warning white--text"
       @click="$auth.logout()"

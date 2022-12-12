@@ -14,6 +14,7 @@
         @playing="playing"
         @ended="ended"
       />
+
       <v-col
         cols=3
         class="ml-auto"
@@ -22,32 +23,58 @@
           elevation="1"
           class="vh-100"
         >
+
           <v-list
             id="chat-list"
-            class="overflow-y-auto"
-            dense
+            class="overflow-y-auto grey lighten-5 text-caption font-weight-medium px-2"
             max-height=70%
           >
-            <v-list-item
+            <template
               v-for="(message, i) in messages"
-              :key="`message-${i}`"
             >
-              <v-list-item-content
+              <v-list-item
+                :key="`message-${i}`"
+                class="py-1"
               >
-                <v-list-item-title
-                  class="font-weight-bold grey--text text--darken-1"
+                <v-row
+                  no-gutters
                 >
-                  {{ message.name }}
-                </v-list-item-title>
-                <v-list-item-action-text
-                  class="grey--text text--darken-4"
-                >
-                  {{ message.body }}
-                </v-list-item-action-text>
-              </v-list-item-content>
-            </v-list-item>
+                  <v-col
+                    cols="1"
+                    align-self="start"
+                  >
+                    <v-avatar
+                      size="35px"
+                    >
+                      <v-img :src="sampleAvatar"></v-img>
+                    </v-avatar>
+                  </v-col>
+                  <v-col
+                    cols="11"
+                    align-self="start"
+                  >
+                    <div
+                      class="ml-3"
+                    >
+                      <span
+                        class="grey--text text--darken-1 mr-2"
+                      >
+                        {{ message.name }}
+                      </span>
+                      <span
+                        class="grey--text text--darken-4"
+                      >
+                        {{ message.body }}
+                      </span>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-list-item>
+            </template>
           </v-list>
+
           <v-divider/>
+
           <v-sheet
             class="pa-3"
             height=30%
@@ -106,7 +133,8 @@ export default {
       room: 'rest-area',
       videoId: 'uZ0dceZdSK8',
       media: 5,
-      isMuted: true
+      isMuted: true,
+      sampleAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'
     }
   },
   computed: {
@@ -165,5 +193,9 @@ export default {
 <style lang="scss" scoped>
 .vh-100 {
   height: calc(100vh - 48px);
+}
+
+.message {
+  line-height: 18px;
 }
 </style>
