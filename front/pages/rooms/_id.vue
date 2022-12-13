@@ -1,101 +1,120 @@
 <template>
-  <v-sheet
-    class="light-blue lighten-4 vh-100"
+  <v-container
+    fluid
+    class="pa-0"
   >
-    <v-row
-      no-gutters
+    <v-sheet
+      class="main pa-10"
     >
-      <v-sheet :is="`room-${room}`" />
-      <youtube
-        ref="youtube"
-        :video-id="videoId"
-        width=0
-        height=0
-        @playing="playing"
-        @ended="ended"
-      />
-
-      <v-col
-        cols=3
-        class="ml-auto"
+      <v-row
+        no-gutters
       >
-        <v-sheet
-          elevation="1"
-          class="vh-100"
+        <v-col
+          cols="9"
         >
-
-          <v-list
-            id="chat-list"
-            class="overflow-y-auto grey lighten-5 text-caption font-weight-medium px-2"
-            max-height=70%
+          <v-sheet :is="`room-${room}`" />
+          <youtube
+            ref="youtube"
+            :video-id="videoId"
+            width=0
+            height=0
+            @playing="playing"
+            @ended="ended"
+          />
+        </v-col>
+        <v-col
+          cols="3"
+        >
+          <v-card
+            rounded="lg"
+            class="sidebar"
           >
-            <template
-              v-for="(message, i) in messages"
+            <v-toolbar
+              dense
+              flat
             >
-              <v-list-item
-                :key="`message-${i}`"
-                class="py-1"
+              <v-toolbar-title
+                class="text-caption"
               >
-                <v-row
-                  no-gutters
-                >
-                  <v-col
-                    cols="1"
-                    align-self="start"
-                  >
-                    <v-avatar
-                      size="35px"
-                    >
-                      <v-img :src="sampleAvatar"></v-img>
-                    </v-avatar>
-                  </v-col>
-                  <v-col
-                    cols="11"
-                    align-self="start"
-                  >
-                    <div
-                      class="ml-3"
-                    >
-                      <span
-                        class="grey--text text--darken-1 mr-2"
-                      >
-                        {{ message.name }}
-                      </span>
-                      <span
-                        class="grey--text text--darken-4"
-                      >
-                        {{ message.body }}
-                      </span>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-list-item>
-            </template>
-          </v-list>
+                トップチャット
+              </v-toolbar-title>
+            </v-toolbar>
 
-          <v-divider/>
+            <v-divider/>
 
-          <v-sheet
-            class="pa-3"
-            height=30%
-          >
-            <v-slider
-              v-model="media"
-              thumb-label
+            <v-list
+              id="chat-list"
+              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium px-2"
+              height=70%
             >
-              <template #prepend>
-                <v-icon
-                  @click="toggle"
+              <template
+                v-for="(message, i) in messages"
+              >
+                <v-list-item
+                  :key="`message-${i}`"
+                  class="py-1"
                 >
-                {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
-                </v-icon>
+                  <v-row
+                    no-gutters
+                  >
+                    <v-col
+                      cols="1"
+                      align-self="start"
+                    >
+                      <v-avatar
+                        size="35px"
+                      >
+                        <v-img :src="sampleAvatar"></v-img>
+                      </v-avatar>
+                    </v-col>
+                    <v-col
+                      cols="11"
+                      align-self="start"
+                    >
+                      <div
+                        class="ml-3"
+                      >
+                        <span
+                          class="grey--text text--darken-1 mr-2"
+                        >
+                          {{ message.name }}
+                        </span>
+                        <span
+                          class="grey--text text--darken-4"
+                        >
+                          {{ message.body }}
+                        </span>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-list-item>
               </template>
-            </v-slider>
-          </v-sheet>
-        </v-sheet>
-      </v-col>
-    </v-row>
-  </v-sheet>
+            </v-list>
+
+            <v-divider/>
+
+            <v-sheet
+              class="pa-3"
+              height=30%
+            >
+              <v-slider
+                v-model="media"
+                thumb-label
+              >
+                <template #prepend>
+                  <v-icon
+                    @click="toggle"
+                  >
+                    {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+                  </v-icon>
+                </template>
+              </v-slider>
+            </v-sheet>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-sheet>
+  </v-container>
 </template>
 
 <script>
@@ -191,8 +210,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.vh-100 {
+.main {
   height: calc(100vh - 48px);
+	background: url(~/assets/img/cloud-pattern.png);
+  background-size: 900px 900px;
+	animation: bg-loop 80s linear infinite;
+}
+
+@keyframes bg-loop {
+  100% {
+    background-position: 900px 0px;
+  }
+}
+
+.sidebar {
+  height: calc(100vh - 176px);
 }
 
 .message {
