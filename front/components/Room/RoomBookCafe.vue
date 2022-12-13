@@ -1,6 +1,6 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/${image}.svg`)" usemap="#ImageMap" />
+    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
     <map name="ImageMap" @click.prevent="getSeat">
       <area
         v-for="(coord, i) in coords"
