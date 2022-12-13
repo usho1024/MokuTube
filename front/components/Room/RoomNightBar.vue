@@ -48,6 +48,6 @@ export default {
 <style lang="scss" scoped>
 .room {
   transform-origin: top left;
-  transform: scale(0.8) translate(100px, 100px);
+  transform: scale(0.8) translate(100px, 60px);
 }
 </style>

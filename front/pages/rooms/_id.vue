@@ -149,7 +149,7 @@ export default {
   },
   data() {
     return {
-      room: 'rest-area',
+      room: 'kitchen',
       videoId: 'uZ0dceZdSK8',
       media: 5,
       isMuted: true,
