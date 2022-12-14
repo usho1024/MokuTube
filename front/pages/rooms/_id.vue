@@ -12,7 +12,7 @@
         <v-col
           cols="9"
         >
-          <v-sheet :is="`room-${room}`" />
+          <v-sheet :is="`room-${room.type}`" />
           <youtube
             ref="youtube"
             :video-id="videoId"
@@ -94,12 +94,27 @@
             <v-divider/>
 
             <v-sheet
-              class="pa-3"
+              class="pa-4"
               height=30%
             >
+              <v-form
+                class="mb-2"
+              >
+                <v-text-field
+                  v-model="inputMessage"
+                  type="text"
+                  label="メッセージを入力する"
+                  counter="200"
+                  dense
+                  append-icon="mdi-send"
+                  @click:append="speak"
+                />
+              </v-form>
+
               <v-slider
                 v-model="media"
                 thumb-label
+                dense
               >
                 <template #prepend>
                   <v-icon
@@ -118,6 +133,8 @@
 </template>
 
 <script>
+import ActionCable from 'actioncable'
+
 import RoomBookCafe from '~/components/Room/RoomBookCafe'
 import RoomCafe from '~/components/Room/RoomCafe'
 import RoomClassroom from '~/components/Room/RoomClassroom'
@@ -147,13 +164,18 @@ export default {
     await $axios.$get('/api/v1/messages')
       .then(response => store.dispatch('getChatMessages', response))
   },
+  // TODO asyncDataでルームの情報を取得できるようにする
   data() {
     return {
-      room: 'kitchen',
+      room: {
+        id: this.$route.params.id,
+        type: 'kitchen'
+      },
       videoId: 'uZ0dceZdSK8',
       media: 5,
       isMuted: true,
-      sampleAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'
+      sampleAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+      inputMessage: ''
     }
   },
   computed: {
@@ -162,12 +184,26 @@ export default {
     },
     player() {
       return this.$refs.youtube.player
+    },
+    currentUser() {
+      return this.$store.state.currentUser
     }
   },
   watch: {
     media(newVal) {
       this.setVolume(newVal)
     }
+  },
+  created() {
+    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    this.roomChannel = cable.subscriptions.create(
+      { channel: 'RoomChannel', room: this.room.id },
+      {
+        received: (data) => {
+          this.$store.dispatch("getChatMessages", data)
+        }
+      }
+    )
   },
   mounted() {
     this.playVideo()
@@ -204,6 +240,23 @@ export default {
     scrollToBottom() {
       const el = document.getElementById('chat-list')
       el.scrollTo(0, el.scrollHeight)
+    },
+    speak() {
+      this.roomChannel.perform('speak', {
+        user: this.currentUser.id,
+        message: this.inputMessage
+      })
+      this.inputMessage = ''
+    },
+    getSeat() {
+      this.roomChannel.perform('get_seat', {
+        // room: ,
+        // user: ,
+        // work: ,
+        // seat_number: ,
+        // x_coord: ,
+        // y_coord:
+      })
     }
   }
 }
