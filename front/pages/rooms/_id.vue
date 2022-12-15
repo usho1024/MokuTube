@@ -99,6 +99,7 @@
             >
               <v-form
                 class="mb-2"
+                @submit.prevent="speak"
               >
                 <v-text-field
                   v-model="inputMessage"
@@ -160,11 +161,14 @@ export default {
     RoomSmallOffice
   },
   layout: 'logged-in',
-  async asyncData ({ $axios, store }) {
-    await $axios.$get('/api/v1/messages')
+  async asyncData ({ $axios, store, route }) {
+    await $axios.$get('/api/v1/messages', {
+      params: {
+        id: route.params.id
+      }
+    })
       .then(response => store.dispatch('getChatMessages', response))
   },
-  // TODO asyncDataでルームの情報を取得できるようにする
   data() {
     return {
       room: {
@@ -197,10 +201,16 @@ export default {
   created() {
     const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
     this.roomChannel = cable.subscriptions.create(
-      { channel: 'RoomChannel', room: this.room.id },
       {
-        received: (data) => {
-          this.$store.dispatch("getChatMessages", data)
+        channel: 'RoomChannel',
+        room: this.room.id
+      },
+      {
+        received: response => {
+          this.$store.dispatch('getChatMessages', response)
+          this.$nextTick(() => {
+            this.scrollToBottom()
+          })
         }
       }
     )

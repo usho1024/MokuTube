@@ -6,7 +6,8 @@ User.create!(
 )
 
 10.times do |n|
-  name = "user#{n+1}"
+  n += 1
+  name = "user#{n}"
   User.create!(
     name: "#{name}",
     email: "#{name}@example.com",

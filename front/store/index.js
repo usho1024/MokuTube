@@ -1,6 +1,6 @@
 export const state = () => ({
   currentUser: null,
-  chatMessages: null
+  chatMessages: []
 })
 
 export const getters = {}
@@ -10,7 +10,7 @@ export const mutations = {
     state.currentUser = payload
   },
   setChatMessages (state, payload) {
-    state.chatMessages = payload
+    Array.isArray(payload) ? state.chatMessages.push(...payload.reverse()) : state.chatMessages.push(payload)
   }
 }
 
