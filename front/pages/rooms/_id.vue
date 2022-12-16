@@ -191,6 +191,10 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser
+    },
+    getWebSocketURL() {
+      const id = this.currentUser.id
+      return `ws://localhost:3000/cable?id=${id}`
     }
   },
   watch: {
@@ -199,7 +203,7 @@ export default {
     }
   },
   created() {
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    const cable = ActionCable.createConsumer(this.getWebSocketURL)
     this.roomChannel = cable.subscriptions.create(
       {
         channel: 'RoomChannel',
@@ -253,7 +257,6 @@ export default {
     },
     speak() {
       this.roomChannel.perform('speak', {
-        user: this.currentUser.id,
         message: this.inputMessage
       })
       this.inputMessage = ''
