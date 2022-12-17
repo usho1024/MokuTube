@@ -1,6 +1,6 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/${image}.svg`)" usemap="#ImageMap" />
+    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
     <map name="ImageMap" @click.prevent="getSeat">
       <area
         v-for="(coord, i) in coords"
@@ -11,11 +11,7 @@
         href=""
       />
     </map>
-    <user-avatar
-      :x="x"
-      :y="y"
-      :size="size"
-    />
+    <user-avatar :x="x" :y="y" :size="size" />
   </div>
 </template>
 
@@ -50,6 +46,6 @@ export default {
 <style lang="scss" scoped>
 .room {
   transform-origin: top left;
-  transform: scale(0.8) translate(100px, 100px);
+  transform: scale(0.8) translate(100px, 60px);
 }
 </style>

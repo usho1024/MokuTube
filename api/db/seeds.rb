@@ -2,6 +2,7 @@ table_names = %w(
   users
   room_images
   rooms
+  messages
 )
 
 table_names.each do |table_name|

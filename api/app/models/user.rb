@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   has_many :rooms
   has_many :rooms_users
   has_many :messages
-  has_one_attached :image
 
   validates :name, presence: true,
                    length: {

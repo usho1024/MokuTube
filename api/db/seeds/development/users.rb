@@ -6,6 +6,7 @@ User.create!(
 )
 
 10.times do |n|
+  n += 1
   name = "user#{n}"
   User.create!(
     name: "#{name}",
