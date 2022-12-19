@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :rooms
   has_many :rooms_users
   has_many :messages
