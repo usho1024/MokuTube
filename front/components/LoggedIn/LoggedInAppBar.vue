@@ -7,13 +7,17 @@
   >
     MokuTube
     <v-spacer />
-    <span
-      class="mr-5"
-    >
-      {{ userInfo }}
-    </span>
+    <nuxt-link to="/edit">
+      <v-avatar
+        size="36px"
+      >
+        <img
+          :src="currentUser.avatar.url"
+        >
+      </v-avatar>
+    </nuxt-link>
     <v-btn
-      class="mr-4 warning white--text"
+      class="mx-4 warning white--text"
       @click="$auth.logout()"
     >
       ログアウト
@@ -24,8 +28,8 @@
 <script>
 export default {
   computed: {
-    userInfo() {
-      return this.$store.state.currentUser.email
+    currentUser() {
+      return this.$store.state.currentUser
     }
   }
 }
