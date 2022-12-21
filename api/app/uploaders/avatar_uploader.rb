@@ -15,7 +15,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url(*args)
-    "http://localhost:3000/uploads/user/avatar/" + [version_name, "default.png"].compact.join('_')
+    "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
   end
 
   # Process files as they are uploaded:
