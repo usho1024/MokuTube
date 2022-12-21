@@ -1,6 +1,7 @@
 class Message < ApplicationRecord
   # jsonでメッセージの投稿者名を返す用（attributes API）
   attribute :name
+  attribute :avatar
 
   belongs_to :user
   belongs_to :room

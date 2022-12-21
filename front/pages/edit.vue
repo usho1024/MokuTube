@@ -6,8 +6,8 @@
       >
         <v-img
           :src="currentUser.avatar.url"
-          max-height="300"
-          max-width="300"
+          max-height="200"
+          max-width="200"
         />
       </v-col>
       <v-col
@@ -20,7 +20,6 @@
           chips
           show-size
           prepend-icon="mdi-camera"
-          @change="setAvatar"
         />
         <v-btn
           color="primary"
@@ -51,26 +50,14 @@
       }
     },
     methods:{
-      setAvatar(e){
-        this.inputFile = e
-      },
       updateUser(){
         const formData = new FormData()
         formData.append('user[avatar]', this.inputFile)
-        const config = {
-          headers: {
-            'content-type': 'multipart/form-data',
-          }
-        }
-        this.$axios.patch(
-          `/api/v1/users/${this.currentUser.id}`,
-          formData,
-          config
-        )
+        this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, formData)
         .then(response => {
-          this.inputFile = null
           const user = response.data
           this.$store.dispatch('getCurrentUser', user)
+          this.inputFile = null
         })
       }
     }
