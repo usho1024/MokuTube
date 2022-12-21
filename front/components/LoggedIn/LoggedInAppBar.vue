@@ -12,7 +12,7 @@
         size="36px"
       >
         <img
-          :src="currentUser.avatar.url"
+          :src="currentUser.avatar.thumb.url"
         >
       </v-avatar>
     </nuxt-link>

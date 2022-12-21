@@ -42,17 +42,17 @@
 
             <v-divider/>
 
-            <v-list
+            <v-sheet
               id="chat-list"
-              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium px-2"
+              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
               height=70%
             >
               <template
                 v-for="(message, i) in messages"
               >
-                <v-list-item
+                <div
                   :key="`message-${i}`"
-                  class="py-1"
+                  class="px-4 mb-4"
                 >
                   <v-row
                     no-gutters
@@ -64,12 +64,11 @@
                       <v-avatar
                         size="35px"
                       >
-                        <v-img :src="sampleAvatar"></v-img>
+                        <v-img :src="message.avatar"/>
                       </v-avatar>
                     </v-col>
                     <v-col
                       cols="11"
-                      align-self="start"
                     >
                       <div
                         class="ml-3"
@@ -87,9 +86,9 @@
                       </div>
                     </v-col>
                   </v-row>
-                </v-list-item>
+                </div>
               </template>
-            </v-list>
+            </v-sheet>
 
             <v-divider/>
 
@@ -223,6 +222,10 @@ export default {
     this.playVideo()
     this.mute()
     this.scrollToBottom()
+  },
+  beforeDestroy() {
+    alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
+    location.reload()
   },
   methods: {
     playVideo() {

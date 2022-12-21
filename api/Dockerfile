@@ -1,7 +1,7 @@
 FROM ruby:3.1.2-alpine3.16
 
 ARG WORKDIR
-ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git"
+ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git imagemagick"
 ARG DEV_PACKAGES="build-base curl-dev"
 
 ENV HOME=/${WORKDIR} \

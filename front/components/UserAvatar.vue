@@ -1,12 +1,13 @@
 <template>
   <v-avatar
     class="avatar"
-    color="primary"
     :size="size"
     :style="{
       transform: `translate(${x}px, ${y}px)`,
     }"
-  />
+  >
+    <v-img :src="currentUser.avatar.thumb.url"/>
+  </v-avatar>
 </template>
 
 <script>
@@ -23,6 +24,11 @@ export default {
     size: {
       type: Number,
       default: 0
+    }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser
     }
   }
 }
