@@ -17,6 +17,12 @@
 
 <script>
 export default {
+  props: {
+    roomChannel: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       image: 'kitchen',
@@ -39,11 +45,14 @@ export default {
       const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
       this.x = x
       this.y = y
-      console.log(seatNum)
-      console.log(this.x)
-      console.log(this.y)
-    },
-  },
+      this.roomChannel.perform('get_seat', {
+        // work: ,
+        seat_number: seatNum,
+        x_coord: this.x,
+        y_coord: this.y
+      })
+    }
+  }
 }
 </script>
 

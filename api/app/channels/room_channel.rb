@@ -4,6 +4,19 @@ class RoomChannel < ApplicationCable::Channel
     stream_from "room#{params[:room]}"
   end
 
+  # 退室の際にカレントユーザーの席情報を削除する
+  def unsubscribed
+    if RoomsUser.exists?(room_id: params[:room], user_id: current_user.id)
+      RoomsUser.find_by(room_id: params[:room], user_id: current_user.id).destroy
+      users = RoomsUser.where(room_id: params[:room])
+      content = {
+        type: 'getSeat',
+        body: users
+      }
+      ActionCable.server.broadcast("room#{params[:room]}", content)
+    end
+  end
+
   # チャットのメッセージを作成する
   def speak(data)
     Message.create!(
@@ -15,13 +28,19 @@ class RoomChannel < ApplicationCable::Channel
 
   # ルームの席を確保する
   def get_seat(data)
-    # RoomsUsers.create!(
-    #   room_id: params[:room],
-    #   user_id: data['user'],
-    #   work: data['work'],
-    #   seat_number: data['seat_number'],
-    #   x_coord: data['x_coord'],
-    #   y_coord: data['y_coord']
-    # )
+    if RoomsUser.exists?(room_id: params[:room], seat_number: data['seat_number'])
+      return
+    elsif RoomsUser.exists?(room_id: params[:room], user_id: current_user.id)
+      RoomsUser.find_by(room_id: params[:room], user_id: current_user.id).destroy
+    end
+    RoomsUser.create!(
+      room_id: params[:room],
+      user_id: current_user.id,
+      # work: data['work'],
+      seat_number: data['seat_number'],
+      x_coord: data['x_coord'],
+      y_coord: data['y_coord']
+    )
   end
+
 end

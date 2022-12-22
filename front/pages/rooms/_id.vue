@@ -12,7 +12,10 @@
         <v-col
           cols="9"
         >
-          <v-sheet :is="`room-${room.type}`" />
+          <v-sheet
+            :is="`room-${room.type}`"
+            :room-channel="roomChannel"
+          />
           <youtube
             ref="youtube"
             :video-id="videoId"
@@ -167,9 +170,16 @@ export default {
       }
     })
       .then(response => store.dispatch('getChatMessages', response))
+    await $axios.$get('/api/v1/rooms_users', {
+      params: {
+        id: route.params.id
+      }
+    })
+      .then(response => store.dispatch('getRoomUsers', response))
   },
   data() {
     return {
+      roomChannel: null,
       room: {
         id: this.$route.params.id,
         type: 'kitchen'
@@ -209,11 +219,18 @@ export default {
         room: this.room.id
       },
       {
-        received: response => {
-          this.$store.dispatch('getChatMessages', response)
-          this.$nextTick(() => {
-            this.scrollToBottom()
-          })
+        received: ({ type, body }) => {
+          switch (type) {
+            case 'speak':
+              this.$store.dispatch('getChatMessages', body)
+              this.$nextTick(() => {
+                this.scrollToBottom()
+              })
+              break
+            case 'getSeat':
+              this.$store.dispatch('getRoomUsers', body)
+              break
+          }
         }
       }
     )
@@ -263,16 +280,6 @@ export default {
         message: this.inputMessage
       })
       this.inputMessage = ''
-    },
-    getSeat() {
-      this.roomChannel.perform('get_seat', {
-        // room: ,
-        // user: ,
-        // work: ,
-        // seat_number: ,
-        // x_coord: ,
-        // y_coord:
-      })
     }
   }
 }
