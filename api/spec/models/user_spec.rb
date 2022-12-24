@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context '名前がない場合' do
+    context '名前が空白である場合' do
       let(:user) { build(:user, name: '')}
       it '空白は無効になること' do
         expect(user).to be_invalid

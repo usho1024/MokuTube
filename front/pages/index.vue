@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  layout: 'logged-in',
   auth: false
 }
 </script>

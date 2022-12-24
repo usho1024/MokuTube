@@ -12,7 +12,10 @@
         <v-col
           cols="9"
         >
-          <v-sheet :is="`room-${room.type}`" />
+          <v-sheet
+            :is="`room-${room.type}`"
+            :room-channel="roomChannel"
+          />
           <youtube
             ref="youtube"
             :video-id="videoId"
@@ -42,17 +45,17 @@
 
             <v-divider/>
 
-            <v-list
+            <v-sheet
               id="chat-list"
-              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium px-2"
+              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
               height=70%
             >
               <template
                 v-for="(message, i) in messages"
               >
-                <v-list-item
+                <div
                   :key="`message-${i}`"
-                  class="py-1"
+                  class="px-4 mb-4"
                 >
                   <v-row
                     no-gutters
@@ -64,12 +67,11 @@
                       <v-avatar
                         size="35px"
                       >
-                        <v-img :src="sampleAvatar"></v-img>
+                        <v-img :src="message.avatar"/>
                       </v-avatar>
                     </v-col>
                     <v-col
                       cols="11"
-                      align-self="start"
                     >
                       <div
                         class="ml-3"
@@ -87,9 +89,9 @@
                       </div>
                     </v-col>
                   </v-row>
-                </v-list-item>
+                </div>
               </template>
-            </v-list>
+            </v-sheet>
 
             <v-divider/>
 
@@ -168,9 +170,16 @@ export default {
       }
     })
       .then(response => store.dispatch('getChatMessages', response))
+    await $axios.$get('/api/v1/rooms_users', {
+      params: {
+        id: route.params.id
+      }
+    })
+      .then(response => store.dispatch('getRoomUsers', response))
   },
   data() {
     return {
+      roomChannel: null,
       room: {
         id: this.$route.params.id,
         type: 'kitchen'
@@ -210,11 +219,18 @@ export default {
         room: this.room.id
       },
       {
-        received: response => {
-          this.$store.dispatch('getChatMessages', response)
-          this.$nextTick(() => {
-            this.scrollToBottom()
-          })
+        received: ({ type, body }) => {
+          switch (type) {
+            case 'speak':
+              this.$store.dispatch('getChatMessages', body)
+              this.$nextTick(() => {
+                this.scrollToBottom()
+              })
+              break
+            case 'getSeat':
+              this.$store.dispatch('getRoomUsers', body)
+              break
+          }
         }
       }
     )
@@ -223,6 +239,10 @@ export default {
     this.playVideo()
     this.mute()
     this.scrollToBottom()
+  },
+  beforeDestroy() {
+    alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
+    location.reload()
   },
   methods: {
     playVideo() {
@@ -260,16 +280,6 @@ export default {
         message: this.inputMessage
       })
       this.inputMessage = ''
-    },
-    getSeat() {
-      this.roomChannel.perform('get_seat', {
-        // room: ,
-        // user: ,
-        // work: ,
-        // seat_number: ,
-        // x_coord: ,
-        // y_coord:
-      })
     }
   }
 }

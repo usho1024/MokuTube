@@ -11,12 +11,25 @@
         href=""
       />
     </map>
-    <user-avatar :x="x" :y="y" :size="size" />
+    <user-avatar
+      v-for="(roomUser, i) in roomUsers"
+      :key="`roomUser-${i}`"
+      :size="size"
+      :x="roomUser.x_coord"
+      :y="roomUser.y_coord"
+      :avatar="roomUser.avatar"
+    />
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    roomChannel: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       image: 'small-office',
@@ -29,15 +42,23 @@ export default {
       ],
     }
   },
+  computed: {
+    roomUsers() {
+      return this.$store.state.roomUsers
+    },
+  },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
       const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
       this.x = x
       this.y = y
-      console.log(seatNum)
-      console.log(this.x)
-      console.log(this.y)
+      this.roomChannel.perform('get_seat', {
+        // work: ,
+        seat_number: seatNum,
+        x_coord: this.x,
+        y_coord: this.y,
+      })
     },
   },
 }
