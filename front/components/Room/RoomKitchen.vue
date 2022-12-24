@@ -11,7 +11,14 @@
         href=""
       />
     </map>
-    <user-avatar :x="x" :y="y" :size="size" />
+    <user-avatar
+      v-for="(roomUser, i) in roomUsers"
+      :key="`roomUser-${i}`"
+      :size="size"
+      :x="roomUser.x_coord"
+      :y="roomUser.y_coord"
+      :avatar="roomUser.avatar"
+    />
   </div>
 </template>
 
@@ -37,6 +44,11 @@ export default {
         '733,569,794,569,797,613,788,686,763,700,738,686,729,614',
         '799,532,860,532,863,576,854,649,829,663,804,649,795,577',
       ],
+    }
+  },
+  computed: {
+    roomUsers() {
+      return this.$store.state.roomUsers
     }
   },
   methods: {

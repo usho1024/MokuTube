@@ -6,13 +6,17 @@
       transform: `translate(${x}px, ${y}px)`,
     }"
   >
-    <v-img :src="currentUser.avatar.thumb.url"/>
+    <v-img :src="avatar"/>
   </v-avatar>
 </template>
 
 <script>
 export default {
   props: {
+    size: {
+      type: Number,
+      default: 0
+    },
     x: {
       type: Number,
       default: 0
@@ -21,14 +25,9 @@ export default {
       type: Number,
       default: 0
     },
-    size: {
-      type: Number,
-      default: 0
-    }
-  },
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser
+    avatar: {
+      type: String,
+      default: ''
     }
   }
 }
