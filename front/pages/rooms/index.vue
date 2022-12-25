@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  name: 'Rooms',
   async asyncData ({ $axios }) {
     let rooms = []
     await $axios.$get('/api/v1/rooms')

@@ -35,6 +35,7 @@
 
 <script>
   export default {
+    name: 'Edit',
     layout: 'logged-in',
     data(){
       return{

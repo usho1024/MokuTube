@@ -9,15 +9,20 @@
 
     <v-spacer />
 
-    <nuxt-link to="/edit">
-      <v-avatar
-        size="36px"
-      >
-        <img
-          :src="currentUser.avatar.thumb.url"
-        >
-      </v-avatar>
-    </nuxt-link>
+    <v-btn
+      class="mx-4 primary white--text"
+      nuxt
+      to="/login"
+    >
+      ログイン
+    </v-btn>
+    <v-btn
+      class="mx-4 primary white--text"
+      nuxt
+      to="/signup"
+    >
+      新規登録
+    </v-btn>
     <v-btn
       class="mx-4 warning white--text"
       @click="logoutWithAuthModule"

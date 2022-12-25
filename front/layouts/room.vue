@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-bar />
+    <logged-in-room-app-bar />
     <v-main>
       <nuxt />
     </v-main>

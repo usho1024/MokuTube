@@ -150,6 +150,7 @@ import RoomRestArea from '~/components/Room/RoomRestArea'
 import RoomSmallOffice from '~/components/Room/RoomSmallOffice'
 
 export default {
+  name: 'Room',
   components: {
     RoomBookCafe,
     RoomCafe,
@@ -162,7 +163,7 @@ export default {
     RoomRestArea,
     RoomSmallOffice
   },
-  layout: 'logged-in',
+  layout: 'room',
   async asyncData ({ $axios, store, route }) {
     await $axios.$get('/api/v1/messages', {
       params: {
