@@ -21,7 +21,7 @@
     <v-btn
       class="mx-4 warning white--text"
       nuxt
-      to="/edit"
+      to="/rooms"
     >
       退出する
     </v-btn>

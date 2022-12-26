@@ -23,12 +23,13 @@
     >
       新規登録
     </v-btn>
-    <v-btn
+    <!-- TODO あとで削除 -->
+    <!-- <v-btn
       class="mx-4 warning white--text"
       @click="logoutWithAuthModule"
     >
       ログアウト
-    </v-btn>
+    </v-btn> -->
   </v-app-bar>
 </template>
 

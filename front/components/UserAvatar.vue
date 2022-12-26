@@ -15,19 +15,19 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 0
+      default: null
     },
     x: {
       type: Number,
-      default: 0
+      default: null
     },
     y: {
       type: Number,
-      default: 0
+      default: null
     },
     avatar: {
       type: String,
-      default: ''
+      default: null
     }
   }
 }

@@ -7,6 +7,7 @@
         cols="3"
       >
         <index-room
+          :id="room.id"
           :name="room.name"
         />
       </v-col>
