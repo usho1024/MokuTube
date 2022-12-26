@@ -10,7 +10,7 @@ class Room < ApplicationRecord
 
   validates :name, presence: true,
                    length: {
-                            maximum: 30,
-                            allow_blank: true
-                           }
+                     maximum: 30,
+                     allow_blank: true
+                   }
 end

@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true,
                    length: {
-                            maximum: 30,
-                            allow_blank: true
-                           }
+                     maximum: 30,
+                     allow_blank: true
+                   }
   validates :introduction, length: { maximum: 300 }
 end

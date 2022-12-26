@@ -10,4 +10,3 @@
 end
 
 puts "rooms = #{Room.count}"
-
