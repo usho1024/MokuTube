@@ -17,7 +17,7 @@
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.avatar"
+      :avatar="roomUser.detail.avatar"
     />
   </div>
 </template>
@@ -27,8 +27,8 @@ export default {
   props: {
     roomChannel: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {

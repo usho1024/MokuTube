@@ -17,7 +17,7 @@
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.avatar"
+      :avatar="roomUser.detail.avatar"
     />
   </div>
 </template>
@@ -27,8 +27,8 @@ export default {
   props: {
     roomChannel: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
@@ -49,7 +49,7 @@ export default {
   computed: {
     roomUsers() {
       return this.$store.state.roomUsers
-    }
+    },
   },
   methods: {
     getSeat(e) {
@@ -61,10 +61,10 @@ export default {
         // work: ,
         seat_number: seatNum,
         x_coord: this.x,
-        y_coord: this.y
+        y_coord: this.y,
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

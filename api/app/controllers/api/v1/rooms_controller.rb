@@ -2,11 +2,18 @@ class Api::V1::RoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    rooms = Room.all
-    # rooms.map do |room|
-    #   room.user_name = room.user.name
-    #   room.user_count = room.rooms_users.count
-    # end
+    rooms = Room.all.limit(50).includes([:user, :room_image])
+    rooms.map do |room|
+      room.host = {
+                   name: room.user.name,
+                   avatar: room.user.avatar.thumb.url
+                  }
+      room.image = {
+                    name: room.room_image.image_name,
+                    number_of_seats: room.room_image.number_of_seats
+                   }
+      room.active_users = room.rooms_users.count
+    end
     render json: rooms
   end
 end

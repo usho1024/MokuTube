@@ -67,7 +67,7 @@
                       <v-avatar
                         size="35px"
                       >
-                        <v-img :src="message.avatar"/>
+                        <v-img :src="message.sender.avatar"/>
                       </v-avatar>
                     </v-col>
                     <v-col
@@ -79,7 +79,7 @@
                         <span
                           class="grey--text text--darken-1 mr-2"
                         >
-                          {{ message.name }}
+                          {{ message.sender.name }}
                         </span>
                         <span
                           class="grey--text text--darken-4"
