@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users, only:[:index, :update]
       resources :messages, only:[:index]
       resources :rooms_users, only:[:index]
+      resources :rooms, only:[:index]
     end
   end
 end

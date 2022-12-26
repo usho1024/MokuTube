@@ -40,7 +40,7 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.$store.dispatch('getCurrentUser', null)
-            }, 1000)
+            }, 1500)
         })
     }
   }

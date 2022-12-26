@@ -1,54 +1,42 @@
 <template>
-  <div>
-    <h2>
-      Roomsテーブルの取得
-    </h2>
-    <table v-if="rooms.length">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>email</th>
-          <th>created_at</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
+  <v-container>
+    Rooms
+    <v-row>
+      <v-col
+        cols="3"
+      >
+        <room-card
           v-for="(room, i) in rooms"
-          :key="`room-${i}`"
-        >
-          <td>{{ room.id }}</td>
-          <td>{{ room.name }}</td>
-          <td>{{ room.email }}</td>
-          <td>{{ dateFormat(room.created_at) }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div v-else>
-      ルームが取得できませんでした
-    </div>
-  </div>
+          :key="`rooms-${i}`"
+        />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'Rooms',
-  async asyncData ({ $axios }) {
-    let rooms = []
+  layout: 'logged-in',
+  async asyncData ({ $axios, store }) {
     await $axios.$get('/api/v1/rooms')
-      .then(response => (rooms = response))
-    return { rooms }
+      .then(response => store.dispatch('getRooms', response))
   },
   computed: {
-    dateFormat () {
-      return (date) => {
-        const dateTimeFormat = new Intl.DateTimeFormat(
-          'ja', { dateStyle: 'medium', timeStyle: 'short' }
-        )
-        return dateTimeFormat.format(new Date(date))
-      }
-    }
+    rooms() {
+      return this.$store.state.rooms
+    },
+    // dateFormat () {
+    //   return (date) => {
+    //     const dateTimeFormat = new Intl.DateTimeFormat(
+    //       'ja', { dateStyle: 'medium', timeStyle: 'short' }
+    //     )
+    //     return dateTimeFormat.format(new Date(date))
+    //   }
+    // }
+  },
+  destroyed() {
+    this.$store.dispatch('getRooms', null)
   }
 }
 </script>

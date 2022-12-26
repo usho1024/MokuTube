@@ -1,7 +1,8 @@
 export const state = () => ({
   currentUser: null,
   chatMessages: [],
-  roomUsers: null
+  roomUsers: null,
+  rooms: null
 })
 
 export const getters = {}
@@ -15,6 +16,9 @@ export const mutations = {
   },
   setRoomUsers (state, payload) {
     state.roomUsers = payload
+  },
+  setRooms (state, payload) {
+    state.rooms = payload
   }
 }
 
@@ -27,5 +31,8 @@ export const actions = {
   },
   getRoomUsers ({ commit }, roomUser) {
     commit('setRoomUsers', roomUser)
+  },
+  getRooms ({ commit }, message) {
+    commit('setRooms', message)
   }
 }
