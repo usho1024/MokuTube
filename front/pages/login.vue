@@ -61,7 +61,11 @@ export default {
         }
       })
         .then(response => {
-          const user = response.data.data
+          const user = {
+            id: response.data.data.id,
+            name: response.data.data.name,
+            avatar: response.data.data.avatar
+          }
           this.$store.dispatch('getCurrentUser', user)
         })
     }
