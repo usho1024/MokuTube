@@ -150,7 +150,7 @@ import RoomRestArea from '~/components/Room/RoomRestArea'
 import RoomSmallOffice from '~/components/Room/RoomSmallOffice'
 
 export default {
-  name: 'Room',
+  name: 'RoomsShow',
   components: {
     RoomBookCafe,
     RoomCafe,

@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    Rooms
     <v-row>
       <v-col
+        v-for="(room, i) in rooms"
+        :key="`room-${i}`"
         cols="3"
       >
-        <room-card
-          v-for="(room, i) in rooms"
-          :key="`rooms-${i}`"
+        <index-room
+          :name="room.name"
         />
       </v-col>
     </v-row>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'Rooms',
+  name: 'RoomsIndex',
   layout: 'logged-in',
   async asyncData ({ $axios, store }) {
     await $axios.$get('/api/v1/rooms')
