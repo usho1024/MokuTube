@@ -213,8 +213,8 @@ export default {
     }
   },
   created() {
-    const cable = ActionCable.createConsumer(this.getWebSocketURL)
-    this.roomChannel = cable.subscriptions.create(
+    this.cable = ActionCable.createConsumer(this.getWebSocketURL)
+    this.roomChannel = this.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
         room: this.room.id
@@ -243,7 +243,9 @@ export default {
   },
   beforeDestroy() {
     alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
-    location.reload()
+  },
+  destroyed() {
+    this.cable.disconnect()
   },
   methods: {
     playVideo() {
