@@ -12,7 +12,13 @@ export const mutations = {
     state.currentUser = payload
   },
   setChatMessages (state, payload) {
-    Array.isArray(payload) ? state.chatMessages.push(...payload.reverse()) : state.chatMessages.push(payload)
+    if (!payload) {
+      state.chatMessages = []
+    } else if (Array.isArray(payload)) {
+      state.chatMessages.push(...payload.reverse())
+    } else {
+      state.chatMessages.push(payload)
+    }
   },
   setRoomUsers (state, payload) {
     state.roomUsers = payload

@@ -242,10 +242,13 @@ export default {
     this.scrollToBottom()
   },
   beforeDestroy() {
-    alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
+    // TODO あとでコメントアウト外す
+    // alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
   },
   destroyed() {
     this.cable.disconnect()
+    this.$store.dispatch('getChatMessages', null)
+    this.$store.dispatch('getRoomUsers', null)
   },
   methods: {
     playVideo() {
