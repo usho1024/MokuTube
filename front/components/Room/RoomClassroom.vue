@@ -29,6 +29,10 @@ export default {
       type: Object,
       default: null,
     },
+    roomUsers: {
+      type: Object,
+      default: null,
+    },
   },
   data() {
     return {
@@ -49,11 +53,6 @@ export default {
         '142,385,163,351,204,419,132,461,134,367,163,352',
       ],
     }
-  },
-  computed: {
-    roomUsers() {
-      return this.$store.state.roomUsers
-    },
   },
   methods: {
     getSeat(e) {

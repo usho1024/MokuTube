@@ -24,25 +24,11 @@
 export default {
   name: 'RoomsIndex',
   layout: 'logged-in',
-  async asyncData ({ $axios, store }) {
+  async asyncData ({ $axios }) {
+    let rooms
     await $axios.$get('/api/v1/rooms')
-      .then(response => store.dispatch('getRooms', response))
-  },
-  computed: {
-    rooms() {
-      return this.$store.state.rooms
-    },
-    // dateFormat () {
-    //   return (date) => {
-    //     const dateTimeFormat = new Intl.DateTimeFormat(
-    //       'ja', { dateStyle: 'medium', timeStyle: 'short' }
-    //     )
-    //     return dateTimeFormat.format(new Date(date))
-    //   }
-    // }
-  },
-  destroyed() {
-    this.$store.dispatch('getRooms', null)
+      .then(response => (rooms = response))
+    return { rooms }
   }
 }
 </script>

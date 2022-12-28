@@ -18,6 +18,7 @@
           <v-sheet
             :is="`room-${room.type}`"
             :room-channel="roomChannel"
+            :room-users="roomUsers"
           />
           <youtube
             ref="youtube"
@@ -54,7 +55,7 @@
               height=70%
             >
               <template
-                v-for="(message, i) in messages"
+                v-for="(message, i) in chatMessages"
               >
                 <div
                   :key="`message-${i}`"
@@ -167,19 +168,24 @@ export default {
     RoomSmallOffice
   },
   layout: 'room',
-  async asyncData ({ $axios, store, route }) {
+  async asyncData ({ $axios, route }) {
+    const chatMessages = []
+    let roomUsers
     await $axios.$get('/api/v1/messages', {
       params: {
         id: route.params.id
       }
     })
-      .then(response => store.dispatch('getChatMessages', response))
+      .then(response => (
+        chatMessages.push(...response.reverse())
+      ))
     await $axios.$get('/api/v1/rooms_users', {
       params: {
         id: route.params.id
       }
     })
-      .then(response => store.dispatch('getRoomUsers', response))
+      .then(response => (roomUsers = response))
+    return { chatMessages, roomUsers }
   },
   data() {
     return {
@@ -196,9 +202,6 @@ export default {
     }
   },
   computed: {
-    messages() {
-      return this.$store.state.chatMessages
-    },
     player() {
       return this.$refs.youtube.player
     },
@@ -226,13 +229,13 @@ export default {
         received: ({ type, body }) => {
           switch (type) {
             case 'speak':
-              this.$store.dispatch('getChatMessages', body)
+              this.chatMessages.push(body)
               this.$nextTick(() => {
                 this.scrollToBottom()
               })
               break
             case 'getSeat':
-              this.$store.dispatch('getRoomUsers', body)
+              this.roomUsers = body
               break
           }
         }
@@ -246,8 +249,6 @@ export default {
   },
   destroyed() {
     this.cable.disconnect()
-    this.$store.dispatch('getChatMessages', null)
-    this.$store.dispatch('getRoomUsers', null)
   },
   methods: {
     playVideo() {
