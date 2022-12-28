@@ -7,8 +7,13 @@
         cols="3"
       >
         <index-room
-          :id="room.id"
-          :name="room.name"
+          :room-id="room.id"
+          :room-name="room.name"
+          :room-image="room.image.name"
+          :host-name="room.host.name"
+          :host-avatar="room.host.avatar"
+          :active-users="room.active_users"
+          :number-of-seats="room.image.number_of_seats"
         />
       </v-col>
     </v-row>
