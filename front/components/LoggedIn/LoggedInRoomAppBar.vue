@@ -44,9 +44,9 @@ export default {
   methods: {
     goToRooms() {
       this.roomChannel.perform('unsubscribed')
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.$router.push('/rooms')
-        }, 500)
+      })
     }
   }
 }
