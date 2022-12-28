@@ -2,45 +2,44 @@
   <v-card
     nuxt
     :to="`/rooms/${roomId}`"
+    rounded="lg"
+    class="grey--text text--darken-3"
   >
     <v-img
-      :src="require(`~/assets/img/room/${roomImage}.svg`)"
-      height="250px"
-      gradient="rgba(0,0,0,0), #FFFFFF"
-      class="grey--text text--darken-3 align-end"
+      :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
+      height="150px"
+    />
+    <v-card-title
+      class="font-weight-bold text-truncate pb-0"
     >
-      <v-card-title
-        class="font-weight-bold text-truncate py-0"
+      {{ roomName }}
+    </v-card-title>
+    <v-list-item
+      dense
+    >
+      <v-list-item-avatar
+        size="30px"
       >
-        {{ roomName }}
-      </v-card-title>
-      <v-list-item
-        dense
+        <v-img
+          :src="hostAvatar"
+        />
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title
+          class="grey--text text--darken-2 text-truncate"
+        >
+          {{ hostName }}
+        </v-list-item-title>
+      </v-list-item-content>
+      <v-icon
+        class="mr-2"
       >
-        <v-list-item-avatar
-          size="30px"
-        >
-          <v-img
-            :src="hostAvatar"
-          />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title
-            class="grey--text text--darken-3 text-truncate"
-          >
-            {{ hostName }}
-          </v-list-item-title>
-        </v-list-item-content>
-        <v-icon
-          class="mr-2"
-        >
-          mdi-account-multiple-check
-        </v-icon>
-        <span>
-          {{ activeUsers }} / {{ numberOfSeats }}
-        </span>
-      </v-list-item>
-    </v-img>
+        mdi-account-multiple-check
+      </v-icon>
+      <span>
+        {{ activeUsers }} / {{ numberOfSeats }}
+      </span>
+    </v-list-item>
   </v-card>
 </template>
 
