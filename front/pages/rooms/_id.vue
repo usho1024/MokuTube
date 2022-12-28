@@ -3,6 +3,9 @@
     fluid
     class="pa-0"
   >
+    <logged-in-room-app-bar
+      :room-channel="roomChannel"
+    />
     <v-sheet
       class="main pa-10"
     >
@@ -240,10 +243,6 @@ export default {
     this.playVideo()
     this.mute()
     this.scrollToBottom()
-  },
-  beforeDestroy() {
-    // TODO あとでコメントアウト外す
-    // alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
   },
   destroyed() {
     this.cable.disconnect()

@@ -29,16 +29,16 @@ export const mutations = {
 }
 
 export const actions = {
-  getCurrentUser ({ commit }, user) {
-    commit('setCurrentUser', user)
+  getCurrentUser ({ commit }, currentUser) {
+    commit('setCurrentUser', currentUser)
   },
-  getChatMessages ({ commit }, message) {
-    commit('setChatMessages', message)
+  getChatMessages ({ commit }, chatMessages) {
+    commit('setChatMessages', chatMessages)
   },
-  getRoomUsers ({ commit }, roomUser) {
-    commit('setRoomUsers', roomUser)
+  getRoomUsers ({ commit }, roomUsers) {
+    commit('setRoomUsers', roomUsers)
   },
-  getRooms ({ commit }, message) {
-    commit('setRooms', message)
+  getRooms ({ commit }, rooms) {
+    commit('setRooms', rooms)
   }
 }

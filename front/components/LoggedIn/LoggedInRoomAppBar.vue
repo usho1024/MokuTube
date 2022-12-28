@@ -21,7 +21,7 @@
     <v-btn
       class="mx-4 warning white--text"
       nuxt
-      to="/rooms"
+      @click="goToRooms"
     >
       退出する
     </v-btn>
@@ -30,9 +30,23 @@
 
 <script>
 export default {
+  props: {
+    roomChannel: {
+      type: Object,
+      default: null,
+    },
+  },
   computed: {
     currentUser() {
       return this.$store.state.currentUser
+    }
+  },
+  methods: {
+    goToRooms() {
+      this.roomChannel.perform('unsubscribed')
+      setTimeout(() => {
+        this.$router.push('/rooms')
+        }, 500)
     }
   }
 }
