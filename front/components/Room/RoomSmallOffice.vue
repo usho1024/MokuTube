@@ -30,7 +30,7 @@ export default {
       default: null,
     },
     roomUsers: {
-      type: Object,
+      type: Array,
       default: null,
     },
   },
