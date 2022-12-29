@@ -16,4 +16,10 @@ class Api::V1::RoomsController < ApplicationController
     end
     render json: rooms
   end
+
+  def show
+    room = Room.find(params[:id])
+    room.image = { name: room.room_image.image_name }
+    render json: room
+  end
 end

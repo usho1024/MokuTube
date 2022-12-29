@@ -16,7 +16,7 @@
           cols="9"
         >
           <v-sheet
-            :is="`room-${room.type}`"
+            :is="`room-${room.image.name}`"
             :room-channel="roomChannel"
             :room-users="roomUsers"
           />
@@ -136,7 +136,6 @@ export default {
   layout: 'room',
   async asyncData ({ $axios, route }) {
     const chatMessages = []
-    let roomUsers
     await $axios.$get('/api/v1/messages', {
       params: {
         id: route.params.id
@@ -145,25 +144,24 @@ export default {
       .then(response => (
         chatMessages.push(...response.reverse())
       ))
+    let roomUsers
     await $axios.$get('/api/v1/rooms_users', {
       params: {
         id: route.params.id
       }
     })
       .then(response => (roomUsers = response))
-    return { chatMessages, roomUsers }
+    let room
+    await $axios.$get(`/api/v1/rooms/${route.params.id}`)
+      .then(response => (room = response))
+    return { chatMessages, roomUsers, room }
   },
   data() {
     return {
       roomChannel: null,
-      room: {
-        id: this.$route.params.id,
-        type: 'kitchen'
-      },
       videoId: 'uZ0dceZdSK8',
       media: 5,
       isMuted: true,
-      sampleAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
       inputMessage: ''
     }
   },
