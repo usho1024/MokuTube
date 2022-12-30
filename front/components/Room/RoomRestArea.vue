@@ -1,16 +1,14 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
-    <map name="ImageMap" @click.prevent="getSeat">
-      <area
-        v-for="(coord, i) in coords"
-        :id="`seat-${i}`"
-        :key="`seat-${i}`"
-        shape="poly"
-        :coords="coord"
-        href=""
-      />
-    </map>
+    <v-avatar
+      v-for="(seat, i) in seats"
+      :id="`seat-${i}`"
+      :key="`seat-${i}`"
+      class="seats"
+      :size="size"
+      :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
+      @click.prevent="getSeat"
+    />
     <user-avatar
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
@@ -36,30 +34,24 @@ export default {
   },
   data() {
     return {
-      image: 'rest-area',
-      x: 0,
-      y: 0,
-      size: 50,
-      coords: [
-        '195,561,182,536,221,519,278,617,224,649,188,636,182,540',
-        '356,655,428,638,429,727,386,753,337,720,343,698',
-        '548,370,588,355,662,396,661,422,603,465,577,445,462,428',
-        '513,438,577,444,604,467,551,499,549,556,423,481,422,423',
-        '617,485,603,464,548,499,548,555,663,622,743,579,741,517,726,507,701,519,601,463',
-      ],
+      size: 35,
+      seats: [
+        {x: 116, y: 326},
+        {x: 206, y: 378},
+        {x: 360, y: 276},
+        {x: 304, y: 246},
+        {x: 330, y: 200}
+      ]
     }
   },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
-      const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
-      this.x = x
-      this.y = y
+      const {x, y} = this.seats[seatNum]
       this.roomChannel.perform('get_seat', {
-        // work: ,
         seat_number: seatNum,
-        x_coord: this.x,
-        y_coord: this.y,
+        x_coord: x,
+        y_coord: y,
       })
     },
   },
@@ -68,7 +60,21 @@ export default {
 
 <style lang="scss" scoped>
 .room {
+  width: 579px;
+  height: 500px;
+  background: url(~/assets/img/room/rest-area.svg);
   transform-origin: top left;
-  transform: scale(0.9) translate(80px, 60px);
+  transform: scale(1.6) translate(20px, 10px);
+}
+
+.seats {
+  background-color: rgba(255,255,255,0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255,0,255,0.3);
+  }
 }
 </style>

@@ -7,7 +7,6 @@
       class="seats"
       :size="size"
       :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
-      color="rgba(255,255,255,0.3)"
       @click.prevent="getSeat"
     />
     <user-avatar
@@ -63,9 +62,13 @@ export default {
 }
 
 .seats {
+  background-color: rgba(255,255,255,0.3);
   position: absolute;
   left: 0;
   top: 0;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255,0,255,0.3);
+  }
 }
 </style>
