@@ -2,9 +2,7 @@
   <v-avatar
     class="avatar"
     :size="size"
-    :style="{
-      transform: `translate(${x}px, ${y}px)`,
-    }"
+    :style="{ transform: `translate(${x}px, ${y}px)` }"
   >
     <v-img :src="avatar"/>
   </v-avatar>

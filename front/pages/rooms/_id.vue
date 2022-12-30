@@ -15,7 +15,7 @@
         <v-col
           cols="9"
         >
-          <v-sheet
+          <div
             :is="`room-${room.image.name}`"
             :room-channel="roomChannel"
             :room-users="roomUsers"
