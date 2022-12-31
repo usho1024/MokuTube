@@ -63,7 +63,7 @@ export default {
   height: 500px;
   background: url(~/assets/img/room/night-bar.svg);
   transform-origin: top left;
-  transform: scale(1.6) translate(50px, 20px);
+  transform: scale(1.6) translate(30px, 20px);
 }
 
 .seats {

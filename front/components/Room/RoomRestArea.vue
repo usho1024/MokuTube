@@ -64,7 +64,7 @@ export default {
   height: 500px;
   background: url(~/assets/img/room/rest-area.svg);
   transform-origin: top left;
-  transform: scale(1.6) translate(20px, 10px);
+  transform: scale(1.6) translate(20px, 20px);
 }
 
 .seats {

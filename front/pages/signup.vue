@@ -88,9 +88,13 @@ export default {
               email: this.email
             }
           })
-          const user = response.data.data
+          const user = {
+            id: response.data.data.id,
+            name: response.data.data.name,
+            avatar: response.data.data.avatar
+          }
           this.$store.dispatch('getCurrentUser', user)
-          this.$router.push('/rooms/1')
+          this.$router.push('/rooms')
         })
     }
   }
