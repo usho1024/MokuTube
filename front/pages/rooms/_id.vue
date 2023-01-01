@@ -6,9 +6,6 @@
     <logged-in-room-app-bar
       :room-channel="roomChannel"
     />
-    <v-sheet
-      class="main pa-10"
-    >
       <v-row
         no-gutters
       >
@@ -101,7 +98,6 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-sheet>
   </v-container>
 </template>
 
@@ -256,17 +252,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main {
+.v-main__wrap {
   height: calc(100vh - 48px);
-	background: url(~/assets/img/cloud-pattern.png);
-  background-size: 900px 900px;
-	animation: bg-loop 80s linear infinite;
-}
-
-@keyframes bg-loop {
-  100% {
-    background-position: 900px 0px;
-  }
 }
 
 .sidebar {
