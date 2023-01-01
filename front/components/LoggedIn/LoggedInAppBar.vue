@@ -9,7 +9,7 @@
 
     <v-spacer />
 
-    <nuxt-link to="/edit">
+    <nuxt-link to="/users/edit">
       <v-avatar
         size="36px"
       >
