@@ -1,15 +1,17 @@
 <template>
-  <v-container>
+  <v-container
+    class="pa-0"
+  >
     <v-row
       justify="center"
     >
       <v-col
-        cols="10"
+        md="12"
+        xl="8"
       >
         <v-card
-          color="indigo lighten-5"
           rounded="lg"
-          class="pa-10"
+          class="pa-5"
         >
           <v-row>
             <v-col

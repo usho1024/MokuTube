@@ -71,7 +71,11 @@
         formData.append('user[avatar]', this.inputFile)
         this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, formData)
         .then(response => {
-          const user = response.data
+          const user = {
+            id: response.data.id,
+            name: response.data.name,
+            avatar: response.data.avatar
+          }
           this.$store.dispatch('getCurrentUser', user)
           this.inputFile = null
         })

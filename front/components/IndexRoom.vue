@@ -3,17 +3,20 @@
     nuxt
     :to="`/rooms/${roomId}`"
     rounded="lg"
-    class="grey--text text--darken-3"
+    elevation="5"
   >
     <v-img
       :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
       height="150px"
     />
-    <v-card-title
-      class="font-weight-bold text-truncate pb-0"
+
+    <v-divider/>
+
+    <v-card-subtitle
+      class="grey--text text--darken-4 text-truncate pb-0"
     >
       {{ roomName }}
-    </v-card-title>
+    </v-card-subtitle>
     <v-list-item
       dense
     >
@@ -32,7 +35,7 @@
         </v-list-item-title>
       </v-list-item-content>
       <v-icon
-        class="mr-2"
+        class="mr-3"
       >
         mdi-account-multiple-check
       </v-icon>

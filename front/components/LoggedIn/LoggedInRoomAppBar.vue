@@ -1,28 +1,15 @@
 <template>
-  <v-app-bar
-    app
-    dense
-    elevation="1"
-    color="white"
-  >
+  <v-app-bar app dense elevation="1" color="white">
     MokuTube
 
     <v-spacer />
 
-    <nuxt-link to="/users/edit">
-      <v-avatar
-        size="36px"
-      >
-        <img
-          :src="currentUser.avatar.thumb.url"
-        >
+    <nuxt-link to="/users/mypage">
+      <v-avatar size="36px">
+        <img :src="currentUser.avatar.thumb.url" />
       </v-avatar>
     </nuxt-link>
-    <v-btn
-      class="mx-4 warning white--text"
-      nuxt
-      @click="goToRooms"
-    >
+    <v-btn class="mx-4 warning white--text" nuxt @click="goToRooms">
       退出する
     </v-btn>
   </v-app-bar>
@@ -39,7 +26,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser
-    }
+    },
   },
   methods: {
     goToRooms() {
@@ -47,7 +34,7 @@ export default {
       this.$nextTick(() => {
         this.$router.push('/rooms')
       })
-    }
-  }
+    },
+  },
 }
 </script>
