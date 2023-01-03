@@ -27,22 +27,28 @@
               v-model="room.name"
               :counter="30"
               label="ルーム名を入力する"
+              class="mb-3"
             />
-            <v-btn
-              :disabled="!room.name"
-              color="primary"
-              class="mr-3"
-              @click="stepUp"
+
+            <div
+              class="mb-5"
             >
-              続ける
-            </v-btn>
-            <v-btn
-              nuxt
-              color="warning"
-              to="/rooms"
-            >
-              ルーム一覧に戻る
-            </v-btn>
+              <v-btn
+                :disabled="!room.name"
+                color="primary"
+                class="mr-3"
+                @click="stepUp"
+              >
+                続ける
+              </v-btn>
+              <v-btn
+                nuxt
+                color="warning"
+                to="/rooms"
+              >
+                ルーム一覧に戻る
+              </v-btn>
+            </div>
           </v-stepper-content>
 
           <v-stepper-step
@@ -53,24 +59,54 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-card
-              color="grey lighten-1"
-              class="mb-12"
-              height="200px"
-            ></v-card>
-            <v-btn
-              color="primary"
-              class="mr-3"
-              @click="stepUp"
+            <div
+              class="mb-7 pa-5 overflow-x-auto"
             >
-              続ける
-            </v-btn>
-            <v-btn
-              color="warning"
-              @click="stepDown"
+              <v-row
+                class="flex-nowrap"
+              >
+                <v-sheet
+                  v-for="roomImage in roomImages"
+                  :id="`roomImage-${roomImage.id}`"
+                  :key="`roomImage-${roomImage.id}`"
+                  rounded="lg"
+                  class="pa-3"
+                >
+                  <index-room-image
+                    :id="roomImage.id"
+                    :name="roomImage.name"
+                    :image-name="roomImage.imageName"
+                    :number-of-seats="roomImage.numberOfSeats"
+                    @my-click="setImage"
+                  />
+                </v-sheet>
+              </v-row>
+            </div>
+
+            <div
+              class="mb-5"
             >
-              1つ前に戻る
-            </v-btn>
+              選択しているイメージ：{{ room.imageName }}
+            </div>
+
+            <div
+              class="mb-5"
+            >
+              <v-btn
+                :disabled="!room.imageId"
+                color="primary"
+                class="mr-3"
+                @click="stepUp"
+              >
+                続ける
+              </v-btn>
+              <v-btn
+                color="warning"
+                @click="stepDown"
+              >
+                1つ前に戻る
+              </v-btn>
+            </div>
           </v-stepper-content>
 
           <v-stepper-step
@@ -137,15 +173,76 @@
     layout: 'logged-in',
     data(){
       return{
-        currentStep: 1,
+        currentStep: 2,
+        activeImage: null,
         room: {
           name: '',
+          imageName: null,
           imageId: null,
           bgmName: null,
           bgmUrl: null
         },
         roomImages: [
-          'private-room',
+          {
+            id: 1,
+            name: '個室',
+            imageName: 'private-room',
+            numberOfSeats: 1,
+          },
+          {
+            id: 2,
+            name: '小さいオフィス',
+            imageName: 'small-office',
+            numberOfSeats: 2,
+          },
+          {
+            id: 3,
+            name: '大きいオフィス',
+            imageName: 'large-office',
+            numberOfSeats: 4,
+          },
+          {
+            id: 4,
+            name: '夜のバー',
+            imageName: 'night-bar',
+            numberOfSeats: 4,
+          },
+          {
+            id: 5,
+            name: '休憩スペース',
+            imageName: 'rest-area',
+            numberOfSeats: 5,
+          },
+          {
+            id: 6,
+            name: 'キッチン',
+            imageName: 'kitchen',
+            numberOfSeats: 6,
+          },
+          {
+            id: 7,
+            name: 'ブックカフェ',
+            imageName: 'book-cafe',
+            numberOfSeats: 7,
+          },
+          {
+            id: 8,
+            name: '教室',
+            imageName: 'classroom',
+            numberOfSeats: 10,
+          },
+          {
+            id: 9,
+            name: 'カフェ',
+            imageName: 'cafe',
+            numberOfSeats: 16,
+          },
+          {
+            id: 10,
+            name: 'ラウンジ',
+            imageName: 'lounge',
+            numberOfSeats: 20,
+          }
         ]
       }
     },
@@ -155,6 +252,17 @@
       },
       stepDown() {
         this.currentStep--
+      },
+      setImage(imageName, imageId) {
+        this.room.imageName = imageName
+        this.room.imageId = imageId
+        if (this.activeImage) {
+          const oldEl = document.getElementById(`${this.activeImage}`)
+          oldEl.style.backgroundColor = null
+        }
+        this.activeImage = `roomImage-${imageId}`
+        const newEl = document.getElementById(`${this.activeImage}`)
+        newEl.style.backgroundColor = "#82B1FF"
       }
     }
   }

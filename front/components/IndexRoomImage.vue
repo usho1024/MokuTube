@@ -1,12 +1,13 @@
 <template>
   <v-card
-    nuxt
-    :to="`/rooms/${roomId}`"
     rounded="lg"
     elevation="5"
+    :ripple="false"
+    width="200px"
+    @click="send"
   >
     <v-img
-      :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
+      :src="require(`~/assets/img/room/thumb/${imageName}.png`)"
       height="150px"
     />
 
@@ -20,35 +21,20 @@
           <v-list-item-title
             class="text-truncate"
           >
-            {{ roomName }}
+            {{ name }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item
         dense
       >
-        <v-list-item-avatar
-          size="30px"
-        >
-          <v-img
-            :src="hostAvatar"
-          />
-        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title
-            class="grey--text text--darken-2 text-truncate"
+            class="text-truncate"
           >
-            {{ hostName }}
+            席数：{{ numberOfSeats }}
           </v-list-item-title>
         </v-list-item-content>
-        <v-icon
-          class="mr-3"
-        >
-          mdi-account-multiple-check
-        </v-icon>
-        <span>
-          {{ activeUsers }} / {{ numberOfSeats }}
-        </span>
       </v-list-item>
     </v-list>
   </v-card>
@@ -57,33 +43,27 @@
 <script>
 export default {
   props: {
-    roomId: {
+    id: {
       type: Number,
       default: null
     },
-    roomName: {
+    name: {
       type: String,
       default: null
     },
-    roomImage: {
+    imageName: {
       type: String,
       default: null
-    },
-    hostName: {
-      type: String,
-      default: null
-    },
-    hostAvatar: {
-      type: String,
-      default: null
-    },
-    activeUsers: {
-      type: Number,
-      default: 0
     },
     numberOfSeats: {
       type: Number,
       default: null
+    }
+  },
+  methods: {
+    send() {
+      this.$emit("my-click", this.name, this.id)
+
     }
   }
 }
