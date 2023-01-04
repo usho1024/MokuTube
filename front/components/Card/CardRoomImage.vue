@@ -63,7 +63,6 @@ export default {
   methods: {
     send() {
       this.$emit("my-click", this.name, this.id)
-
     }
   }
 }

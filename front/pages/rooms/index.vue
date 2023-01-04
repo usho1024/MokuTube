@@ -1,18 +1,8 @@
 <template>
-  <v-container
-    class="pa-0"
-  >
-    <v-row
-      justify="center"
-    >
-      <v-col
-        md="12"
-        xl="8"
-      >
-        <v-card
-          rounded="lg"
-          class="pa-5"
-        >
+  <v-container class="pa-0">
+    <v-row justify="center">
+      <v-col md="12" xl="8">
+        <v-card rounded="lg" class="pa-5">
           <v-row>
             <v-col
               v-for="(room, i) in rooms"
@@ -20,7 +10,7 @@
               cols="3"
               class="pa-5"
             >
-              <index-room
+              <card-room
                 :room-id="room.id"
                 :room-name="room.name"
                 :room-image="room.image.name"
@@ -41,11 +31,10 @@
 export default {
   name: 'RoomsIndex',
   layout: 'logged-in',
-  async asyncData ({ $axios }) {
+  async asyncData({ $axios }) {
     let rooms
-    await $axios.$get('/api/v1/rooms')
-      .then(response => (rooms = response))
+    await $axios.$get('/api/v1/rooms').then((response) => (rooms = response))
     return { rooms }
-  }
+  },
 }
 </script>
