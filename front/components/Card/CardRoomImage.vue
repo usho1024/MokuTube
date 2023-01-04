@@ -1,14 +1,13 @@
 <template>
   <v-card
     rounded="lg"
-    elevation="5"
+    elevation=5
     :ripple="false"
-    width="200px"
     @click="send"
   >
     <v-img
       :src="require(`~/assets/img/room/thumb/${imageName}.png`)"
-      height="150px"
+      height=120
     />
 
     <v-divider/>

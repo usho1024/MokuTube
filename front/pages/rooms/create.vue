@@ -34,13 +34,17 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <div class="mb-7 pa-5 overflow-x-auto">
-              <v-row class="flex-nowrap">
-                <v-sheet
+            <v-sheet
+              outlined
+              height=40vh
+              class="mb-7 pa-5 overflow-auto"
+            >
+              <v-row>
+                <v-col
                   v-for="roomImage in roomImages"
-                  :id="`roomImage-${roomImage.id}`"
+                  :id="`room-image-${roomImage.id}`"
                   :key="`roomImage-${roomImage.id}`"
-                  rounded="lg"
+                  cols=3
                   class="pa-3"
                 >
                   <card-room-image
@@ -50,9 +54,9 @@
                     :number-of-seats="roomImage.numberOfSeats"
                     @my-click="setImage"
                   />
-                </v-sheet>
+                </v-col>
               </v-row>
-            </div>
+            </v-sheet>
 
             <div class="mb-5">選択しているイメージ：{{ room.imageName }}</div>
 
@@ -74,8 +78,9 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
-
-            <index-videos/>
+            <div class="mb-5">
+              <dialog-playlist/>
+            </div>
 
             <div class="mb-5">
               <v-btn
@@ -201,7 +206,7 @@ export default {
         const oldEl = document.getElementById(`${this.activeImage}`)
         oldEl.style.backgroundColor = null
       }
-      this.activeImage = `roomImage-${imageId}`
+      this.activeImage = `room-image-${imageId}`
       const newEl = document.getElementById(`${this.activeImage}`)
       newEl.style.backgroundColor = '#82B1FF'
     },

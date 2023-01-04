@@ -7,7 +7,7 @@
   >
     <v-img
       :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
-      height="150px"
+      height=150
     />
 
     <v-divider/>
@@ -28,7 +28,7 @@
         dense
       >
         <v-list-item-avatar
-          size="30px"
+          size=30
         >
           <v-img
             :src="hostAvatar"
