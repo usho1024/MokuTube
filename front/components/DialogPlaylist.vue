@@ -1,33 +1,33 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    scrollable
-    width=50%
-  >
+  <v-dialog v-model="dialog" scrollable width="50%">
     <template #activator="{ on, attrs }">
-      <v-btn
-        color="primary"
-        v-bind="attrs"
-        v-on="on"
-        @click="getPlayList"
-      >
+      <v-btn color="primary" v-bind="attrs" v-on="on" @click="getPlayList">
         クリックでBGMリストを表示
       </v-btn>
     </template>
 
     <v-card>
-      <v-card-title>リストからBGMを選択してください</v-card-title>
-      <v-divider/>
-      <v-sheet class="pa-5" height=70vh>
-        ああああ
-      </v-sheet>
-      <v-divider/>
+      <v-subheader>リストからBGMを選択してください</v-subheader>
+      <v-divider />
+      <v-simple-table height="70vh">
+        <template #default>
+          <tbody>
+            <tr v-for="video in playlist" :key="video.snippet.title">
+              <td>
+                <v-img :src="video.snippet.thumbnails.default.url" />
+              </td>
+              <td @click="test">{{ video.snippet.title }}</td>
+              <td>
+                <v-btn color="primary"> 試聴する </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <v-divider />
       <v-card-actions>
-        <v-btn
-          color="blue darken-3"
-          text
-          @click="dialog = false"
-        >
+        <v-card-subtitle> 選択しているBGM： </v-card-subtitle>
+        <v-btn color="blue darken-3" text @click="dialog = false">
           保存して終了
         </v-btn>
       </v-card-actions>
@@ -55,11 +55,13 @@ export default {
   methods: {
     async getPlayList() {
       if (!this.playlist) {
-        await axios.get(this.url, { params: this.params })
-          .then(response => {
-            this.playlist = response.data.items
-          })
+        await axios.get(this.url, { params: this.params }).then((response) => {
+          this.playlist = response.data.items
+        })
       }
+    },
+    test() {
+      console.log('test')
     },
   },
 }

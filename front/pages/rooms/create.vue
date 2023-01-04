@@ -16,7 +16,7 @@
               class="mb-3"
             />
 
-            <div class="mb-5">
+            <div class="mb-2">
               <v-btn
                 :disabled="!room.name"
                 color="primary"
@@ -34,17 +34,13 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-sheet
-              outlined
-              height=40vh
-              class="mb-7 pa-5 overflow-auto"
-            >
+            <v-sheet outlined height="40vh" class="mb-7 pa-5 overflow-auto">
               <v-row>
                 <v-col
                   v-for="roomImage in roomImages"
                   :id="`room-image-${roomImage.id}`"
                   :key="`roomImage-${roomImage.id}`"
-                  cols=3
+                  cols="3"
                   class="pa-3"
                 >
                   <card-room-image
@@ -60,7 +56,7 @@
 
             <div class="mb-5">選択しているイメージ：{{ room.imageName }}</div>
 
-            <div class="mb-5">
+            <div class="mb-2">
               <v-btn
                 :disabled="!room.imageId"
                 color="primary"
@@ -78,11 +74,14 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <div class="mb-5">
-              <dialog-playlist/>
+            <div class="mb-7">
+              <dialog-playlist />
             </div>
 
-            <div class="mb-5">
+            <div class="mb-3">選択しているBGM：{{}}</div>
+            <div class="mb-5">※ルーム内にてBGMは自動でループ再生されます</div>
+
+            <div class="mb-2">
               <v-btn
                 :disabled="!room.imageId"
                 color="primary"
