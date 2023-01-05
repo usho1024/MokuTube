@@ -101,35 +101,36 @@
             <div class="mb-8">
               <v-row>
                 <v-col cols="2">
-                  <span> 名前： </span>
+                  <div>名前：</div>
                 </v-col>
                 <v-col cols="10">
-                  <span>
+                  <div class="text-truncate">
                     {{ room.name }}
-                  </span>
+                  </div>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="2">
-                  <span> イメージ： </span>
+                  <div>イメージ：</div>
                 </v-col>
                 <v-col cols="10">
-                  <span>
+                  <div>
                     {{ room.imageName }}
-                  </span>
+                  </div>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="2">
-                  <span> BGM： </span>
+                  <div>BGM：</div>
                 </v-col>
                 <v-col cols="10">
-                  <span class="text-truncate">
+                  <div class="text-truncate">
                     {{ room.bgmName }}
-                  </span>
+                  </div>
                 </v-col>
               </v-row>
             </div>
+
             <div class="mb-2">
               <v-btn color="primary" class="mr-3" @click="createRoom">
                 OK
@@ -248,7 +249,7 @@ export default {
       const params = {
         name: this.room.name,
         room_image_id: this.room.imageId,
-        video_id: this.room.bgmId,
+        bgm_resource: this.room.bgmId,
       }
       await this.$axios
         .post('/api/v1/rooms', params)

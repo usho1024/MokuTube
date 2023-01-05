@@ -49,5 +49,13 @@ RSpec.describe User, type: :model do
         expect(user).to be_invalid
       end
     end
+
+    context '作業内容が30文字を超過する場合' do
+      let(:user) { build(:user, work: "#{'う' * 31}") }
+
+      it 'う*31は無効になること' do
+        expect(user).to be_invalid
+      end
+    end
   end
 end

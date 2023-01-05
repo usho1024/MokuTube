@@ -15,4 +15,5 @@ class User < ActiveRecord::Base
                      allow_blank: true
                    }
   validates :introduction, length: { maximum: 300 }
+  validates :work, length: { maximum: 30 }
 end
