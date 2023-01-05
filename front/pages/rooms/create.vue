@@ -74,11 +74,9 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <div class="mb-7">
-              <dialog-playlist />
-            </div>
+            <dialog-playlist />
 
-            <div class="mb-3">選択しているBGM：{{}}</div>
+            <div class="mb-3">選択しているBGM：</div>
             <div class="mb-5">※ルーム内にてBGMは自動でループ再生されます</div>
 
             <div class="mb-2">
