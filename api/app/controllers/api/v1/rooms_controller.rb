@@ -22,4 +22,17 @@ class Api::V1::RoomsController < ApplicationController
     room.image = { name: room.room_image.image_name }
     render json: room
   end
+
+  def create
+    room = Room.new(room_params)
+    room.user_id = current_user.id
+    room.save
+    render json: room
+  end
+
+  private
+
+  def room_params
+    params.require(:room).permit(:room_image_id, :name, :video_id)
+  end
 end

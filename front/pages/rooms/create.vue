@@ -98,13 +98,44 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <v-card
-              color="grey lighten-1"
-              class="mb-12"
-              height="200px"
-            ></v-card>
-            <v-btn nuxt color="primary" to="/rooms" class="mr-3"> OK </v-btn>
-            <v-btn color="warning" @click="stepDown"> 1つ前に戻る </v-btn>
+            <div class="mb-8">
+              <v-row>
+                <v-col cols="2">
+                  <span> 名前： </span>
+                </v-col>
+                <v-col cols="10">
+                  <span>
+                    {{ room.name }}
+                  </span>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="2">
+                  <span> イメージ： </span>
+                </v-col>
+                <v-col cols="10">
+                  <span>
+                    {{ room.imageName }}
+                  </span>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="2">
+                  <span> BGM： </span>
+                </v-col>
+                <v-col cols="10">
+                  <span class="text-truncate">
+                    {{ room.bgmName }}
+                  </span>
+                </v-col>
+              </v-row>
+            </div>
+            <div class="mb-2">
+              <v-btn color="primary" class="mr-3" @click="createRoom">
+                OK
+              </v-btn>
+              <v-btn color="warning" @click="stepDown"> 1つ前に戻る </v-btn>
+            </div>
           </v-stepper-content>
         </v-stepper>
       </v-col>
@@ -118,7 +149,7 @@ export default {
   layout: 'logged-in',
   data() {
     return {
-      currentStep: 3,
+      currentStep: 1,
       activeImage: null,
       room: {
         name: '',
@@ -212,6 +243,16 @@ export default {
     setBgm(bgmId, bgmName) {
       this.room.bgmId = bgmId
       this.room.bgmName = bgmName
+    },
+    async createRoom() {
+      const params = {
+        name: this.room.name,
+        room_image_id: this.room.imageId,
+        video_id: this.room.bgmId,
+      }
+      await this.$axios
+        .post('/api/v1/rooms', params)
+        .then(() => this.$router.push('/rooms'))
     },
   },
 }
