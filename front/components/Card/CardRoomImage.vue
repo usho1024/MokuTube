@@ -1,36 +1,23 @@
 <template>
-  <v-card
-    rounded="lg"
-    elevation=5
-    :ripple="false"
-    @click="send"
-  >
+  <v-card rounded="lg" elevation="5" :ripple="false" @click="send">
     <v-img
       :src="require(`~/assets/img/room/thumb/${imageName}.png`)"
-      height=120
+      height="120"
     />
 
-    <v-divider/>
+    <v-divider />
 
     <v-list>
-      <v-list-item
-        dense
-      >
+      <v-list-item dense>
         <v-list-item-content>
-          <v-list-item-title
-            class="text-truncate"
-          >
+          <v-list-item-title class="text-truncate">
             {{ name }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item
-        dense
-      >
+      <v-list-item dense>
         <v-list-item-content>
-          <v-list-item-title
-            class="text-truncate"
-          >
+          <v-list-item-title class="text-truncate">
             席数：{{ numberOfSeats }}
           </v-list-item-title>
         </v-list-item-content>
@@ -44,25 +31,25 @@ export default {
   props: {
     id: {
       type: Number,
-      default: null
+      default: null,
     },
     name: {
       type: String,
-      default: null
+      default: null,
     },
     imageName: {
       type: String,
-      default: null
+      default: null,
     },
     numberOfSeats: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
   methods: {
     send() {
-      this.$emit("my-click", this.name, this.id)
-    }
-  }
+      this.$emit('setImage', this.id, this.name)
+    },
+  },
 }
 </script>

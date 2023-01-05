@@ -11,13 +11,35 @@
         <v-simple-table height="70vh">
           <template #default>
             <tbody>
-              <tr v-for="item in playlist" :key="item.snippet.title">
+              <tr
+                v-for="item in playlist"
+                :id="`${item.snippet.resourceId.videoId}`"
+                :key="`${item.snippet.resourceId.videoId}`"
+              >
                 <td>
                   <v-img :src="item.snippet.thumbnails.default.url" />
                 </td>
-                <td @click="test">{{ item.snippet.title }}</td>
+                <td
+                  class="video-title"
+                  @click="
+                    selectVideo(
+                      item.snippet.resourceId.videoId,
+                      item.snippet.title
+                    )
+                  "
+                >
+                  {{ item.snippet.title }}
+                </td>
                 <td>
-                  <v-btn color="primary" @click="playVideo(item.snippet.resourceId.videoId, item.snippet.title)">
+                  <v-btn
+                    color="primary"
+                    @click="
+                      playVideo(
+                        item.snippet.resourceId.videoId,
+                        item.snippet.title
+                      )
+                    "
+                  >
                     試聴する
                   </v-btn>
                 </td>
@@ -27,21 +49,23 @@
         </v-simple-table>
         <v-divider />
         <v-card-actions>
-          <v-card-subtitle>選択しているBGM：</v-card-subtitle>
           <v-btn color="blue darken-3" text @click="dialogPlaylist = false">
             保存して終了
           </v-btn>
+          <v-card-subtitle class="text-truncate"
+            >選択しているBGM： {{ selectedVideo.title }}</v-card-subtitle
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="dialogPlayVideo" width="672">
       <v-card>
-        <v-subheader>{{ video.title }}</v-subheader>
+        <v-subheader>{{ playedVideo.title }}</v-subheader>
         <iframe
           width="672"
           height="378"
-          :src="`https://www.youtube.com/embed/${video.id}`"
+          :src="`https://www.youtube.com/embed/${playedVideo.id}`"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -63,6 +87,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      activeVideo: null,
       dialogPlaylist: false,
       dialogPlayVideo: false,
       playlist: null,
@@ -73,10 +98,14 @@ export default {
         maxResults: '50',
         key: 'AIzaSyAy_YnIr0huJ4IC7TkkHhkybIrl2B3x7rg',
       },
-      video: {
+      playedVideo: {
         id: null,
         title: null,
-      }
+      },
+      selectedVideo: {
+        id: null,
+        title: null,
+      },
     }
   },
   methods: {
@@ -89,13 +118,28 @@ export default {
       this.dialogPlaylist = true
     },
     playVideo(id, title) {
-      this.video.id = id
-      this.video.title = title
+      this.playedVideo.id = id
+      this.playedVideo.title = title
       this.dialogPlayVideo = true
     },
-    test() {
-      console.log('test')
+    selectVideo(id, title) {
+      this.selectedVideo.id = id
+      this.selectedVideo.title = title
+      this.$emit('setBgm', this.selectedVideo.id, this.selectedVideo.title)
+      if (this.activeVideo) {
+        const oldEl = document.getElementById(`${this.activeVideo}`)
+        oldEl.style.backgroundColor = null
+      }
+      this.activeVideo = id
+      const newEl = document.getElementById(`${this.activeVideo}`)
+      newEl.style.backgroundColor = '#82B1FF'
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.video-title {
+  cursor: pointer;
+}
+</style>

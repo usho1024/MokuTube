@@ -48,13 +48,13 @@
                     :name="roomImage.name"
                     :image-name="roomImage.imageName"
                     :number-of-seats="roomImage.numberOfSeats"
-                    @my-click="setImage"
+                    @setImage="setImage"
                   />
                 </v-col>
               </v-row>
             </v-sheet>
 
-            <div class="mb-5">選択しているイメージ：{{ room.imageName }}</div>
+            <div class="mb-5">選択しているイメージ： {{ room.imageName }}</div>
 
             <div class="mb-2">
               <v-btn
@@ -74,14 +74,16 @@
           </v-stepper-step>
 
           <v-stepper-content step="3">
-            <dialog-playlist />
+            <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-3">選択しているBGM：</div>
+            <div class="mb-5 text-truncate">
+              選択しているBGM： {{ room.bgmName }}
+            </div>
             <div class="mb-5">※ルーム内にてBGMは自動でループ再生されます</div>
 
             <div class="mb-2">
               <v-btn
-                :disabled="!room.imageId"
+                :disabled="!room.bgmId"
                 color="primary"
                 class="mr-3"
                 @click="stepUp"
@@ -120,10 +122,10 @@ export default {
       activeImage: null,
       room: {
         name: '',
-        imageName: null,
         imageId: null,
+        imageName: null,
+        bgmId: null,
         bgmName: null,
-        bgmUrl: null,
       },
       roomImages: [
         {
@@ -196,9 +198,9 @@ export default {
     stepDown() {
       this.currentStep--
     },
-    setImage(imageName, imageId) {
-      this.room.imageName = imageName
+    setImage(imageId, imageName) {
       this.room.imageId = imageId
+      this.room.imageName = imageName
       if (this.activeImage) {
         const oldEl = document.getElementById(`${this.activeImage}`)
         oldEl.style.backgroundColor = null
@@ -206,6 +208,10 @@ export default {
       this.activeImage = `room-image-${imageId}`
       const newEl = document.getElementById(`${this.activeImage}`)
       newEl.style.backgroundColor = '#82B1FF'
+    },
+    setBgm(bgmId, bgmName) {
+      this.room.bgmId = bgmId
+      this.room.bgmName = bgmName
     },
   },
 }
