@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
     <v-row justify="center">
-      <v-col md="12" xl="8">
+      <v-col xl="8">
         <v-card>
           <v-subheader>ルーム一覧</v-subheader>
 

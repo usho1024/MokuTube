@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
     <v-row justify="center">
-      <v-col cols="6">
+      <v-col xl="6" md="8">
         <v-stepper v-model="currentStep" vertical>
           <v-subheader> ルームを作成する </v-subheader>
           <v-stepper-step :complete="currentStep > 1" step="1">
@@ -251,11 +251,9 @@ export default {
         name: this.room.name,
         bgm_resource: this.room.bgmId,
       }
-      await this.$axios
-        .post('/api/v1/rooms', params)
-        .then(response => {
-          this.$router.push(`/rooms/${response.data.id}`)
-        })
+      await this.$axios.post('/api/v1/rooms', params).then((response) => {
+        this.$router.push(`/rooms/${response.data.id}`)
+      })
     },
   },
 }
