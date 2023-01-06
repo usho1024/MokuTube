@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       roomChannel: null,
-      media: 20,
+      media: 15,
       isMuted: true,
       inputMessage: '',
     }

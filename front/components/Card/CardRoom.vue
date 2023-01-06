@@ -1,58 +1,31 @@
 <template>
-  <v-card
-    outlined
-    nuxt
-    :to="`/rooms/${roomId}`"
-    class="rounded-0"
-  >
-    <v-row>
-      <v-col
-        cols="2"
-      >
+  <v-card outlined nuxt :to="`/rooms/${roomId}`" class="rounded-0">
+    <v-row no-gutters>
+      <v-col cols="2">
         <v-img
           :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
-          height=86
+          height="80"
         />
       </v-col>
-      <v-col
-        cols="10"
-      >
-        <v-list-item
-          dense
-        >
+      <v-col cols="10">
+        <v-list-item dense>
           <v-list-item-content>
-            <v-list-item-title
-              class="text-truncate"
-            >
+            <v-list-item-title class="text-truncate">
               {{ roomName }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item
-          dense
-        >
-          <v-list-item-avatar
-            size=30
-          >
-            <v-img
-              :src="hostAvatar"
-            />
+        <v-list-item dense>
+          <v-list-item-avatar size="24" class="mr-0 mr-2">
+            <v-img :src="hostAvatar" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title
-              class="grey--text text--darken-2 text-truncate"
-            >
+            <v-list-item-title class="grey--text text--darken-2 text-truncate">
               {{ hostName }}
             </v-list-item-title>
           </v-list-item-content>
-          <v-icon
-            class="mr-3"
-          >
-            mdi-account-multiple-check
-          </v-icon>
-          <span>
-            {{ activeUsers }} / {{ numberOfSeats }}
-          </span>
+          <v-icon class="mr-3"> mdi-account-multiple-check </v-icon>
+          <span> {{ activeUsers }} / {{ numberOfSeats }} </span>
         </v-list-item>
       </v-col>
     </v-row>
@@ -64,32 +37,32 @@ export default {
   props: {
     roomId: {
       type: Number,
-      default: null
+      default: null,
     },
     roomName: {
       type: String,
-      default: null
+      default: null,
     },
     roomImage: {
       type: String,
-      default: null
+      default: null,
     },
     hostName: {
       type: String,
-      default: null
+      default: null,
     },
     hostAvatar: {
       type: String,
-      default: null
+      default: null,
     },
     activeUsers: {
       type: Number,
-      default: 0
+      default: 0,
     },
     numberOfSeats: {
       type: Number,
-      default: null
-    }
-  }
+      default: null,
+    },
+  },
 }
 </script>

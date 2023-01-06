@@ -2,21 +2,30 @@
   <v-container class="pa-0">
     <v-row justify="center">
       <v-col md="12" xl="8">
-        <v-card rounded="lg" class="pa-5">
-          <v-card-subtitle class="pa-0 mb-4">ルーム一覧</v-card-subtitle>
-          <div>
-            <card-room
-              v-for="(room, i) in rooms"
-              :key="`room-${i}`"
-              :room-id="room.id"
-              :room-name="room.name"
-              :room-image="room.image.name"
-              :host-name="room.host.name"
-              :host-avatar="room.host.avatar"
-              :active-users="room.active_users"
-              :number-of-seats="room.image.number_of_seats"
-              :class="{ 'mb-3': i < rooms.length - 1 }"
-            />
+        <v-card>
+          <v-subheader>ルーム一覧</v-subheader>
+
+          <v-divider class="mb-4" />
+
+          <div class="px-3">
+            <v-row no-gutters>
+              <v-col
+                v-for="(room, i) in rooms"
+                :key="`room-${i}`"
+                cols="6"
+                class="py-0 px-2 mb-4"
+              >
+                <card-room
+                  :room-id="room.id"
+                  :room-name="room.name"
+                  :room-image="room.image.name"
+                  :host-name="room.host.name"
+                  :host-avatar="room.host.avatar"
+                  :active-users="room.active_users"
+                  :number-of-seats="room.image.number_of_seats"
+                />
+              </v-col>
+            </v-row>
           </div>
         </v-card>
       </v-col>
