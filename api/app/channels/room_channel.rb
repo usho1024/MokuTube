@@ -42,7 +42,6 @@ class RoomChannel < ApplicationCable::Channel
     RoomsUser.create!(
       room_id: params[:room],
       user_id: current_user.id,
-      # work: data['work'],
       seat_number: data['seat_number'],
       x_coord: data['x_coord'],
       y_coord: data['y_coord']

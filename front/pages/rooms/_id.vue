@@ -1,103 +1,72 @@
 <template>
-  <v-container
-    fluid
-    class="pa-0"
-  >
-    <logged-in-room-app-bar
-      :room-channel="roomChannel"
-    />
-      <v-row
-        no-gutters
-      >
-        <v-col
-          cols="9"
-        >
-          <div
-            :is="`room-${room.image.name}`"
-            :room-channel="roomChannel"
-            :room-users="roomUsers"
-          />
-          <youtube
-            ref="youtube"
-            :video-id="room.bgm_resource"
-            width=0
-            height=0
-            @playing="playing"
-            @ended="ended"
-          />
-        </v-col>
-        <v-col
-          cols="3"
-        >
-          <v-card
-            rounded="lg"
-            class="sidebar"
+  <v-container fluid class="pa-0">
+    <logged-in-room-app-bar :room-channel="roomChannel" />
+    <v-row no-gutters>
+      <v-col cols="9">
+        <div
+          :is="`room-${room.image.name}`"
+          :room-channel="roomChannel"
+          :room-users="roomUsers"
+        />
+        <youtube
+          ref="youtube"
+          :video-id="room.bgm_resource"
+          width="0"
+          height="0"
+          @playing="playing"
+          @ended="ended"
+        />
+      </v-col>
+      <v-col cols="3">
+        <v-card rounded="lg" class="sidebar">
+          <v-toolbar dense flat>
+            <v-toolbar-title class="text-caption">
+              トップチャット
+            </v-toolbar-title>
+          </v-toolbar>
+
+          <v-divider />
+
+          <v-sheet
+            id="chat-list"
+            class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
+            height="70%"
           >
-            <v-toolbar
-              dense
-              flat
-            >
-              <v-toolbar-title
-                class="text-caption"
-              >
-                トップチャット
-              </v-toolbar-title>
-            </v-toolbar>
+            <list-message
+              v-for="(message, i) in chatMessages"
+              :key="`message-${i}`"
+              :body="message.body"
+              :name="message.sender.name"
+              :avatar="message.sender.avatar"
+            />
+          </v-sheet>
 
-            <v-divider/>
+          <v-divider />
 
-            <v-sheet
-              id="chat-list"
-              class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
-              height=70%
-            >
-              <list-message
-                v-for="(message, i) in chatMessages"
-                :key="`message-${i}`"
-                :body="message.body"
-                :name="message.sender.name"
-                :avatar="message.sender.avatar"
-              />
-            </v-sheet>
-
-            <v-divider/>
-
-            <v-sheet
-              class="pa-4"
-              height=30%
-            >
-              <v-form
-                class="mb-2"
-                @submit.prevent="speak"
-              >
-                <v-text-field
-                  v-model="inputMessage"
-                  type="text"
-                  label="メッセージを入力する"
-                  counter="200"
-                  dense
-                  append-icon="mdi-send"
-                  @click:append="speak"
-                />
-              </v-form>
-
-              <v-slider
-                v-model="media"
-                thumb-label
+          <v-sheet class="pa-4" height="30%">
+            <v-form class="mb-2" @submit.prevent="speak">
+              <v-text-field
+                v-model="inputMessage"
+                type="text"
+                label="メッセージを入力する"
+                counter="200"
                 dense
-              >
-                <template #prepend>
-                  <v-icon
-                    @click="toggle"
-                  >
-                    {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
-                  </v-icon>
-                </template>
-              </v-slider>
-            </v-sheet>
-          </v-card>
-        </v-col>
-      </v-row>
+                append-icon="mdi-send"
+                @click:append="speak"
+              />
+            </v-form>
+
+            <v-slider v-model="media" thumb-label dense>
+              <template #prepend>
+                <v-icon @click="toggle">
+                  {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+                </v-icon>
+              </template>
+            </v-slider>
+          </v-sheet>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -127,37 +96,38 @@ export default {
     RoomNightBar,
     RoomPrivateRoom,
     RoomRestArea,
-    RoomSmallOffice
+    RoomSmallOffice,
   },
   layout: 'room',
-  async asyncData ({ $axios, route }) {
+  async asyncData({ $axios, route }) {
     const chatMessages = []
-    await $axios.$get('/api/v1/messages', {
-      params: {
-        id: route.params.id
-      }
-    })
-      .then(response => (
-        chatMessages.push(...response.reverse())
-      ))
+    await $axios
+      .$get('/api/v1/messages', {
+        params: {
+          id: route.params.id,
+        },
+      })
+      .then((response) => chatMessages.push(...response.reverse()))
     let roomUsers
-    await $axios.$get('/api/v1/rooms_users', {
-      params: {
-        id: route.params.id
-      }
-    })
-      .then(response => (roomUsers = response))
+    await $axios
+      .$get('/api/v1/rooms_users', {
+        params: {
+          id: route.params.id,
+        },
+      })
+      .then((response) => (roomUsers = response))
     let room
-    await $axios.$get(`/api/v1/rooms/${route.params.id}`)
-      .then(response => (room = response))
+    await $axios
+      .$get(`/api/v1/rooms/${route.params.id}`)
+      .then((response) => (room = response))
     return { chatMessages, roomUsers, room }
   },
   data() {
     return {
       roomChannel: null,
-      media: 5,
+      media: 20,
       isMuted: true,
-      inputMessage: ''
+      inputMessage: '',
     }
   },
   computed: {
@@ -168,21 +138,23 @@ export default {
       return this.$store.state.currentUser
     },
     getWebSocketURL() {
-      const id = this.currentUser.id
-      return `ws://localhost:3000/cable?id=${id}`
-    }
+      const uid = window.localStorage.getItem('uid')
+      const token = window.localStorage.getItem('access-token')
+      const client = window.localStorage.getItem('client')
+      return `ws://localhost:3000/cable?uid=${uid}&token=${token}&client=${client}`
+    },
   },
   watch: {
     media(newVal) {
       this.setVolume(newVal)
-    }
+    },
   },
   created() {
     this.cable = ActionCable.createConsumer(this.getWebSocketURL)
     this.roomChannel = this.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
-        room: this.room.id
+        room: this.room.id,
       },
       {
         received: ({ type, body }) => {
@@ -197,7 +169,7 @@ export default {
               this.roomUsers = body
               break
           }
-        }
+        },
       }
     )
   },
@@ -242,11 +214,11 @@ export default {
     },
     speak() {
       this.roomChannel.perform('speak', {
-        message: this.inputMessage
+        message: this.inputMessage,
       })
       this.inputMessage = ''
-    }
-  }
+    },
+  },
 }
 </script>
 
