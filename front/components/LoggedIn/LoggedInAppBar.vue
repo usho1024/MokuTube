@@ -4,6 +4,9 @@
 
     <v-spacer />
 
+    <v-btn class="mx-4 primary white--text" nuxt to="/rooms/create">
+      ルーム作成
+    </v-btn>
     <nuxt-link to="/users/mypage">
       <v-avatar size="36px">
         <img :src="currentUser.avatar.thumb.url" />

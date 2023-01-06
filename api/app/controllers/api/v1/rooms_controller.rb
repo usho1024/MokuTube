@@ -33,6 +33,6 @@ class Api::V1::RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:room_image_id, :name, :video_id)
+    params.require(:room).permit(:room_image_id, :name, :bgm_resource)
   end
 end

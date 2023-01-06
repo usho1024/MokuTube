@@ -247,13 +247,15 @@ export default {
     },
     async createRoom() {
       const params = {
-        name: this.room.name,
         room_image_id: this.room.imageId,
+        name: this.room.name,
         bgm_resource: this.room.bgmId,
       }
       await this.$axios
         .post('/api/v1/rooms', params)
-        .then(() => this.$router.push('/rooms'))
+        .then(response => {
+          this.$router.push(`/rooms/${response.data.id}`)
+        })
     },
   },
 }

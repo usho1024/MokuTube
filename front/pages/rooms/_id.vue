@@ -19,7 +19,7 @@
           />
           <youtube
             ref="youtube"
-            :video-id="videoId"
+            :video-id="room.bgm_resource"
             width=0
             height=0
             @playing="playing"
@@ -155,7 +155,6 @@ export default {
   data() {
     return {
       roomChannel: null,
-      videoId: 'uZ0dceZdSK8',
       media: 5,
       isMuted: true,
       inputMessage: ''

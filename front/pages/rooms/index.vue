@@ -2,13 +2,13 @@
   <v-container class="pa-0">
     <v-row justify="center">
       <v-col md="12" xl="8">
-        <v-card rounded="lg" class="pa-5">
+        <v-card rounded="lg" class="pa-8">
           <v-row>
             <v-col
               v-for="(room, i) in rooms"
               :key="`room-${i}`"
               cols="3"
-              class="pa-5"
+              class="pa-4"
             >
               <card-room
                 :room-id="room.id"
