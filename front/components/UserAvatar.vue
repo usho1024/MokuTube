@@ -2,9 +2,7 @@
   <v-avatar
     class="avatar"
     :size="size"
-    :style="{
-      transform: `translate(${x}px, ${y}px)`,
-    }"
+    :style="{ transform: `translate(${x}px, ${y}px)` }"
   >
     <v-img :src="avatar"/>
   </v-avatar>
@@ -15,19 +13,19 @@ export default {
   props: {
     size: {
       type: Number,
-      default: 0
+      default: null
     },
     x: {
       type: Number,
-      default: 0
+      default: null
     },
     y: {
       type: Number,
-      default: 0
+      default: null
     },
     avatar: {
       type: String,
-      default: ''
+      default: null
     }
   }
 }

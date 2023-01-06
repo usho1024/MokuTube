@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <v-card class="mt-5 mx-auto" max-width="600">
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form">
         <v-container>
           <v-row justify="center">
             <p cols="12" class="mt-3 display-1 grey--text">
@@ -45,14 +45,15 @@
 
 <script>
 export default {
-  data () {
+  name: 'Login',
+  data() {
     return {
       password: '',
       email: ''
     }
   },
   methods: {
-    async loginWithAuthModule () {
+    async loginWithAuthModule() {
       await this.$auth.loginWith('local', {
         data: {
           email: this.email,
@@ -60,7 +61,11 @@ export default {
         }
       })
         .then(response => {
-          const user = response.data.data
+          const user = {
+            id: response.data.data.id,
+            name: response.data.data.name,
+            avatar: response.data.data.avatar
+          }
           this.$store.dispatch('getCurrentUser', user)
         })
     }

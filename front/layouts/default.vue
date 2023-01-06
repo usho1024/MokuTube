@@ -1,9 +1,14 @@
 <template>
   <v-app>
-    <nuxt />
+    <app-bar />
+    <v-main>
+      <nuxt />
+    </v-main>
   </v-app>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Default'
+}
 </script>

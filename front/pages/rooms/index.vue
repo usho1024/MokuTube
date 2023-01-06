@@ -1,53 +1,40 @@
 <template>
-  <div>
-    <h2>
-      Roomsテーブルの取得
-    </h2>
-    <table v-if="rooms.length">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>email</th>
-          <th>created_at</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(room, i) in rooms"
-          :key="`room-${i}`"
-        >
-          <td>{{ room.id }}</td>
-          <td>{{ room.name }}</td>
-          <td>{{ room.email }}</td>
-          <td>{{ dateFormat(room.created_at) }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div v-else>
-      ルームが取得できませんでした
-    </div>
-  </div>
+  <v-container class="pa-0">
+    <v-row justify="center">
+      <v-col md="12" xl="8">
+        <v-card rounded="lg" class="pa-8">
+          <v-row>
+            <v-col
+              v-for="(room, i) in rooms"
+              :key="`room-${i}`"
+              cols="3"
+              class="pa-4"
+            >
+              <card-room
+                :room-id="room.id"
+                :room-name="room.name"
+                :room-image="room.image.name"
+                :host-name="room.host.name"
+                :host-avatar="room.host.avatar"
+                :active-users="room.active_users"
+                :number-of-seats="room.image.number_of_seats"
+              />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
-  async asyncData ({ $axios }) {
-    let rooms = []
-    await $axios.$get('/api/v1/rooms')
-      .then(response => (rooms = response))
+  name: 'RoomsIndex',
+  layout: 'logged-in',
+  async asyncData({ $axios }) {
+    let rooms
+    await $axios.$get('/api/v1/rooms').then((response) => (rooms = response))
     return { rooms }
   },
-  computed: {
-    dateFormat () {
-      return (date) => {
-        const dateTimeFormat = new Intl.DateTimeFormat(
-          'ja', { dateStyle: 'medium', timeStyle: 'short' }
-        )
-        return dateTimeFormat.format(new Date(date))
-      }
-    }
-  }
 }
 </script>

@@ -3,7 +3,7 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      self.current_user =  User.find(request.params[:id])
+      self.current_user = User.find(request.params[:id])
     end
   end
 end

@@ -1,23 +1,21 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
-    <map name="ImageMap" @click.prevent="getSeat">
-      <area
-        v-for="(coord, i) in coords"
-        :id="`seat-${i}`"
-        :key="`seat-${i}`"
-        shape="poly"
-        :coords="coord"
-        href=""
-      />
-    </map>
+    <v-avatar
+      v-for="(seat, i) in seats"
+      :id="`seat-${i}`"
+      :key="`seat-${i}`"
+      class="seats"
+      :size="size"
+      :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
+      @click.prevent="getSeat"
+    />
     <user-avatar
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.avatar"
+      :avatar="roomUser.detail.avatar"
     />
   </div>
 </template>
@@ -27,42 +25,35 @@ export default {
   props: {
     roomChannel: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+    roomUsers: {
+      type: Array,
+      default: null,
+    },
   },
   data() {
     return {
-      image: 'book-cafe',
-      x: 0,
-      y: 0,
-      size: 50,
-      coords: [
-        '75,351,132,343,171,367,170,394,68,454,29,432,30,401',
-        '216,431,210,425,145,465,144,516,195,545,314,474,315,419,268,392,211,425',
-        '335,517,304,550,303,605,352,634,379,619,378,519',
-        '472,573,467,571,404,608,403,662,454,692,575,620,574,561,527,535,463,573',
-        '627,654,687,622,733,649,732,706,611,777,562,747,563,694',
-        '650,340,640,309,593,335,593,393,715,465,746,449,746,371,639,308',
-        '835,450,827,418,950,492,950,544,900,574,779,502,780,445,828,417',
-      ],
+      size: 40,
+      seats: [
+        {x: 43, y: 217},
+        {x: 129, y: 267},
+        {x: 197, y: 317},
+        {x: 293, y: 357},
+        {x: 385, y: 407},
+        {x: 517, y: 283},
+        {x: 399, y: 211},
+      ]
     }
-  },
-  computed: {
-    roomUsers() {
-      return this.$store.state.roomUsers
-    },
   },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
-      const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
-      this.x = x
-      this.y = y
+      const {x, y} = this.seats[seatNum]
       this.roomChannel.perform('get_seat', {
-        // work: ,
         seat_number: seatNum,
-        x_coord: this.x,
-        y_coord: this.y,
+        x_coord: x,
+        y_coord: y,
       })
     },
   },
@@ -71,7 +62,21 @@ export default {
 
 <style lang="scss" scoped>
 .room {
+  width: 630px;
+  height: 500px;
+  background: url(~/assets/img/room/book-cafe.svg);
   transform-origin: top left;
-  transform: scale(0.9) translate(80px, 90px);
+  transform: scale(1.6) translate(20px, 20px);
+}
+
+.seats {
+  background-color: rgba(255,255,255,0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255,0,255,0.3);
+  }
 }
 </style>

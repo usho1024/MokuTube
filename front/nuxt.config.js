@@ -57,7 +57,7 @@ export default {
       login: '/login',
       logout: '/',
       callback: false,
-      home: '/rooms/1'
+      home: '/rooms'
     },
     strategies: {
       local: {

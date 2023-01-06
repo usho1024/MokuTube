@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3">
     <v-card class="mt-5 mx-auto" max-width="600">
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form">
         <v-container>
           <v-row justify="center">
             <p cols="12" class="mt-3 display-1 grey--text">
@@ -63,6 +63,7 @@
 
 <script>
 export default {
+  name: 'Signup',
   auth: false,
   data () {
     return {
@@ -73,7 +74,7 @@ export default {
     }
   },
   methods: {
-    async signup () {
+    async signup() {
       await this.$axios.post('/api/v1/auth', {
         name: this.name,
         email: this.email,
@@ -87,9 +88,13 @@ export default {
               email: this.email
             }
           })
-          const user = response.data.data
+          const user = {
+            id: response.data.data.id,
+            name: response.data.data.name,
+            avatar: response.data.data.avatar
+          }
           this.$store.dispatch('getCurrentUser', user)
-          this.$router.push('/rooms/1')
+          this.$router.push('/rooms')
         })
     }
   }

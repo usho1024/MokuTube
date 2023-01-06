@@ -2,8 +2,10 @@ class MessageBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(message)
-    message.name = message.user.name
-    message.avatar = message.user.avatar.thumb.url
+    message.sender = {
+      name: message.user.name,
+      avatar: message.user.avatar.thumb.url
+    }
     content = {
       type: 'speak',
       body: message

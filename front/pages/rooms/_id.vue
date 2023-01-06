@@ -3,22 +3,23 @@
     fluid
     class="pa-0"
   >
-    <v-sheet
-      class="main pa-10"
-    >
+    <logged-in-room-app-bar
+      :room-channel="roomChannel"
+    />
       <v-row
         no-gutters
       >
         <v-col
           cols="9"
         >
-          <v-sheet
-            :is="`room-${room.type}`"
+          <div
+            :is="`room-${room.image.name}`"
             :room-channel="roomChannel"
+            :room-users="roomUsers"
           />
           <youtube
             ref="youtube"
-            :video-id="videoId"
+            :video-id="room.bgm_resource"
             width=0
             height=0
             @playing="playing"
@@ -50,47 +51,13 @@
               class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
               height=70%
             >
-              <template
-                v-for="(message, i) in messages"
-              >
-                <div
-                  :key="`message-${i}`"
-                  class="px-4 mb-4"
-                >
-                  <v-row
-                    no-gutters
-                  >
-                    <v-col
-                      cols="1"
-                      align-self="start"
-                    >
-                      <v-avatar
-                        size="35px"
-                      >
-                        <v-img :src="message.avatar"/>
-                      </v-avatar>
-                    </v-col>
-                    <v-col
-                      cols="11"
-                    >
-                      <div
-                        class="ml-3"
-                      >
-                        <span
-                          class="grey--text text--darken-1 mr-2"
-                        >
-                          {{ message.name }}
-                        </span>
-                        <span
-                          class="grey--text text--darken-4"
-                        >
-                          {{ message.body }}
-                        </span>
-                      </div>
-                    </v-col>
-                  </v-row>
-                </div>
-              </template>
+              <list-message
+                v-for="(message, i) in chatMessages"
+                :key="`message-${i}`"
+                :body="message.body"
+                :name="message.sender.name"
+                :avatar="message.sender.avatar"
+              />
             </v-sheet>
 
             <v-divider/>
@@ -131,7 +98,6 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-sheet>
   </v-container>
 </template>
 
@@ -150,6 +116,7 @@ import RoomRestArea from '~/components/Room/RoomRestArea'
 import RoomSmallOffice from '~/components/Room/RoomSmallOffice'
 
 export default {
+  name: 'RoomsShow',
   components: {
     RoomBookCafe,
     RoomCafe,
@@ -162,39 +129,38 @@ export default {
     RoomRestArea,
     RoomSmallOffice
   },
-  layout: 'logged-in',
-  async asyncData ({ $axios, store, route }) {
+  layout: 'room',
+  async asyncData ({ $axios, route }) {
+    const chatMessages = []
     await $axios.$get('/api/v1/messages', {
       params: {
         id: route.params.id
       }
     })
-      .then(response => store.dispatch('getChatMessages', response))
+      .then(response => (
+        chatMessages.push(...response.reverse())
+      ))
+    let roomUsers
     await $axios.$get('/api/v1/rooms_users', {
       params: {
         id: route.params.id
       }
     })
-      .then(response => store.dispatch('getRoomUsers', response))
+      .then(response => (roomUsers = response))
+    let room
+    await $axios.$get(`/api/v1/rooms/${route.params.id}`)
+      .then(response => (room = response))
+    return { chatMessages, roomUsers, room }
   },
   data() {
     return {
       roomChannel: null,
-      room: {
-        id: this.$route.params.id,
-        type: 'kitchen'
-      },
-      videoId: 'uZ0dceZdSK8',
       media: 5,
       isMuted: true,
-      sampleAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
       inputMessage: ''
     }
   },
   computed: {
-    messages() {
-      return this.$store.state.chatMessages
-    },
     player() {
       return this.$refs.youtube.player
     },
@@ -212,8 +178,8 @@ export default {
     }
   },
   created() {
-    const cable = ActionCable.createConsumer(this.getWebSocketURL)
-    this.roomChannel = cable.subscriptions.create(
+    this.cable = ActionCable.createConsumer(this.getWebSocketURL)
+    this.roomChannel = this.cable.subscriptions.create(
       {
         channel: 'RoomChannel',
         room: this.room.id
@@ -222,13 +188,13 @@ export default {
         received: ({ type, body }) => {
           switch (type) {
             case 'speak':
-              this.$store.dispatch('getChatMessages', body)
+              this.chatMessages.push(body)
               this.$nextTick(() => {
                 this.scrollToBottom()
               })
               break
             case 'getSeat':
-              this.$store.dispatch('getRoomUsers', body)
+              this.roomUsers = body
               break
           }
         }
@@ -240,9 +206,8 @@ export default {
     this.mute()
     this.scrollToBottom()
   },
-  beforeDestroy() {
-    alert(`${this.currentUser.name}さん、おつかれさまです🙇‍♂️\n今回のルーム利用時間はn時間でした🎉\nこの調子で頑張りましょう❗️`)
-    location.reload()
+  destroyed() {
+    this.cable.disconnect()
   },
   methods: {
     playVideo() {
@@ -286,17 +251,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main {
+.v-main__wrap {
   height: calc(100vh - 48px);
-	background: url(~/assets/img/cloud-pattern.png);
-  background-size: 900px 900px;
-	animation: bg-loop 80s linear infinite;
-}
-
-@keyframes bg-loop {
-  100% {
-    background-position: 900px 0px;
-  }
 }
 
 .sidebar {

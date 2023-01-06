@@ -1,23 +1,21 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
-    <map name="ImageMap" @click.prevent="getSeat">
-      <area
-        v-for="(coord, i) in coords"
-        :id="`seat-${i}`"
-        :key="`seat-${i}`"
-        shape="poly"
-        :coords="coord"
-        href=""
-      />
-    </map>
+    <v-avatar
+      v-for="(seat, i) in seats"
+      :id="`seat-${i}`"
+      :key="`seat-${i}`"
+      class="seats"
+      :size="size"
+      :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
+      @click.prevent="getSeat"
+    />
     <user-avatar
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.avatar"
+      :avatar="roomUser.detail.avatar"
     />
   </div>
 </template>
@@ -27,34 +25,27 @@ export default {
   props: {
     roomChannel: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+    roomUsers: {
+      type: Array,
+      default: null,
+    },
   },
   data() {
     return {
-      image: 'private-room',
-      x: 0,
-      y: 0,
-      size: 80,
-      coords: ['383,413,352,382,355,563,488,565,488,471,407,407,350,380'],
+      size: 50,
+      seats: [{x: 183, y: 200}]
     }
-  },
-  computed: {
-    roomUsers() {
-      return this.$store.state.roomUsers
-    },
   },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
-      const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
-      this.x = x
-      this.y = y
+      const {x, y} = this.seats[seatNum]
       this.roomChannel.perform('get_seat', {
-        // work: ,
         seat_number: seatNum,
-        x_coord: this.x,
-        y_coord: this.y,
+        x_coord: x,
+        y_coord: y,
       })
     },
   },
@@ -63,7 +54,21 @@ export default {
 
 <style lang="scss" scoped>
 .room {
+  width: 503px;
+  height: 500px;
+  background: url(~/assets/img/room/private-room.svg);
   transform-origin: top left;
-  transform: scale(0.8) translate(100px, 100px);
+  transform: scale(1.6) translate(30px, 20px);
+}
+
+.seats {
+  background-color: rgba(255,255,255,0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255,0,255,0.3);
+  }
 }
 </style>

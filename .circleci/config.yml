@@ -1,8 +1,6 @@
 version: 2.1
 
-# 実行するjob
 jobs:
-  # buildするjob
   build:
     machine:
       image: ubuntu-2004:2022.10.1
@@ -11,7 +9,6 @@ jobs:
       - run:
           name: docker-compose build
           command: docker-compose build
-  # testするjob
   test:
     machine:
       image: ubuntu-2004:2022.10.1
@@ -20,7 +17,6 @@ jobs:
       - run:
           name: docker-compose up -d
           command: docker-compose up -d
-      - run: sleep 30
       - run:
           name: docker-compose run api rails db:create RAILS_ENV=test
           command: docker-compose run api rails db:create RAILS_ENV=test
@@ -42,9 +38,8 @@ jobs:
           name: docker-compose down
           command: docker-compose down
 
-# 順番を制御するworkflow
 workflows:
-  build_and_test_and_deploy:
+  build_=>_test:
     jobs:
       - build
       - test:

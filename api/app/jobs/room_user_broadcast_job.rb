@@ -3,7 +3,11 @@ class RoomUserBroadcastJob < ApplicationJob
 
   def perform(room_user)
     room_users = RoomsUser.where(room_id: room_user.room_id).includes(:user)
-    room_users.map { |room_user| room_user.avatar = room_user.user.avatar.thumb.url }
+    room_users.map do |room_user|
+      room_user.detail = {
+        avatar: room_user.user.avatar.thumb.url
+      }
+    end
     content = {
       type: 'getSeat',
       body: room_users

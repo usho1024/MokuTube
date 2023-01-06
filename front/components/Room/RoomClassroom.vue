@@ -1,23 +1,21 @@
 <template>
   <div class="room">
-    <img :src="require(`~/assets/img/room/${image}.svg`)" usemap="#ImageMap" />
-    <map name="ImageMap" @click.prevent="getSeat">
-      <area
-        v-for="(coord, i) in coords"
-        :id="`seat-${i}`"
-        :key="`seat-${i}`"
-        shape="poly"
-        :coords="coord"
-        href=""
-      />
-    </map>
+    <v-avatar
+      v-for="(seat, i) in seats"
+      :id="`seat-${i}`"
+      :key="`seat-${i}`"
+      class="seats"
+      :size="size"
+      :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
+      @click.prevent="getSeat"
+    />
     <user-avatar
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.avatar"
+      :avatar="roomUser.detail.avatar"
     />
   </div>
 </template>
@@ -27,45 +25,39 @@ export default {
   props: {
     roomChannel: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
+    roomUsers: {
+      type: Array,
+      default: null,
+    },
   },
   data() {
     return {
-      image: 'classroom',
-      x: 0,
-      y: 0,
-      size: 50,
-      coords: [
-        '565,395,620,393,619,450,582,486,555,470,553,433',
-        '674,459,729,457,728,514,691,550,664,534,662,497',
-        '781,519,836,517,835,574,798,610,771,594,769,557',
-        '444,463,499,461,498,518,461,554,434,538,432,501',
-        '552,526,607,524,606,581,569,617,542,601,540,564',
-        '660,588,715,586,714,643,677,679,650,663,648,626',
-        '326,533,381,531,380,588,343,624,316,608,314,571',
-        '434,597,489,595,488,652,451,688,424,672,422,635',
-        '542,658,597,656,596,713,559,749,532,733,530,696',
-        '142,385,163,351,204,419,132,461,134,367,163,352',
-      ],
+      size: 35,
+      seats: [
+        {x: 337, y: 234},
+        {x: 403, y: 272},
+        {x: 467, y: 310},
+        {x: 337, y: 234},
+        {x: 265, y: 276},
+        {x: 331, y: 314},
+        {x: 395, y: 352},
+        {x: 193, y: 318},
+        {x: 259, y: 356},
+        {x: 323, y: 394},
+        {x: 83, y: 228},
+      ]
     }
-  },
-  computed: {
-    roomUsers() {
-      return this.$store.state.roomUsers
-    },
   },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
-      const [x, y] = e.target.getAttribute('coords').split(',').map(Number)
-      this.x = x
-      this.y = y
+      const {x, y} = this.seats[seatNum]
       this.roomChannel.perform('get_seat', {
-        // work: ,
         seat_number: seatNum,
-        x_coord: this.x,
-        y_coord: this.y,
+        x_coord: x,
+        y_coord: y,
       })
     },
   },
@@ -74,7 +66,21 @@ export default {
 
 <style lang="scss" scoped>
 .room {
+  width: 604px;
+  height: 500px;
+  background: url(~/assets/img/room/classroom.svg);
   transform-origin: top left;
-  transform: scale(0.9) translate(80px, 60px);
+  transform: scale(1.6) translate(20px, 20px);
+}
+
+.seats {
+  background-color: rgba(255,255,255,0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255,0,255,0.3);
+  }
 }
 </style>
