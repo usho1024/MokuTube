@@ -1,56 +1,61 @@
 <template>
   <v-card
+    outlined
     nuxt
     :to="`/rooms/${roomId}`"
-    rounded="lg"
-    elevation="5"
+    class="rounded-0"
   >
-    <v-img
-      :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
-      height=150
-    />
-
-    <v-divider/>
-
-    <v-list>
-      <v-list-item
-        dense
+    <v-row>
+      <v-col
+        cols="2"
       >
-        <v-list-item-content>
-          <v-list-item-title
-            class="text-truncate"
-          >
-            {{ roomName }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item
-        dense
+        <v-img
+          :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
+          height=86
+        />
+      </v-col>
+      <v-col
+        cols="10"
       >
-        <v-list-item-avatar
-          size=30
+        <v-list-item
+          dense
         >
-          <v-img
-            :src="hostAvatar"
-          />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title
-            class="grey--text text--darken-2 text-truncate"
+          <v-list-item-content>
+            <v-list-item-title
+              class="text-truncate"
+            >
+              {{ roomName }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          dense
+        >
+          <v-list-item-avatar
+            size=30
           >
-            {{ hostName }}
-          </v-list-item-title>
-        </v-list-item-content>
-        <v-icon
-          class="mr-3"
-        >
-          mdi-account-multiple-check
-        </v-icon>
-        <span>
-          {{ activeUsers }} / {{ numberOfSeats }}
-        </span>
-      </v-list-item>
-    </v-list>
+            <v-img
+              :src="hostAvatar"
+            />
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title
+              class="grey--text text--darken-2 text-truncate"
+            >
+              {{ hostName }}
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-icon
+            class="mr-3"
+          >
+            mdi-account-multiple-check
+          </v-icon>
+          <span>
+            {{ activeUsers }} / {{ numberOfSeats }}
+          </span>
+        </v-list-item>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
