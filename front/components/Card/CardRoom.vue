@@ -13,7 +13,7 @@
       <v-col cols="10">
         <v-list-item dense>
           <v-list-item-content>
-            <v-list-item-title class="text-truncate font-weight-bold">
+            <v-list-item-title class="text-truncate">
               {{ roomName }}
             </v-list-item-title>
           </v-list-item-content>

@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-col xl="8">
         <v-card>
-          <v-subheader class="font-weight-bold">ルーム一覧</v-subheader>
+          <v-subheader>ルーム一覧</v-subheader>
 
           <v-divider />
 

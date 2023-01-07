@@ -3,7 +3,10 @@
     <v-row justify="center">
       <v-col xl="6" md="8">
         <v-stepper v-model="currentStep" vertical>
-          <v-subheader class="font-weight-bold"> ルームを作成する </v-subheader>
+          <v-subheader>ルーム作成</v-subheader>
+
+          <v-divider />
+
           <v-stepper-step :complete="currentStep > 1" step="1">
             ルーム名を入力してください（30文字以内）
           </v-stepper-step>
