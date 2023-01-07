@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined nuxt :to="`/rooms/${roomId}`" class="rounded-0">
+  <v-card nuxt :to="`/rooms/${roomId}`">
     <v-row no-gutters>
       <v-col cols="2">
         <v-img
@@ -7,10 +7,13 @@
           height="80"
         />
       </v-col>
+
+      <v-divider vertical />
+
       <v-col cols="10">
         <v-list-item dense>
           <v-list-item-content>
-            <v-list-item-title class="text-truncate">
+            <v-list-item-title class="text-truncate font-weight-bold">
               {{ roomName }}
             </v-list-item-title>
           </v-list-item-content>

@@ -6,8 +6,12 @@
 
     <v-dialog v-model="dialogPlaylist" scrollable width="50%">
       <v-card>
-        <v-subheader>リストからBGMを選択してください</v-subheader>
+        <v-subheader class="font-weight-bold"
+          >リストからBGMを選択してください</v-subheader
+        >
+
         <v-divider />
+
         <v-simple-table height="70vh">
           <template #default>
             <tbody>
@@ -47,13 +51,20 @@
             </tbody>
           </template>
         </v-simple-table>
+
         <v-divider />
+
         <v-card-actions>
           <v-btn color="blue darken-3" text @click="dialogPlaylist = false">
             保存して終了
           </v-btn>
-          <v-card-subtitle class="text-truncate"
-            >選択しているBGM： {{ selectedVideo.title }}</v-card-subtitle
+          <v-card-subtitle
+            v-if="selectedVideo.title"
+            class="font-weight-bold text-truncate"
+            >選択中： {{ selectedVideo.title }}</v-card-subtitle
+          >
+          <v-card-subtitle v-else class="font-weight-bold"
+            >選択中： 未選択</v-card-subtitle
           >
         </v-card-actions>
       </v-card>
@@ -61,7 +72,9 @@
 
     <v-dialog v-model="dialogPlayVideo" width="672">
       <v-card>
-        <v-subheader>{{ playedVideo.title }}</v-subheader>
+        <v-subheader class="font-weight-bold">{{
+          playedVideo.title
+        }}</v-subheader>
         <iframe
           width="672"
           height="378"

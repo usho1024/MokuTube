@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-col xl="6" md="8">
         <v-stepper v-model="currentStep" vertical>
-          <v-subheader> ルームを作成する </v-subheader>
+          <v-subheader class="font-weight-bold"> ルームを作成する </v-subheader>
           <v-stepper-step :complete="currentStep > 1" step="1">
             ルーム名を入力してください（30文字以内）
           </v-stepper-step>
@@ -54,7 +54,10 @@
               </v-row>
             </v-sheet>
 
-            <div class="mb-5">選択しているイメージ： {{ room.imageName }}</div>
+            <div class="mb-5 font-weight-bold">
+              <div v-if="room.imageName">選択中： {{ room.imageName }}</div>
+              <div v-else>選択中： 未選択</div>
+            </div>
 
             <div class="mb-2">
               <v-btn
@@ -76,8 +79,11 @@
           <v-stepper-content step="3">
             <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-5 text-truncate">
-              選択しているBGM： {{ room.bgmName }}
+            <div class="mb-5 font-weight-bold">
+              <div v-if="room.bgmName" class="text-truncate">
+                選択中： {{ room.bgmName }}
+              </div>
+              <div v-else>選択中： 未選択</div>
             </div>
             <div class="mb-5">※ルーム内にてBGMは自動でループ再生されます</div>
 
@@ -98,7 +104,7 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <div class="mb-8">
+            <div class="mb-8 font-weight-bold">
               <v-row>
                 <v-col cols="2">
                   <div>名前：</div>

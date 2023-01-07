@@ -3,11 +3,11 @@
     <v-row justify="center">
       <v-col xl="8">
         <v-card>
-          <v-subheader>ルーム一覧</v-subheader>
+          <v-subheader class="font-weight-bold">ルーム一覧</v-subheader>
 
-          <v-divider class="mb-4" />
+          <v-divider />
 
-          <div class="px-3">
+          <v-sheet class="grey lighten-4 px-3 pt-4">
             <v-row no-gutters>
               <v-col
                 v-for="(room, i) in rooms"
@@ -26,7 +26,7 @@
                 />
               </v-col>
             </v-row>
-          </div>
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>
