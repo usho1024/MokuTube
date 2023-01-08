@@ -1,9 +1,11 @@
 <template>
   <v-card outlined :ripple="false" class="rounded-0" @click="send">
-    <v-img
-      :src="require(`~/assets/img/room/thumb/${imageName}.png`)"
-      height="120"
-    />
+    <div class="pa-1">
+      <v-img
+        :src="require(`~/assets/img/room/thumb/${imageName}.png`)"
+        height="120"
+      />
+    </div>
 
     <v-divider />
 

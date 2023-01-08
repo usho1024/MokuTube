@@ -2,24 +2,26 @@
   <v-card nuxt :to="`/rooms/${roomId}`">
     <v-row no-gutters>
       <v-col cols="2">
-        <v-img
-          :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
-          height="80"
-        />
+        <div class="pa-1">
+          <v-img
+            :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
+            height="88"
+          />
+        </div>
       </v-col>
 
       <v-divider vertical />
 
       <v-col cols="10">
-        <v-list-item dense>
+        <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="text-truncate">
+            <v-list-item-title class="text-truncate text-body-1">
               {{ roomName }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item dense>
-          <v-list-item-avatar size="24" class="mr-0 mr-2">
+        <v-list-item>
+          <v-list-item-avatar size="30" class="mr-0 mr-2">
             <v-img :src="hostAvatar" />
           </v-list-item-avatar>
           <v-list-item-content>

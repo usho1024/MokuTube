@@ -7,13 +7,13 @@
 
           <v-divider />
 
-          <v-sheet class="grey lighten-4 px-3 pt-4">
+          <v-sheet class="grey lighten-4 px-3 pt-5">
             <v-row no-gutters>
               <v-col
                 v-for="(room, i) in rooms"
                 :key="`room-${i}`"
                 cols="6"
-                class="py-0 px-2 mb-4"
+                class="py-0 px-3 mb-5"
               >
                 <card-room
                   :room-id="room.id"

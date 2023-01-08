@@ -6,28 +6,20 @@
 
     <div class="mr-10">
       <v-btn
-        v-for="menuItem in menuItems"
-        :key="menuItem.name"
+        v-for="menu in menus"
+        :key="menu.name"
         text
         tile
         exact
         nuxt
-        :to="`/${menuItem.link}`"
+        :to="`/${menu.link}`"
         width="150"
       >
-        {{ menuItem.name }}
+        {{ menu.name }}
       </v-btn>
     </div>
 
-    <v-btn text tile width="150" class="mr-10" @click="logoutWithAuthModule"
-      >ログアウト</v-btn
-    >
-
-    <nuxt-link to="/users/mypage">
-      <v-avatar size="35" class="mr-5">
-        <img :src="currentUser.avatar.thumb.url" />
-      </v-avatar>
-    </nuxt-link>
+    <logged-in-app-bar-account-menu />
   </v-app-bar>
 </template>
 
@@ -35,7 +27,7 @@
 export default {
   data() {
     return {
-      menuItems: [
+      menus: [
         { name: 'ルーム一覧', link: 'rooms' },
         { name: 'ルーム作成', link: 'rooms/create' },
       ],
@@ -44,15 +36,6 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser
-    },
-  },
-  methods: {
-    async logoutWithAuthModule() {
-      await this.$auth.logout().then(() => {
-        setTimeout(() => {
-          this.$store.dispatch('getCurrentUser', null)
-        }, 1500)
-      })
     },
   },
 }

@@ -8,16 +8,16 @@
 
     <div class="mr-10">
       <v-btn
-        v-for="menuItem in menuItems"
-        :key="menuItem.name"
+        v-for="menu in menus"
+        :key="menu.name"
         text
         tile
         exact
         nuxt
-        :to="`/${menuItem.link}`"
+        :to="`/${menu.link}`"
         width="150"
       >
-        {{ menuItem.name }}
+        {{ menu.name }}
       </v-btn>
     </div>
 
@@ -31,7 +31,7 @@
 export default {
   data() {
     return {
-      menuItems: [
+      menus: [
         { name: 'ログイン', link: 'login' },
         { name: '新規登録', link: 'signup' },
       ],

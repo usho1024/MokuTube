@@ -57,7 +57,7 @@
               </v-row>
             </v-sheet>
 
-            <div class="mb-5 font-weight-bold">
+            <div class="mb-5 text-body-1">
               <div v-if="room.imageName">選択中： {{ room.imageName }}</div>
               <div v-else>選択中： 未選択</div>
             </div>
@@ -82,13 +82,13 @@
           <v-stepper-content step="3">
             <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-5 font-weight-bold">
+            <div class="mb-5 text-body-1">
               <div v-if="room.bgmName" class="text-truncate">
                 選択中： {{ room.bgmName }}
               </div>
               <div v-else>選択中： 未選択</div>
             </div>
-            <div class="mb-5">※ルーム内にてBGMは自動でループ再生されます</div>
+            <div class="mb-5 text-body-1">※ルーム内にてBGMは自動でループ再生されます</div>
 
             <div class="mb-2">
               <v-btn
@@ -107,7 +107,7 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <div class="mb-8 font-weight-bold">
+            <div class="mb-8 text-body-1">
               <v-row>
                 <v-col cols="2">
                   <div>名前：</div>
