@@ -7,12 +7,12 @@
         </v-avatar>
       </v-btn>
     </template>
+
     <v-list dense>
       <v-subheader>ログイン中のユーザー</v-subheader>
-
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-subtitle>
+          <v-list-item-subtitle class="text-truncate">
             {{ currentUser.name }}
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -21,13 +21,9 @@
       <v-divider />
 
       <v-subheader>アカウント</v-subheader>
-
       <template v-for="(menu, i) in menus">
         <v-divider v-if="menu.divider" :key="`menu-divider-${i}`" />
-        <v-list-item
-          :key="`menu-list-${i}`"
-          @click="menu.method"
-        >
+        <v-list-item :key="`menu-${i}`" @click="menu.method">
           <v-list-item-icon class="mr-2">
             <v-icon size="22">{{ menu.icon }}</v-icon>
           </v-list-item-icon>
@@ -47,7 +43,6 @@ export default {
           name: '情報を編集',
           icon: 'mdi-account-edit',
           method: this.goToMypage,
-          divider: true,
         },
         {
           name: 'ログアウト',
