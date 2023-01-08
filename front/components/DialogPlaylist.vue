@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-7">
-    <v-btn color="primary" @click="getPlayList">
+  <div class="mb-10">
+    <v-btn outlined color="teal darken-2" @click="getPlayList">
       クリックでBGMリストを表示
     </v-btn>
 
@@ -34,7 +34,9 @@
                 </td>
                 <td>
                   <v-btn
-                    color="primary"
+                    icon
+                    large
+                    color="#da1725"
                     @click="
                       playVideo(
                         item.snippet.resourceId.videoId,
@@ -42,7 +44,7 @@
                       )
                     "
                   >
-                    試聴する
+                    <v-icon>mdi-youtube</v-icon>
                   </v-btn>
                 </td>
               </tr>

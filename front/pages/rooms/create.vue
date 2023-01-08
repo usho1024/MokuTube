@@ -16,19 +16,14 @@
               v-model="room.name"
               :counter="30"
               label="ルーム名を入力する"
-              class="mb-3"
+              class="mb-6"
             />
 
             <div class="mb-2">
-              <v-btn
-                :disabled="!room.name"
-                color="primary"
-                class="mr-3"
-                @click="stepUp"
+              <button-step-up :value="room.name" @btnClick="stepUp" />
+              <v-btn outlined exact nuxt color="yellow darken-4" to="/rooms"
+                >ルーム一覧に戻る</v-btn
               >
-                続ける
-              </v-btn>
-              <v-btn nuxt color="warning" to="/rooms"> ルーム一覧に戻る </v-btn>
             </div>
           </v-stepper-content>
 
@@ -37,14 +32,14 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-sheet outlined height="40vh" class="mb-7 pa-5 overflow-auto">
+            <v-sheet outlined height="40vh" class="mb-6 pa-5 overflow-auto">
               <v-row>
                 <v-col
                   v-for="roomImage in roomImages"
                   :id="`room-image-${roomImage.id}`"
                   :key="`roomImage-${roomImage.id}`"
                   cols="3"
-                  class="pa-3"
+                  class="pa-2"
                 >
                   <card-room-image
                     :id="roomImage.id"
@@ -57,21 +52,14 @@
               </v-row>
             </v-sheet>
 
-            <div class="mb-5 text-body-1">
+            <div class="mb-10 text-body-1">
               <div v-if="room.imageName">選択中： {{ room.imageName }}</div>
               <div v-else>選択中： 未選択</div>
             </div>
 
             <div class="mb-2">
-              <v-btn
-                :disabled="!room.imageId"
-                color="primary"
-                class="mr-3"
-                @click="stepUp"
-              >
-                続ける
-              </v-btn>
-              <v-btn color="warning" @click="stepDown"> 1つ前に戻る </v-btn>
+              <button-step-up :value="room.imageName" @btnClick="stepUp" />
+              <button-step-down @btnClick="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -82,24 +70,19 @@
           <v-stepper-content step="3">
             <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-5 text-body-1">
+            <div class="mb-3 text-body-1">
               <div v-if="room.bgmName" class="text-truncate">
                 選択中： {{ room.bgmName }}
               </div>
               <div v-else>選択中： 未選択</div>
             </div>
-            <div class="mb-5 text-body-1">※ルーム内にてBGMは自動でループ再生されます</div>
+            <div class="mb-10 text-body-1">
+              ※ルーム内にてBGMは自動でループ再生されます
+            </div>
 
             <div class="mb-2">
-              <v-btn
-                :disabled="!room.bgmId"
-                color="primary"
-                class="mr-3"
-                @click="stepUp"
-              >
-                続ける
-              </v-btn>
-              <v-btn color="warning" @click="stepDown"> 1つ前に戻る </v-btn>
+              <button-step-up :value="room.bgmName" @btnClick="stepUp" />
+              <button-step-down @btnClick="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -107,7 +90,7 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <div class="mb-8 text-body-1">
+            <div class="mb-10 text-body-1">
               <v-row>
                 <v-col cols="2">
                   <div>名前：</div>
@@ -141,10 +124,16 @@
             </div>
 
             <div class="mb-2">
-              <v-btn color="primary" class="mr-3" @click="createRoom">
-                OK
+              <v-btn
+                outlined
+                color="indigo"
+                width="100"
+                class="mr-5"
+                @click="createRoom"
+              >
+                O K
               </v-btn>
-              <v-btn color="warning" @click="stepDown"> 1つ前に戻る </v-btn>
+              <button-step-down @btnClick="stepDown" />
             </div>
           </v-stepper-content>
         </v-stepper>
@@ -162,7 +151,7 @@ export default {
       currentStep: 1,
       activeImage: null,
       room: {
-        name: '',
+        name: null,
         imageId: null,
         imageName: null,
         bgmId: null,
