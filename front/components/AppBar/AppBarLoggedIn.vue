@@ -19,7 +19,7 @@
       </v-btn>
     </div>
 
-    <logged-in-app-bar-account-menu />
+    <app-bar-account-menu />
   </v-app-bar>
 </template>
 
@@ -32,11 +32,6 @@ export default {
         { name: 'ルーム作成', link: 'rooms/create' },
       ],
     }
-  },
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser
-    },
   },
 }
 </script>

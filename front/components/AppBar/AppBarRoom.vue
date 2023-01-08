@@ -1,17 +1,14 @@
 <template>
   <v-app-bar app dense elevation="1" color="white">
-    MokuTube
+    <v-app-bar-title class="text-subtitle-1">MokuTube</v-app-bar-title>
 
     <v-spacer />
 
-    <nuxt-link to="/users/mypage">
-      <v-avatar size="36px">
-        <img :src="currentUser.avatar.thumb.url" />
-      </v-avatar>
-    </nuxt-link>
-    <v-btn class="mx-4 warning white--text" nuxt @click="goToRooms">
-      退出する
-    </v-btn>
+    <v-btn class="green white--text mr-10" @click="goToRooms">
+      <v-icon class="mr-2">mdi-exit-run</v-icon>
+      退室する</v-btn
+    >
+    <app-bar-account-menu />
   </v-app-bar>
 </template>
 
@@ -21,11 +18,6 @@ export default {
     roomChannel: {
       type: Object,
       default: null,
-    },
-  },
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser
     },
   },
   methods: {
