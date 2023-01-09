@@ -1,8 +1,6 @@
 <template>
   <v-app-bar app dense elevation="1" color="white">
-    <nuxt-link to="/" class="text-decoration-none">
-      <v-app-bar-title class="text-subtitle-1">MokuTube</v-app-bar-title>
-    </nuxt-link>
+    <app-bar-logo />
 
     <v-spacer />
 
@@ -21,9 +19,10 @@
       </v-btn>
     </div>
 
+    <!-- TODO 後で消す
     <v-btn text tile width="150" @click="logoutWithAuthModule"
       >ログアウト</v-btn
-    >
+    > -->
   </v-app-bar>
 </template>
 

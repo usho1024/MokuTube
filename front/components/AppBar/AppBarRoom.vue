@@ -1,6 +1,7 @@
 <template>
   <v-app-bar app dense elevation="1" color="white">
-    <v-app-bar-title class="text-subtitle-1">MokuTube</v-app-bar-title>
+    <v-app-bar-title class="text-subtitle-1">
+    </v-app-bar-title>
 
     <v-spacer />
 

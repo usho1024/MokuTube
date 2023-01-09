@@ -33,8 +33,7 @@
 
 <script>
 export default {
-  name: 'Edit',
-  layout: 'logged-in',
+  name: 'Mypage',
   data() {
     return {
       inputFile: null,
