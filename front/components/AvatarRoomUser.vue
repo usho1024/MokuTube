@@ -1,30 +1,46 @@
 <template>
   <v-menu offset-x>
-    <template #activator="{ on }">
-      <v-btn
-        icon
-        :width="size"
-        :height="size"
-        class="avatar"
-        :style="{ transform: `translate(${x}px, ${y}px)` }"
-        v-on="on"
-      >
-        <v-avatar :size="size">
-          <v-img :src="user.avatar" />
-        </v-avatar>
-      </v-btn>
+    <template #activator="{ on: menu }">
+      <v-tooltip top color="indigo">
+        <template #activator="{ on: tooltip }">
+          <v-btn
+            icon
+            :width="size"
+            :height="size"
+            class="avatar"
+            :style="{ transform: `translate(${x}px, ${y}px)` }"
+            v-on="{ ...tooltip, ...menu }"
+          >
+            <v-avatar :size="size">
+              <v-img :src="user.avatar" />
+            </v-avatar>
+          </v-btn>
+        </template>
+        <span>{{ user.name }}</span>
+      </v-tooltip>
     </template>
 
-    <v-card width="200">
-      <v-list-item-content class="justify-center">
-        <div class="mx-auto text-center">
-          <h3 class="text-truncate">{{ user.name }}</h3>
-          <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text>Edit Account</v-btn>
-          <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text>Disconnect</v-btn>
-        </div>
-      </v-list-item-content>
+    <v-card min-width="200">
+      <v-tooltip top>
+        <template #activator="{ on }">
+          <v-list-item nuxt :to="`/users/${user.id}`" v-on="on">
+            <v-list-item-icon class="mr-3">
+              <v-icon size="22">mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{ user.name }}</v-list-item-title>
+          </v-list-item>
+        </template>
+        <span>ユーザー詳細ページへ移動</span>
+      </v-tooltip>
+      <v-list-item>
+        <v-list-item-icon class="mr-3">
+          <v-icon size="22">mdi-lead-pencil</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title v-if="user.work" class="text-body-1">{{
+          user.work
+        }}</v-list-item-title>
+        <v-list-item-title v-else class="text-body-1">未設定</v-list-item-title>
+      </v-list-item>
     </v-card>
   </v-menu>
 </template>

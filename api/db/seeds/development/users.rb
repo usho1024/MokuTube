@@ -11,7 +11,8 @@ User.create!(
   User.create!(
     name: "#{name}",
     email: "#{name}@example.com",
-    password: "password"
+    password: "password",
+    work: "ポートフォリオ作成"
   )
 end
 
