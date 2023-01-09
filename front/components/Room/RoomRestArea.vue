@@ -9,13 +9,13 @@
       :style="{ transform: `translate(${seat.x}px, ${seat.y}px)` }"
       @click.prevent="getSeat"
     />
-    <user-avatar
+    <avatar-room-user
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
       :size="size"
       :x="roomUser.x_coord"
       :y="roomUser.y_coord"
-      :avatar="roomUser.detail.avatar"
+      :user="roomUser.detail"
     />
   </div>
 </template>
@@ -36,18 +36,18 @@ export default {
     return {
       size: 35,
       seats: [
-        {x: 116, y: 326},
-        {x: 206, y: 378},
-        {x: 360, y: 276},
-        {x: 304, y: 246},
-        {x: 330, y: 200}
-      ]
+        { x: 116, y: 326 },
+        { x: 206, y: 378 },
+        { x: 360, y: 276 },
+        { x: 304, y: 246 },
+        { x: 330, y: 200 },
+      ],
     }
   },
   methods: {
     getSeat(e) {
       const seatNum = Number(e.target.getAttribute('id').slice(5))
-      const {x, y} = this.seats[seatNum]
+      const { x, y } = this.seats[seatNum]
       this.roomChannel.perform('get_seat', {
         seat_number: seatNum,
         x_coord: x,
@@ -68,13 +68,13 @@ export default {
 }
 
 .seats {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   position: absolute;
   left: 0;
   top: 0;
   cursor: pointer;
   &:hover {
-    background-color: rgba(255,0,255,0.3);
+    background-color: rgba(255, 0, 255, 0.3);
   }
 }
 </style>

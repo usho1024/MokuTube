@@ -5,7 +5,10 @@ class RoomUserBroadcastJob < ApplicationJob
     room_users = RoomsUser.where(room_id: room_user.room_id).includes(:user)
     room_users.map do |room_user|
       room_user.detail = {
-        avatar: room_user.user.avatar.thumb.url
+        id: room_user.user.id,
+        name: room_user.user.name,
+        avatar: room_user.user.avatar.thumb.url,
+        work: room_user.user.work
       }
     end
     content = {

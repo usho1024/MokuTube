@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-bar-logged-in v-if="currentUser"/>
+    <app-bar-logged-in v-if="currentUser" />
     <app-bar v-else />
     <v-main>
       <nuxt />

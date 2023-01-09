@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0">
-    <app-bar-room :room-channel="roomChannel" />
+    <app-bar-room :room-channel="roomChannel" :name="room.name" />
     <v-row no-gutters>
       <v-col cols="9">
         <div
