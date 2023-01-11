@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-5 font-weight-bold text-body-1">
+    <div class="mb-5 font-weight-bold text-body-1 grey--text text--darken-1">
       <span class="mr-5">StayTime:</span>
       <span class="mr-10">{{ formatTime }}</span>
       <v-btn v-show="timerOn" width="100" class="error mr-3" @click="stop"
