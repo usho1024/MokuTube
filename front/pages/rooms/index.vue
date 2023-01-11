@@ -36,7 +36,6 @@
 <script>
 export default {
   name: 'RoomsIndex',
-  layout: 'logged-in',
   async asyncData({ $axios }) {
     let rooms
     await $axios.$get('/api/v1/rooms').then((response) => (rooms = response))

@@ -24,9 +24,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    'plugins/common',
     'plugins/axios',
     'plugins/vue-youtube',
-    'plugins/persistedState.client'
+    'plugins/persistedState.client',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

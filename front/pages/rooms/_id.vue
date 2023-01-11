@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-0">
-    <app-bar-room :room-channel="roomChannel" />
+    <app-bar-room :room-channel="roomChannel" :name="room.name" />
     <v-row no-gutters>
       <v-col cols="9">
         <div
@@ -56,13 +56,14 @@
               />
             </v-form>
 
-            <v-slider v-model="media" thumb-label dense>
+            <v-slider v-model="media" thumb-label dense class="mb-3">
               <template #prepend>
                 <v-icon @click="toggle">
                   {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
                 </v-icon>
               </template>
             </v-slider>
+            <stay-time-clock />
           </v-sheet>
         </v-card>
       </v-col>

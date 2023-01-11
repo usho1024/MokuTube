@@ -145,7 +145,6 @@
 <script>
 export default {
   name: 'Create',
-  layout: 'logged-in',
   data() {
     return {
       currentStep: 1,

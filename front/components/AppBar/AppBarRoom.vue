@@ -1,7 +1,12 @@
 <template>
   <v-app-bar app dense elevation="1" color="white">
-    <v-app-bar-title class="text-subtitle-1">MokuTube</v-app-bar-title>
+    <app-bar-logo class="mr-10" />
 
+    <v-app-bar-title
+      class="text-subtitle-1 grey--text text--darken-1 font-weight-bold"
+      ><v-icon color="grey darken-1" class="mr-2">mdi-home-automation</v-icon
+      >{{ name }}</v-app-bar-title
+    >
     <v-spacer />
 
     <v-btn class="green white--text mr-10" @click="goToRooms">
@@ -17,6 +22,10 @@ export default {
   props: {
     roomChannel: {
       type: Object,
+      default: null,
+    },
+    name: {
+      type: String,
       default: null,
     },
   },

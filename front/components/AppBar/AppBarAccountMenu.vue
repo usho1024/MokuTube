@@ -63,7 +63,7 @@ export default {
       await this.$auth.logout().then(() => {
         setTimeout(() => {
           this.$store.dispatch('getCurrentUser', null)
-        }, 1500)
+        }, 500)
       })
     },
     goToMypage() {
