@@ -4,7 +4,9 @@
       <v-col xl="8">
         <v-card>
           <v-toolbar>
-            <v-toolbar-title class="text-subtitle-1">ルーム一覧</v-toolbar-title>
+            <v-toolbar-title class="text-subtitle-1"
+              >ルーム一覧</v-toolbar-title
+            >
 
             <v-spacer />
 
@@ -20,7 +22,11 @@
               <v-tabs v-model="tab" align-with-title>
                 <v-tabs-slider color="blue"></v-tabs-slider>
 
-                <v-tab v-for="menu in menus" :key="menu.title" @click="test(menu.method)">
+                <v-tab
+                  v-for="menu in menus"
+                  :key="menu.title"
+                  @click="getRooms(menu.query)"
+                >
                   {{ menu.title }}
                 </v-tab>
               </v-tabs>
@@ -28,9 +34,9 @@
           </v-toolbar>
 
           <v-tabs-items v-model="tab">
-            <v-tab-item v-for="menu in menus" :key="menu.method">
+            <v-tab-item v-for="menu in menus" :key="menu.query">
               <v-divider />
-              <v-sheet class="grey lighten-4 px-3 pt-5">
+              <v-sheet v-if="rooms.length" class="grey lighten-4 px-3 pt-5">
                 <v-row no-gutters>
                   <v-col
                     v-for="room in rooms"
@@ -50,6 +56,16 @@
                   </v-col>
                 </v-row>
               </v-sheet>
+
+              <v-sheet
+                v-else
+                height="50vh"
+                class="pa-10 grey--text text--darken-1"
+              >
+                <p class="text-h6">Sorry, Room Not Found...</p>
+                <p>現在、ユーザーが利用しているルームは存在しません😢</p>
+                <p>お手数ですが他のタブからルーム一覧をご確認ください</p>
+              </v-sheet>
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -63,23 +79,34 @@ export default {
   name: 'RoomsIndex',
   async asyncData({ $axios }) {
     let rooms
-    await $axios.$get('/api/v1/rooms').then((response) => (rooms = response))
+    await $axios
+      .$get('/api/v1/rooms', {
+        params: {
+          query: 'new',
+        },
+      })
+      .then((response) => (rooms = response))
     return { rooms }
   },
   data() {
     return {
       tab: null,
       menus: [
-        { title: '最近作成された', method: 'new' },
-        { title: 'ルーム内人数が多い', method: 'active' },
-        { title: '公式', method: 'official' },
-        { title: 'すべて', method: 'all' },
+        { title: '作成日時が新しい順', query: 'new' },
+        { title: 'ユーザーが多い順', query: 'active' },
+        { title: '公式ルーム', query: 'official' },
       ],
     }
   },
   methods: {
-    test(value) {
-      console.log(value)
+    async getRooms(query) {
+      await this.$axios
+        .get('/api/v1/rooms', {
+          params: {
+            query,
+          },
+        })
+        .then((response) => (this.rooms = response.data))
     },
   },
 }

@@ -2,7 +2,14 @@ class Api::V1::RoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    rooms = Room.all.limit(50).includes([:user, :room_image])
+    case params[:query]
+    when 'new'
+      rooms = Room.order(created_at: :desc).limit(100).includes([:user, :room_image])
+    when 'active'
+      rooms = Room.find(RoomsUser.group(:room_id).order('count(room_id) desc').pluck(:room_id))
+    when 'official'
+      rooms = User.first.rooms.includes([:room_image])
+    end
     rooms.map do |room|
       room.host = {
         name: room.user.name,

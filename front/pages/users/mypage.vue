@@ -48,10 +48,10 @@ export default {
     },
   },
   methods: {
-    updateUser() {
+    async updateUser() {
       const formData = new FormData()
       formData.append('user[avatar]', this.inputFile)
-      this.$axios
+      await this.$axios
         .patch(`/api/v1/users/${this.currentUser.id}`, formData)
         .then((response) => {
           const user = {
