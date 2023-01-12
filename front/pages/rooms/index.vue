@@ -74,7 +74,7 @@ export default {
     await $axios
       .$get('/api/v1/rooms', {
         params: {
-          type: 'recent',
+          type: 'official',
         },
       })
       .then((response) => (rooms = response))
@@ -84,9 +84,9 @@ export default {
     return {
       tab: null,
       menus: [
-        { title: '作成日時が新しい順', type: 'recent' },
-        { title: 'ユーザーが多い順', type: 'active' },
         { title: '公式ルーム', type: 'official' },
+        { title: 'ユーザーが多い順', type: 'active' },
+        { title: '作成日時が新しい順', type: 'recent' },
       ],
     }
   },
