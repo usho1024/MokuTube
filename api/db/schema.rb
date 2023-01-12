@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_10_112919) do
+ActiveRecord::Schema.define(version: 2023_01_12_041153) do
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "room_id", null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2023_01_10_112919) do
     t.string "name", null: false
     t.string "email", null: false
     t.text "introduction"
-    t.boolean "admin", default: false, null: false
+    t.boolean "guest", default: false, null: false
     t.boolean "is_deleated", default: false, null: false
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
