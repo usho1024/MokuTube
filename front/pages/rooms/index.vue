@@ -17,7 +17,7 @@
                 <v-tab
                   v-for="menu in menus"
                   :key="menu.title"
-                  @click="getRooms(menu.query)"
+                  @click="getRooms(menu.type)"
                 >
                   {{ menu.title }}
                 </v-tab>
@@ -26,7 +26,7 @@
           </v-toolbar>
 
           <v-tabs-items v-model="tab">
-            <v-tab-item v-for="menu in menus" :key="menu.query">
+            <v-tab-item v-for="menu in menus" :key="menu.type">
               <v-divider />
               <v-sheet v-if="rooms.length" class="grey lighten-4 px-3 pt-5">
                 <v-row no-gutters>
@@ -74,7 +74,7 @@ export default {
     await $axios
       .$get('/api/v1/rooms', {
         params: {
-          query: 'new',
+          type: 'recent',
         },
       })
       .then((response) => (rooms = response))
@@ -84,18 +84,18 @@ export default {
     return {
       tab: null,
       menus: [
-        { title: '作成日時が新しい順', query: 'new' },
-        { title: 'ユーザーが多い順', query: 'active' },
-        { title: '公式ルーム', query: 'official' },
+        { title: '作成日時が新しい順', type: 'recent' },
+        { title: 'ユーザーが多い順', type: 'active' },
+        { title: '公式ルーム', type: 'official' },
       ],
     }
   },
   methods: {
-    async getRooms(query) {
+    async getRooms(type) {
       await this.$axios
         .get('/api/v1/rooms', {
           params: {
-            query,
+            type,
           },
         })
         .then((response) => (this.rooms = response.data))
