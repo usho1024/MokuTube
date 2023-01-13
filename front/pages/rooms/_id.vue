@@ -102,6 +102,7 @@ export default {
   layout: 'room',
   async asyncData({ $axios, route }) {
     const chatMessages = []
+    let roomUsers, room
     await $axios
       .$get('/api/v1/messages', {
         params: {
@@ -109,7 +110,6 @@ export default {
         },
       })
       .then((response) => chatMessages.push(...response.reverse()))
-    let roomUsers
     await $axios
       .$get('/api/v1/rooms_users', {
         params: {
@@ -117,7 +117,6 @@ export default {
         },
       })
       .then((response) => (roomUsers = response))
-    let room
     await $axios
       .$get(`/api/v1/rooms/${route.params.id}`)
       .then((response) => (room = response))

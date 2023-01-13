@@ -4,9 +4,15 @@
       <v-col xl="8">
         <v-card>
           <v-toolbar>
-            <v-toolbar-title class="text-subtitle-1"
-              >ルーム一覧</v-toolbar-title
+            <v-toolbar-title
+              class="text-subtitle-1 blue--text text--accent-3 font-weight-bold"
             >
+              現在
+              <span class="mx-2">
+                {{ users }}
+              </span>
+              人のユーザーがもくもく中．．．✍️
+            </v-toolbar-title>
 
             <v-spacer />
 
@@ -65,7 +71,7 @@
               >
                 <p class="text-h6">Sorry, Active Room Not Found...</p>
                 <p>現在、ユーザーが利用しているルームは存在しません😢</p>
-                <p>お手数ですが他のタブからルーム一覧をご確認ください</p>
+                <p>お手数ですが他のタブからルーム一覧をご確認ください🙇‍♀️</p>
               </v-sheet>
             </v-tab-item>
           </v-tabs-items>
@@ -79,8 +85,7 @@
 export default {
   name: 'RoomsIndex',
   async asyncData({ $axios }) {
-    let rooms
-    let count
+    let rooms, count, users
     await $axios
       .$get('/api/v1/rooms', {
         params: {
@@ -90,8 +95,9 @@ export default {
       .then((response) => {
         rooms = response.rooms
         count = response.count
+        users = response.users
       })
-    return { rooms, count }
+    return { rooms, count, users }
   },
   data() {
     return {
@@ -123,6 +129,7 @@ export default {
         .then((response) => {
           this.rooms = response.data.rooms
           this.count = response.data.count
+          this.users = response.data.users
           this.currentTab = type
         })
     },
@@ -136,6 +143,7 @@ export default {
         })
         .then((response) => {
           this.rooms = response.data.rooms
+          this.users = response.data.users
           window.scrollTo({ top: 0, behavior: 'smooth' })
         })
     },
