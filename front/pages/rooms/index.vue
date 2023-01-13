@@ -47,6 +47,15 @@
                     />
                   </v-col>
                 </v-row>
+
+                <div class="text-center pt-5 pb-10">
+                  <v-pagination
+                    v-model="page"
+                    :length="length"
+                    total-visible="10"
+                    @input="pageChange"
+                  ></v-pagination>
+                </div>
               </v-sheet>
 
               <v-sheet
@@ -54,7 +63,7 @@
                 height="50vh"
                 class="pa-10 grey--text text--darken-1"
               >
-                <p class="text-h6">Sorry, Room Not Found...</p>
+                <p class="text-h6">Sorry, Active Room Not Found...</p>
                 <p>現在、ユーザーが利用しているルームは存在しません😢</p>
                 <p>お手数ですが他のタブからルーム一覧をご確認ください</p>
               </v-sheet>
@@ -71,24 +80,36 @@ export default {
   name: 'RoomsIndex',
   async asyncData({ $axios }) {
     let rooms
+    let count
     await $axios
       .$get('/api/v1/rooms', {
         params: {
           type: 'official',
         },
       })
-      .then((response) => (rooms = response))
-    return { rooms }
+      .then((response) => {
+        rooms = response.rooms
+        count = response.count
+      })
+    return { rooms, count }
   },
   data() {
     return {
       tab: null,
+      currentTab: 'official',
       menus: [
         { title: '公式ルーム', type: 'official' },
         { title: 'ユーザーが多い順', type: 'active' },
         { title: '作成日時が新しい順', type: 'recent' },
       ],
+      page: 1,
+      pageSize: 30,
     }
+  },
+  computed: {
+    length() {
+      return Math.ceil(this.count / this.pageSize)
+    },
   },
   methods: {
     async getRooms(type) {
@@ -96,9 +117,27 @@ export default {
         .get('/api/v1/rooms', {
           params: {
             type,
+            page_number: 1,
           },
         })
-        .then((response) => (this.rooms = response.data))
+        .then((response) => {
+          this.rooms = response.data.rooms
+          this.count = response.data.count
+          this.currentTab = type
+        })
+    },
+    async pageChange(pageNumber) {
+      await this.$axios
+        .get('/api/v1/rooms', {
+          params: {
+            type: this.currentTab,
+            page_number: pageNumber,
+          },
+        })
+        .then((response) => {
+          this.rooms = response.data.rooms
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        })
     },
   },
 }

@@ -14,6 +14,7 @@ class Room < ApplicationRecord
       allow_blank: true
     }
 
-  scope :recent, -> { order(created_at: :desc).limit(100).includes([:user, :room_image]) }
-  scope :active, -> { find(RoomsUser.group(:room_id).order('count(room_id) desc').pluck(:room_id)) }
+    scope :active, -> (page_number) { find(RoomsUser.group(:room_id).order('count(room_id) desc').pluck(:room_id)).slice(30 * (page_number - 1), 30) }
+    scope :recent, -> (page_number) { order(created_at: :desc).includes([:user, :room_image]).slice(30 * (page_number - 1), 30) }
+    scope :count_active, -> { find(RoomsUser.group(:room_id).pluck(:room_id)).count }
 end

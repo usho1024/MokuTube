@@ -2,15 +2,20 @@ class Api::V1::RoomsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    data = {}
+    page_number = params[:page_number].to_i
     case params[:type]
-    when 'recent'
-      rooms = Room.recent
-    when 'active'
-      rooms = Room.active
     when 'official'
-      rooms = User.admin_room
+      data[:rooms] = User.admin_room
+      data[:count] = data[:rooms].count
+    when 'active'
+      data[:rooms] = Room.active(page_number)
+      data[:count] = Room.count_active
+    when 'recent'
+      data[:rooms] = Room.recent(page_number)
+      data[:count] = Room.count
     end
-    rooms.map do |room|
+    data[:rooms].map do |room|
       room.host = {
         name: room.user.name,
         avatar: room.user.avatar.thumb.url
@@ -21,7 +26,7 @@ class Api::V1::RoomsController < ApplicationController
       }
       room.active_users = room.rooms_users.count
     end
-    render json: rooms
+    render json: data
   end
 
   def show
