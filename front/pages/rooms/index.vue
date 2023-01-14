@@ -42,15 +42,7 @@
                     cols="6"
                     class="py-0 px-3 mb-5"
                   >
-                    <card-room
-                      :room-id="room.id"
-                      :room-name="room.name"
-                      :room-image="room.image.name"
-                      :host-name="room.host.name"
-                      :host-avatar="room.host.avatar"
-                      :active-users="room.active_users"
-                      :number-of-seats="room.image.number_of_seats"
-                    />
+                    <card-room :room="room" />
                   </v-col>
                 </v-row>
 
@@ -69,7 +61,6 @@
                 height="50vh"
                 class="pa-10 grey--text text--darken-1"
               >
-                <p class="text-h6">Sorry, Active Room Not Found...</p>
                 <p>現在、ユーザーが利用しているルームは存在しません😢</p>
                 <p>お手数ですが他のタブからルーム一覧をご確認ください🙇‍♀️</p>
               </v-sheet>

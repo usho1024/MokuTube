@@ -1,10 +1,10 @@
 <template>
-  <v-card nuxt :to="`/rooms/${roomId}`">
+  <v-card nuxt :to="`/rooms/${room.id}`">
     <v-row no-gutters>
       <v-col cols="2">
         <div class="pa-1">
           <v-img
-            :src="require(`~/assets/img/room/thumb/${roomImage}.png`)"
+            :src="require(`~/assets/img/room/thumb/${room.image.name}.png`)"
             height="88"
           />
         </div>
@@ -16,21 +16,28 @@
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="text-truncate text-body-1">
-              {{ roomName }}
+              {{ room.name }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item class="grey--text text--darken-2">
           <v-list-item-avatar size="30" class="mr-0 mr-2">
-            <v-img :src="hostAvatar" />
+            <v-img :src="room.host.avatar" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title class="grey--text text--darken-2 text-truncate">
-              {{ hostName }}
+            <v-list-item-title class="grey--text text--darken-2">
+              {{ room.host.name }}
             </v-list-item-title>
           </v-list-item-content>
-          <v-icon class="mr-3"> mdi-account-multiple-check </v-icon>
-          <span> {{ activeUsers }} / {{ numberOfSeats }} </span>
+          <div class="ml-6 mr-3">
+            <v-row justify="end">
+              <span class="mr-5">{{ dateFormat(room.created_at) }}</span>
+              <v-icon class="mr-2">mdi-account-multiple-check</v-icon>
+              <span>
+                {{ room.active_users }} / {{ room.image.number_of_seats }}
+              </span>
+            </v-row>
+          </div>
         </v-list-item>
       </v-col>
     </v-row>
@@ -40,33 +47,20 @@
 <script>
 export default {
   props: {
-    roomId: {
-      type: Number,
+    room: {
+      type: Object,
       default: null,
     },
-    roomName: {
-      type: String,
-      default: null,
-    },
-    roomImage: {
-      type: String,
-      default: null,
-    },
-    hostName: {
-      type: String,
-      default: null,
-    },
-    hostAvatar: {
-      type: String,
-      default: null,
-    },
-    activeUsers: {
-      type: Number,
-      default: 0,
-    },
-    numberOfSeats: {
-      type: Number,
-      default: null,
+  },
+  computed: {
+    dateFormat() {
+      return (date) => {
+        const dateTimeFormat = new Intl.DateTimeFormat('ja', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        })
+        return dateTimeFormat.format(new Date(date))
+      }
     },
   },
 }

@@ -30,7 +30,7 @@
             <v-list-item-title>{{ user.name }}</v-list-item-title>
           </v-list-item>
         </template>
-        <span>ユーザー詳細ページへ移動</span>
+        <span>クリックでユーザー詳細を表示</span>
       </v-tooltip>
       <v-list-item>
         <v-list-item-icon class="mr-3">
