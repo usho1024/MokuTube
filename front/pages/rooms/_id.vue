@@ -35,9 +35,7 @@
             <list-message
               v-for="(message, i) in chatMessages"
               :key="`message-${i}`"
-              :body="message.body"
-              :name="message.sender.name"
-              :avatar="message.sender.avatar"
+              :message="message"
             />
           </v-sheet>
 

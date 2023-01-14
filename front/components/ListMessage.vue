@@ -1,35 +1,18 @@
 <template>
-  <div
-    class="px-4 mb-4"
-  >
-    <v-row
-      no-gutters
-    >
-      <v-col
-        cols="1"
-        align-self="start"
-      >
-        <v-avatar
-          size="35px"
-        >
-          <v-img :src="avatar"/>
+  <div class="px-4 mb-4">
+    <v-row no-gutters>
+      <v-col cols="1" align-self="start">
+        <v-avatar size="35px">
+          <v-img :src="message.sender.avatar" />
         </v-avatar>
       </v-col>
-      <v-col
-        cols="11"
-      >
-        <div
-          class="ml-3"
-        >
-          <span
-            class="grey--text text--darken-1 mr-2"
-          >
-            {{ name }}
+      <v-col cols="11">
+        <div class="ml-3">
+          <span class="grey--text text--darken-1 mr-2">
+            {{ message.sender.name }}
           </span>
-          <span
-            class="grey--text text--darken-4"
-          >
-            {{ body }}
+          <span class="grey--text text--darken-4">
+            {{ message.body }}
           </span>
         </div>
       </v-col>
@@ -40,18 +23,10 @@
 <script>
 export default {
   props: {
-    body: {
-      type: String,
-      default: null
+    message: {
+      type: Object,
+      default: null,
     },
-    name: {
-      type: String,
-      default: null
-    },
-    avatar: {
-      type: String,
-      default: null
-    }
-  }
+  },
 }
 </script>
