@@ -62,7 +62,7 @@
                 class="pa-10 grey--text text--darken-1"
               >
                 <p>現在、ユーザーが利用しているルームは存在しません😢</p>
-                <p>お手数ですが他のタブからルーム一覧をご確認ください🙇‍♀️</p>
+                <p>お手数ですが他のタブからルーム一覧をご確認ください</p>
               </v-sheet>
             </v-tab-item>
           </v-tabs-items>
@@ -125,6 +125,7 @@ export default {
         })
     },
     async pageChange(pageNumber) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       await this.$axios
         .get('/api/v1/rooms', {
           params: {
@@ -135,7 +136,6 @@ export default {
         .then((response) => {
           this.rooms = response.data.rooms
           this.users = response.data.users
-          window.scrollTo({ top: 0, behavior: 'smooth' })
         })
     },
   },

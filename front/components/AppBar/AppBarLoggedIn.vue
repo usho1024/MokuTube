@@ -30,6 +30,7 @@ export default {
       menus: [
         { name: 'ルーム一覧', link: 'rooms' },
         { name: 'ルーム作成', link: 'rooms/create' },
+        { name: 'マイページ', link: 'mypage' },
       ],
     }
   },
