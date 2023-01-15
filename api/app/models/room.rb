@@ -9,8 +9,12 @@ class Room < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   validates :name, presence: true,
-                   length: {
-                     maximum: 30,
-                     allow_blank: true
-                   }
+    length: {
+      maximum: 30,
+      allow_blank: true
+    }
+
+    scope :active, -> (page_number) { find(RoomsUser.group(:room_id).order('count(room_id) desc').pluck(:room_id)).slice(30 * (page_number - 1), 30) }
+    scope :recent, -> (page_number) { order(created_at: :desc).includes([:user, :room_image]).slice(30 * (page_number - 1), 30) }
+    scope :count_active, -> { find(RoomsUser.group(:room_id).pluck(:room_id)).count }
 end

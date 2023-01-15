@@ -13,9 +13,7 @@
       v-for="(roomUser, i) in roomUsers"
       :key="`roomUser-${i}`"
       :size="size"
-      :x="roomUser.x_coord"
-      :y="roomUser.y_coord"
-      :user="roomUser.detail"
+      :room-user="roomUser"
     />
   </div>
 </template>

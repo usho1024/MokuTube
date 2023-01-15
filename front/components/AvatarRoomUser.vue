@@ -8,40 +8,52 @@
             :width="size"
             :height="size"
             class="avatar"
-            :style="{ transform: `translate(${x}px, ${y}px)` }"
+            :style="{
+              transform: `translate(${roomUser.x_coord}px, ${roomUser.y_coord}px)`,
+            }"
             v-on="{ ...tooltip, ...menu }"
           >
             <v-avatar :size="size">
-              <v-img :src="user.avatar" />
+              <v-img :src="roomUser.detail.avatar" />
             </v-avatar>
           </v-btn>
         </template>
-        <span>{{ user.name }}</span>
+        <span>{{ roomUser.detail.name }}</span>
       </v-tooltip>
     </template>
 
-    <v-card min-width="200">
-      <v-tooltip top>
-        <template #activator="{ on }">
-          <v-list-item nuxt :to="`/users/${user.id}`" v-on="on">
-            <v-list-item-icon class="mr-3">
-              <v-icon size="22">mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ user.name }}</v-list-item-title>
-          </v-list-item>
-        </template>
-        <span>ユーザー詳細ページへ移動</span>
-      </v-tooltip>
+    <v-list dense min-width="200">
+      <v-list-item>
+        <v-list-item-icon class="mr-3">
+          <v-icon size="22">mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title class="text-caption">{{
+          roomUser.detail.name
+        }}</v-list-item-title>
+      </v-list-item>
       <v-list-item>
         <v-list-item-icon class="mr-3">
           <v-icon size="22">mdi-lead-pencil</v-icon>
         </v-list-item-icon>
-        <v-list-item-title v-if="user.work" class="text-body-1">{{
-          user.work
+        <v-list-item-title v-if="roomUser.detail.work" class="text-caption">{{
+          roomUser.detail.work
         }}</v-list-item-title>
-        <v-list-item-title v-else class="text-body-1">未設定</v-list-item-title>
+        <v-list-item-title v-else class="text-caption"
+          >未設定</v-list-item-title
+        >
       </v-list-item>
-    </v-card>
+      <v-list-item>
+        <v-list-item-icon class="mr-3">
+          <v-icon size="22">mdi-database-clock</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title class="text-caption">{{
+          secToTime(roomUser.detail.time)
+        }}</v-list-item-title>
+      </v-list-item>
+      <v-list-item>
+        <dialog-user-detail />
+      </v-list-item>
+    </v-list>
   </v-menu>
 </template>
 
@@ -52,17 +64,17 @@ export default {
       type: Number,
       default: null,
     },
-    x: {
-      type: Number,
-      default: null,
-    },
-    y: {
-      type: Number,
-      default: null,
-    },
-    user: {
+    roomUser: {
       type: Object,
       default: null,
+    },
+  },
+  methods: {
+    secToTime(rawsec) {
+      const min = String(Math.trunc(rawsec / 60) % 60).padStart(2, 0)
+      const hour = String(Math.trunc(rawsec / 3600)).padStart(2, 0)
+      const time = hour + '時間' + min + '分'
+      return time
     },
   },
 }

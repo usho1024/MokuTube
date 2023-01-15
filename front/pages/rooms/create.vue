@@ -42,10 +42,7 @@
                   class="pa-2"
                 >
                   <card-room-image
-                    :id="roomImage.id"
-                    :name="roomImage.name"
-                    :image-name="roomImage.imageName"
-                    :number-of-seats="roomImage.numberOfSeats"
+                    :room-image="roomImage"
                     @setImage="setImage"
                   />
                 </v-col>

@@ -3,30 +3,69 @@
     <v-row justify="center">
       <v-col xl="8">
         <v-card>
-          <v-subheader>ルーム一覧</v-subheader>
+          <v-toolbar>
+            <v-toolbar-title
+              class="text-subtitle-1 blue--text text--accent-3 font-weight-bold"
+            >
+              現在
+              <span class="mx-2">
+                {{ users }}
+              </span>
+              人のユーザーがもくもく中．．．✍️
+            </v-toolbar-title>
 
-          <v-divider />
+            <v-spacer />
 
-          <v-sheet class="grey lighten-4 px-3 pt-5">
-            <v-row no-gutters>
-              <v-col
-                v-for="(room, i) in rooms"
-                :key="`room-${i}`"
-                cols="6"
-                class="py-0 px-3 mb-5"
+            <template #extension>
+              <v-tabs v-model="tab" align-with-title>
+                <v-tabs-slider color="blue"></v-tabs-slider>
+
+                <v-tab
+                  v-for="menu in menus"
+                  :key="menu.title"
+                  @click="getRooms(menu.type)"
+                >
+                  {{ menu.title }}
+                </v-tab>
+              </v-tabs>
+            </template>
+          </v-toolbar>
+
+          <v-tabs-items v-model="tab">
+            <v-tab-item v-for="menu in menus" :key="menu.type">
+              <v-divider />
+              <v-sheet v-if="rooms.length" class="grey lighten-4 px-3 pt-5">
+                <v-row no-gutters>
+                  <v-col
+                    v-for="room in rooms"
+                    :key="room.id"
+                    cols="6"
+                    class="py-0 px-3 mb-5"
+                  >
+                    <card-room :room="room" />
+                  </v-col>
+                </v-row>
+
+                <div class="text-center pt-5 pb-10">
+                  <v-pagination
+                    v-model="page"
+                    :length="length"
+                    total-visible="10"
+                    @input="pageChange"
+                  ></v-pagination>
+                </div>
+              </v-sheet>
+
+              <v-sheet
+                v-else
+                height="50vh"
+                class="pa-10 grey--text text--darken-1"
               >
-                <card-room
-                  :room-id="room.id"
-                  :room-name="room.name"
-                  :room-image="room.image.name"
-                  :host-name="room.host.name"
-                  :host-avatar="room.host.avatar"
-                  :active-users="room.active_users"
-                  :number-of-seats="room.image.number_of_seats"
-                />
-              </v-col>
-            </v-row>
-          </v-sheet>
+                <p>現在、ユーザーが利用しているルームは存在しません😢</p>
+                <p>お手数ですが他のタブからルーム一覧をご確認ください🙇‍♀️</p>
+              </v-sheet>
+            </v-tab-item>
+          </v-tabs-items>
         </v-card>
       </v-col>
     </v-row>
@@ -37,9 +76,68 @@
 export default {
   name: 'RoomsIndex',
   async asyncData({ $axios }) {
-    let rooms
-    await $axios.$get('/api/v1/rooms').then((response) => (rooms = response))
-    return { rooms }
+    let rooms, count, users
+    await $axios
+      .$get('/api/v1/rooms', {
+        params: {
+          type: 'official',
+        },
+      })
+      .then((response) => {
+        rooms = response.rooms
+        count = response.count
+        users = response.users
+      })
+    return { rooms, count, users }
+  },
+  data() {
+    return {
+      tab: null,
+      currentTab: 'official',
+      menus: [
+        { title: '公式ルーム', type: 'official' },
+        { title: 'ユーザーが多い順', type: 'active' },
+        { title: '作成日時が新しい順', type: 'recent' },
+      ],
+      page: 1,
+      pageSize: 30,
+    }
+  },
+  computed: {
+    length() {
+      return Math.ceil(this.count / this.pageSize)
+    },
+  },
+  methods: {
+    async getRooms(type) {
+      await this.$axios
+        .get('/api/v1/rooms', {
+          params: {
+            type,
+            page_number: 1,
+          },
+        })
+        .then((response) => {
+          this.rooms = response.data.rooms
+          this.count = response.data.count
+          this.users = response.data.users
+          this.currentTab = type
+        })
+    },
+    async pageChange(pageNumber) {
+      await this.$axios
+        .get('/api/v1/rooms', {
+          params: {
+            type: this.currentTab,
+            page_number: pageNumber,
+          },
+        })
+        .then((response) => {
+          this.rooms = response.data.rooms
+          this.users = response.data.users
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        })
+    },
   },
 }
 </script>

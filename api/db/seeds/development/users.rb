@@ -2,7 +2,6 @@ User.create!(
   name: "admin",
   email: "admin@example.com",
   password: "password",
-  admin: true
 )
 
 10.times do |n|

@@ -6,7 +6,7 @@ export default {
   head: {
     title: 'app',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
@@ -14,17 +14,14 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/sass/main.scss'
-  ],
+  css: ['~/assets/sass/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/common',
     'plugins/axios',
     'plugins/vue-youtube',
     'plugins/persistedState.client',
@@ -37,7 +34,8 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -45,12 +43,12 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http:localhost:3000'
+    baseURL: 'http:localhost:3000',
   },
 
   auth: {
@@ -58,7 +56,7 @@ export default {
       login: '/login',
       logout: '/',
       callback: false,
-      home: '/rooms'
+      home: '/rooms',
     },
     strategies: {
       local: {
@@ -66,20 +64,20 @@ export default {
           login: {
             url: 'api/v1/auth/sign_in',
             method: 'post',
-            propertyName: 'token'
+            propertyName: 'token',
           },
           logout: {
             url: '/api/v1/auth/sign_out',
-            method: 'delete'
+            method: 'delete',
           },
-          user: false
-        }
-      }
-    }
+          user: false,
+        },
+      },
+    },
   },
 
   router: {
-    middleware: ['auth']
+    middleware: ['auth'],
   },
 
   vuetify: {
@@ -94,10 +92,10 @@ export default {
           warning: 'FEB65E',
           error: 'FB8678',
           background: 'f6f6f4',
-          appblue: '1867C0'
-        }
-      }
-    }
+          appblue: '1867C0',
+        },
+      },
+    },
   },
 
   // Doc: https://nuxt-community.github.io/nuxt-i18n/basic-usage.html#nuxt-link
@@ -113,9 +111,13 @@ export default {
       silentFallbackWarn: true,
       messages: {
         ja: require('./locales/ja.json'),
-        en: require('./locales/en.json')
-      }
-    }
+        en: require('./locales/en.json'),
+      },
+    },
+  },
+
+  moment: {
+    locales: ['ja'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

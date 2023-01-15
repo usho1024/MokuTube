@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="mb-5 font-weight-bold text-body-1">
+    <div class="mb-5 font-weight-bold text-body-1 grey--text text--darken-1">
       <span class="mr-5">StayTime:</span>
-      <span class="mr-10">{{ formatTime }}</span>
+      <span class="mr-10">{{ stayTime }}</span>
       <v-btn v-show="timerOn" width="100" class="error mr-3" @click="stop"
         >一時停止</v-btn
       >
@@ -31,8 +31,8 @@ export default {
     }
   },
   computed: {
-    formatTime() {
-      return this.$SecToTime(this.sec)
+    stayTime() {
+      return this.secToTime(this.sec)
     },
   },
   mounted() {
@@ -51,6 +51,13 @@ export default {
     stop() {
       this.timerOn = false
       clearInterval(this.timerObj)
+    },
+    secToTime(rawsec) {
+      const sec = String(rawsec % 60).padStart(2, 0)
+      const min = String(Math.trunc(rawsec / 60) % 60).padStart(2, 0)
+      const hour = String(Math.trunc(rawsec / 3600)).padStart(2, 0)
+      const time = hour + ':' + min + ':' + sec
+      return time
     },
   },
 }
