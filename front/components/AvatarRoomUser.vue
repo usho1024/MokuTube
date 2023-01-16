@@ -51,7 +51,7 @@
         }}</v-list-item-title>
       </v-list-item>
       <v-list-item>
-        <dialog-user-detail :id="roomUser.detail.id" />
+        <dialog-introduction :introduction="roomUser.detail.introduction" />
       </v-list-item>
     </v-list>
   </v-menu>

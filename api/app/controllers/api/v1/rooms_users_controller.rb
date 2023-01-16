@@ -9,7 +9,8 @@ class Api::V1::RoomsUsersController < ApplicationController
         name: room_user.user.name,
         avatar: room_user.user.avatar.thumb.url,
         work: room_user.user.work,
-        time: room_user.user.total_stay_time
+        time: room_user.user.total_stay_time,
+        introduction: room_user.user.introduction
       }
     end
     render json: room_users
