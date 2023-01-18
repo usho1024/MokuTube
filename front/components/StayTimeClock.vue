@@ -34,9 +34,15 @@ export default {
     stayTime() {
       return this.secToTime(this.sec)
     },
+    currentUser() {
+      return this.$store.state.currentUser
+    },
   },
   mounted() {
     this.start()
+  },
+  destroyed() {
+    this.addStayTime()
   },
   methods: {
     countUp() {
@@ -58,6 +64,11 @@ export default {
       const hour = String(Math.trunc(rawsec / 3600)).padStart(2, 0)
       const time = hour + ':' + min + ':' + sec
       return time
+    },
+    addStayTime() {
+      this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, {
+        stay_time: this.sec,
+      })
     },
   },
 }

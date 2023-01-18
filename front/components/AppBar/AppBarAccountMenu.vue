@@ -40,7 +40,7 @@ export default {
     return {
       menus: [
         {
-          name: '情報を編集',
+          name: 'マイページ',
           icon: 'mdi-account-edit',
           method: this.goToMypage,
         },
@@ -67,7 +67,7 @@ export default {
       })
     },
     goToMypage() {
-      this.$router.push('/users/mypage')
+      this.$router.push('/mypage')
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-card nuxt :to="`/rooms/${room.id}`">
+  <v-card @click="goToRoom">
     <v-row no-gutters>
       <v-col cols="2">
         <div class="pa-1">
@@ -32,10 +32,20 @@
           <div class="ml-6 mr-3">
             <v-row justify="end">
               <span class="mr-5">{{ dateFormat(room.created_at) }}</span>
-              <v-icon class="mr-2">mdi-account-multiple-check</v-icon>
-              <span>
-                {{ room.active_users }} / {{ room.image.number_of_seats }}
-              </span>
+              <div v-if="room.active_users === room.image.number_of_seats">
+                <v-icon color="red" class="mr-2"
+                  >mdi-account-multiple-check</v-icon
+                >
+                <span class="red--text">
+                  {{ room.active_users }} / {{ room.image.number_of_seats }}
+                </span>
+              </div>
+              <div v-else>
+                <v-icon class="mr-2">mdi-account-multiple-check</v-icon>
+                <span>
+                  {{ room.active_users }} / {{ room.image.number_of_seats }}
+                </span>
+              </div>
             </v-row>
           </div>
         </v-list-item>
@@ -57,6 +67,15 @@ export default {
   methods: {
     dateFormat(date) {
       return moment(date).fromNow()
+    },
+    goToRoom() {
+      if (this.room.active_users === this.room.image.number_of_seats) {
+        alert(
+          '只今満室のため一時的に入室できません。\n恐れ入りますが他のルームをご利用ください。'
+        )
+      } else {
+        this.$router.push(`/rooms/${this.room.id}`)
+      }
     },
   },
 }
