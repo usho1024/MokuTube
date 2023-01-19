@@ -11,15 +11,13 @@
           >
             <v-row align="center" justify="center" :style="{ height: '450px' }">
               <v-col cols="12" class="text-center">
-                <p class="text-h4 mt-15 mb-10">独学、だけどひとりじゃない。</p>
+                <p class="text-h4 mt-15 mb-10">
+                  独学、だけどあなたはひとりじゃない。
+                </p>
                 <p class="text-h5 mb-10">
                   MokuTube（もくつべ）は会員登録不要で使えるオンライン自習室サービスです
                 </p>
-                <v-btn
-                  x-large
-                  color="teal lighten-1"
-                  class="mb-3"
-                  @click="getStarted"
+                <v-btn x-large color="teal" class="mb-3" @click="getStarted"
                   >今すぐ使ってみる！</v-btn
                 >
                 <p class="text-subtitle-1 mb-10">
@@ -35,6 +33,19 @@
               </v-col>
             </v-row>
           </v-img>
+          <v-sheet color="blue lighten-5">
+            <v-row no-gutters>
+              <v-col v-for="image in images" :key="image" cols="3">
+                <div class="px-3 py-5">
+                  <v-img
+                    :src="require(`~/assets/img/room/thumb/${image}.png`)"
+                    contain
+                    height="200"
+                  />
+                </div>
+              </v-col>
+            </v-row>
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>
@@ -51,6 +62,11 @@ export default {
       activeUsers = response
     })
     return { activeUsers }
+  },
+  data() {
+    return {
+      images: ['kitchen', 'cafe', 'rest-area', 'private-room'],
+    }
   },
   computed: {
     currentUser() {
