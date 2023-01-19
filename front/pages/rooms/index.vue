@@ -9,7 +9,7 @@
             >
               現在
               <span class="mx-2">
-                {{ users }}
+                {{ activeUsers }}
               </span>
               人のユーザーがもくもく中．．．✍️
             </v-toolbar-title>
@@ -76,7 +76,7 @@
 export default {
   name: 'RoomsIndex',
   async asyncData({ $axios }) {
-    let rooms, count, users
+    let rooms, count, activeUsers
     await $axios
       .$get('/api/v1/rooms', {
         params: {
@@ -86,9 +86,9 @@ export default {
       .then((response) => {
         rooms = response.rooms
         count = response.count
-        users = response.users
+        activeUsers = response.active_users
       })
-    return { rooms, count, users }
+    return { rooms, count, activeUsers }
   },
   data() {
     return {
@@ -120,7 +120,7 @@ export default {
         .then((response) => {
           this.rooms = response.data.rooms
           this.count = response.data.count
-          this.users = response.data.users
+          this.activeUsers = response.data.active_users
           this.currentTab = type
         })
     },
@@ -135,7 +135,7 @@ export default {
         })
         .then((response) => {
           this.rooms = response.data.rooms
-          this.users = response.data.users
+          this.activeUsers = response.data.active_users
         })
     },
   },
