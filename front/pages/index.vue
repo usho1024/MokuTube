@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0">
     <v-row justify="center" no-gutters>
-      <v-col xl="8" md="10">
+      <v-col xl="8" md="12">
         <v-card>
           <v-img
             dark
@@ -17,7 +17,11 @@
                 <p class="text-h5 mb-10">
                   MokuTube（もくつべ）は会員登録不要で使えるオンライン自習室サービスです
                 </p>
-                <v-btn x-large color="teal" class="mb-3" @click="getStarted"
+                <v-btn
+                  x-large
+                  color="teal accent-4"
+                  class="mb-3"
+                  @click="getStarted"
                   >今すぐ使ってみる！</v-btn
                 >
                 <p class="text-subtitle-1 mb-10">
@@ -33,18 +37,50 @@
               </v-col>
             </v-row>
           </v-img>
-          <v-sheet color="blue lighten-5">
-            <v-row no-gutters>
-              <v-col v-for="image in images" :key="image" cols="3">
-                <div class="px-3 py-5">
+          <v-sheet
+            color="blue lighten-5"
+            class="py-10 text-center text-h6 indigo--text text--darken-4"
+          >
+            <div class="mb-16">
+              <v-row no-gutters>
+                <v-col v-for="image in images" :key="image" cols="3">
                   <v-img
                     :src="require(`~/assets/img/room/thumb/${image}.png`)"
                     contain
                     height="200"
                   />
-                </div>
-              </v-col>
-            </v-row>
+                </v-col>
+              </v-row>
+            </div>
+            <section class="mb-16">
+              <p class="text-h5 title">How to use MokuTube？</p>
+              <p class="mb-5">MokuTubeの使い方はとってもシンプル</p>
+              <v-row no-gutters justify="center">
+                <v-col cols="3" class="text-left ml-2 mb-5">
+                  <div class="mb-1">
+                    <v-icon color="indigo darken-4">mdi-numeric-1-box</v-icon>
+                    ルーム一覧からルームを選ぶ
+                  </div>
+                  <div>
+                    <v-icon color="indigo darken-4">mdi-numeric-2-box</v-icon>
+                    席を選んで着席する
+                  </div>
+                </v-col>
+              </v-row>
+              <p>たったこれだけです</p>
+            </section>
+            <section>
+              <p class="text-h5 title">What is MokuTube useful for？</p>
+              <p class="mb-6">MokuTubeはあなたの独学を加速させます</p>
+              <v-row no-gutters justify="center">
+                <v-col cols="8" class="text-left ml-16">
+                  <p v-for="sellingPoint in sellingPoints" :key="sellingPoint">
+                    <v-icon color="green" class="mr-3">mdi-check-bold</v-icon
+                    >{{ sellingPoint }}
+                  </p>
+                </v-col>
+              </v-row>
+            </section>
           </v-sheet>
         </v-card>
       </v-col>
@@ -66,6 +102,12 @@ export default {
   data() {
     return {
       images: ['kitchen', 'cafe', 'rest-area', 'private-room'],
+      sellingPoints: [
+        'オンライン自習室なので自宅から無料ですぐに使えます',
+        '同じ志を持った仲間が集まるので独学のモチベーションアップが期待できます',
+        'ルームの滞在時間が自動で記録されるので勉強時間の見える化ができます',
+        '',
+      ],
     }
   },
   computed: {
@@ -82,3 +124,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.title {
+  text-decoration: underline;
+  text-decoration-thickness: 0.5em;
+  text-decoration-color: rgba(0, 191, 165, 0.6);
+  text-underline-offset: -0.2em;
+  text-decoration-skip-ink: none;
+}
+</style>
