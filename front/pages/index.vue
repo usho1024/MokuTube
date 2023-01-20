@@ -37,6 +37,7 @@
               </v-col>
             </v-row>
           </v-img>
+
           <v-sheet
             color="blue lighten-5"
             class="py-10 text-center text-h6 indigo--text text--darken-4"
@@ -52,14 +53,15 @@
                 </v-col>
               </v-row>
             </div>
+
             <section class="mb-16">
               <p class="text-h5 title">How to use MokuTube？</p>
               <p class="mb-5">MokuTubeの使い方はとってもシンプル</p>
               <v-row no-gutters justify="center">
-                <v-col cols="3" class="text-left ml-2 mb-5">
+                <v-col cols="5" class="text-left ml-2 mb-5">
                   <div class="mb-1">
                     <v-icon color="indigo darken-4">mdi-numeric-1-box</v-icon>
-                    ルーム一覧からルームを選ぶ
+                    ルームを選ぶ、もしくは自分でルームを作成する
                   </div>
                   <div>
                     <v-icon color="indigo darken-4">mdi-numeric-2-box</v-icon>
@@ -69,17 +71,30 @@
               </v-row>
               <p>たったこれだけです</p>
             </section>
-            <section>
+
+            <section class="mb-16">
               <p class="text-h5 title">What is MokuTube useful for？</p>
               <p class="mb-6">MokuTubeはあなたの独学を加速させます</p>
               <v-row no-gutters justify="center">
-                <v-col cols="8" class="text-left ml-16">
+                <v-col cols="6" class="text-left">
                   <p v-for="sellingPoint in sellingPoints" :key="sellingPoint">
                     <v-icon color="green" class="mr-3">mdi-check-bold</v-icon
                     >{{ sellingPoint }}
                   </p>
                 </v-col>
               </v-row>
+            </section>
+
+            <section class="mb-16">
+              <p class="mb-8">さあ、一緒にもくもくしてみませんか？</p>
+              <v-btn
+                dark
+                x-large
+                color="teal accent-4"
+                class="mb-3"
+                @click="getStarted"
+                >今すぐ使ってみる！</v-btn
+              >
             </section>
           </v-sheet>
         </v-card>
@@ -104,9 +119,9 @@ export default {
       images: ['kitchen', 'cafe', 'rest-area', 'private-room'],
       sellingPoints: [
         'オンライン自習室なので自宅から無料ですぐに使えます',
-        '同じ志を持った仲間が集まるので独学のモチベーションアップが期待できます',
+        '同じ独学者が集まるので独学のモチベーション維持が期待できます',
         'ルームの滞在時間が自動で記録されるので勉強時間の見える化ができます',
-        '',
+        '勉強に疲れたと思ったらルーム内のBGM視聴とチャット機能を使ってリフレッシュしてみましょう',
       ],
     }
   },
