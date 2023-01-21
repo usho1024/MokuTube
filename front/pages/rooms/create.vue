@@ -142,6 +142,7 @@
 <script>
 export default {
   name: 'Create',
+  layout: 'room-create',
   data() {
     return {
       currentStep: 1,
