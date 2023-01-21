@@ -25,6 +25,7 @@
                         v-model="inputFile"
                         accept="image/png, image/jpeg"
                         hide-input
+                        prepend-icon="mdi-camera-plus-outline"
                         class="mb-3 ml-2"
                       />
                     </div>

@@ -70,6 +70,7 @@
                 </v-col>
               </v-row>
               <p>たったこれだけです</p>
+              <p>最短3クリックで始めることができます</p>
             </section>
 
             <section class="mb-16">
@@ -93,7 +94,7 @@
             </section>
 
             <section class="mb-16">
-              <p class="mb-8">さあ、一緒にもくもくしてみませんか？</p>
+              <p class="mb-8">さあ、あなたもMokuTuberになりませんか？</p>
               <v-btn
                 dark
                 x-large
