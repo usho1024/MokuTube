@@ -14,31 +14,46 @@
 
       <v-sheet class="pa-5">
         <v-form>
+          <v-row justify="center" class="my-5">
+            <v-avatar size="100">
+              <img :src="url" />
+              <v-overlay absolute>
+                <v-tooltip bottom>
+                  <template #activator="{ on }">
+                    <div v-on="on">
+                      <v-file-input
+                        v-model="inputFile"
+                        accept="image/png, image/jpeg"
+                        hide-input
+                        class="mb-3 ml-2"
+                      />
+                    </div>
+                  </template>
+                  <span>画像を追加</span>
+                </v-tooltip>
+              </v-overlay>
+            </v-avatar>
+          </v-row>
+
           <v-text-field
             v-model="name"
             counter="30"
             label="ユーザーネーム"
             class="mb-5"
-          ></v-text-field>
+          />
+
           <v-textarea
             v-model="introduction"
             counter="300"
             label="自己紹介文"
             class="mb-5"
-          ></v-textarea>
+          />
+
           <v-text-field
             v-model="work"
             counter="30"
             label="作業内容"
-            class="mb-5"
-          ></v-text-field>
-          <v-file-input
-            v-model="inputFile"
-            accept="image/png, image/jpeg"
-            label="アバターイメージをアップロードする"
-            chips
-            show-size
-            prepend-icon="mdi-camera"
+            class="mb-2"
           />
         </v-form>
       </v-sheet>
@@ -74,6 +89,20 @@ export default {
       inputFile: null,
     }
   },
+  computed: {
+    url() {
+      if (this.inputFile) {
+        return URL.createObjectURL(this.inputFile)
+      } else {
+        return this.user.avatar.url
+      }
+    },
+  },
+  watch: {
+    dialog() {
+      this.resetData()
+    },
+  },
   methods: {
     async updateUser() {
       const formData = new FormData()
@@ -93,9 +122,14 @@ export default {
             avatar: response.data.avatar,
           }
           this.$store.dispatch('getCurrentUser', user)
-          this.inputFile = null
           this.dialog = false
         })
+    },
+    resetData() {
+      this.name = this.user.name
+      this.introduction = this.user.introduction
+      this.work = this.user.work
+      this.inputFile = null
     },
   },
 }
