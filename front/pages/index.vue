@@ -58,7 +58,7 @@
               <p class="text-h5 title">How to use MokuTube？</p>
               <p class="mb-5">MokuTubeの使い方はとってもシンプル</p>
               <v-row no-gutters justify="center">
-                <v-col cols="5" class="text-left ml-2 mb-5">
+                <v-col cols="5" class="text-left ml-5 mb-5">
                   <div class="mb-1">
                     <v-icon color="indigo darken-4">mdi-numeric-1-box</v-icon>
                     ルームを選ぶ、もしくは自分でルームを作成する
@@ -75,11 +75,18 @@
             <section class="mb-16">
               <p class="text-h5 title">What is MokuTube useful for？</p>
               <p class="mb-6">MokuTubeはあなたの独学を加速させます</p>
-              <v-row no-gutters justify="center">
-                <v-col cols="6" class="text-left">
-                  <p v-for="sellingPoint in sellingPoints" :key="sellingPoint">
-                    <v-icon color="green" class="mr-3">mdi-check-bold</v-icon
-                    >{{ sellingPoint }}
+              <v-row
+                v-for="sellingPoint in sellingPoints"
+                :key="sellingPoint"
+                no-gutters
+                justify="center"
+              >
+                <v-col cols="1">
+                  <v-icon color="green" class="ml-12">mdi-check-bold</v-icon>
+                </v-col>
+                <v-col cols="7" class="text-left">
+                  <p>
+                    {{ sellingPoint }}
                   </p>
                 </v-col>
               </v-row>
@@ -121,7 +128,7 @@ export default {
         'オンライン自習室なので自宅から無料ですぐに使えます',
         '同じ独学者が集まるので独学のモチベーション維持が期待できます',
         'ルームの滞在時間が自動で記録されるので勉強時間の見える化ができます',
-        '勉強に疲れたと思ったらルーム内のBGM視聴とチャット機能を使ってリフレッシュしてみましょう',
+        '勉強に疲れたと思ったらルーム内のBGM視聴機能やチャット機能を使って\nリフレッシュしてみましょう',
       ],
     }
   },
