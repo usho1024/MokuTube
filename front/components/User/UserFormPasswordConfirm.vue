@@ -3,7 +3,7 @@
     v-model="setPassword"
     :rules="form.rules"
     :hint="form.hint"
-    label="パスワードを入力"
+    label="パスワードを確認"
     :placeholder="form.placeholder"
     :hide-details="!setValidation"
     :counter="setValidation"
@@ -19,41 +19,45 @@
 <script>
 export default {
   props: {
-    password: {
+    passwordConfirm: {
       type: String,
-      default: ''
+      default: '',
     },
     setValidation: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      show: false
+      show: false,
     }
   },
   computed: {
     setPassword: {
-      get () { return this.password },
-      set (newVal) { return this.$emit('update:password', newVal) }
+      get() {
+        return this.passwordConfirm
+      },
+      set(newVal) {
+        return this.$emit('update:passwordConfirm', newVal)
+      },
     },
-    form () {
+    form() {
       const min = '8文字以上'
       const msg = `${min}。半角英数字•ﾊｲﾌﾝ•ｱﾝﾀﾞｰﾊﾞｰが使えます`
-      const required = v => !!v || ''
-      const format = v => /^[\w-]{8,72}$/.test(v) || msg
+      const required = (v) => !!v || ''
+      const format = (v) => /^[\w-]{8,72}$/.test(v) || msg
 
       const rules = this.setValidation ? [format] : [required]
       const hint = this.setValidation ? msg : undefined
       const placeholder = this.setValidation ? min : undefined
       return { rules, hint, placeholder }
     },
-    toggle () {
+    toggle() {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
       const type = this.show ? 'text' : 'password'
       return { icon, type }
-    }
-  }
+    },
+  },
 }
 </script>

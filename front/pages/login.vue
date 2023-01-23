@@ -1,7 +1,11 @@
 <template>
   <user-form-card>
     <template #user-form-card-content>
-      <v-form v-model="isValid" @submit.prevent="loginWithAuthModule">
+      <v-form
+        v-model="isValid"
+        :disabled="loading"
+        @submit.prevent="loginWithAuthModule"
+      >
         <user-form-email :email.sync="input.params.email" />
         <user-form-password :password.sync="input.params.password" />
         <v-btn
@@ -10,7 +14,7 @@
           :loading="loading"
           block
           color="appblue"
-          class="white--text mt-5"
+          class="white--text"
         >
           ログインする
         </v-btn>
@@ -40,7 +44,6 @@ export default {
         }
         this.$store.dispatch('getCurrentUser', user)
       })
-      this.loading = false
     },
   },
 }
