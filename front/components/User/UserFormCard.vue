@@ -2,7 +2,7 @@
   <v-container class="pa-0">
     <v-row no-gutters justify="center">
       <v-col xl="3" md="5">
-        <v-card class="pa-8">
+        <v-card class="px-8 py-10">
           <v-row no-gutters class="mb-8">
             <v-col v-for="menu in menus" :key="menu.name" cols="6">
               <v-btn

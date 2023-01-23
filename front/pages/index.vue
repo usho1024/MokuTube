@@ -24,9 +24,10 @@
                   @click="getStarted"
                   >今すぐ使ってみる！</v-btn
                 >
-                <p class="text-subtitle-1 mb-10">
-                  ※パソコンからのみご利用いただけます
-                </p>
+                <div class="text-subtitle-1 mb-8">
+                  <div>※パソコンからのみご利用いただけます</div>
+                  <div>※ゲスト会員の有効期限は登録後24時間です</div>
+                </div>
                 <p class="text-h5">
                   現在
                   <span class="mx-2 font-weight-bold">
