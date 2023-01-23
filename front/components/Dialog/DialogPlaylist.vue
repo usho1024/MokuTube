@@ -55,7 +55,7 @@
         <v-divider />
 
         <v-card-actions>
-          <v-btn color="blue darken-3" text @click="dialogPlaylist = false">
+          <v-btn color="appblue" text @click="dialogPlaylist = false">
             保存して終了
           </v-btn>
         </v-card-actions>

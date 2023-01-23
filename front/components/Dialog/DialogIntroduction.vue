@@ -15,7 +15,7 @@
       <v-divider />
 
       <v-card-actions>
-        <v-btn color="primary" text @click="dialog = false">閉じる</v-btn>
+        <v-btn color="appblue" text @click="dialog = false">閉じる</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -62,10 +62,16 @@
       <v-divider />
 
       <v-card-actions>
-        <v-btn color="primary" width="100" class="mr-3" @click="updateUser">
+        <v-btn
+          dark
+          color="appblue"
+          width="100"
+          class="mr-3"
+          @click="updateUser"
+        >
           更新する
         </v-btn>
-        <v-btn color="primary" text width="100" @click="dialog = false"
+        <v-btn color="appblue" text width="100" @click="dialog = false"
           >閉じる</v-btn
         >
       </v-card-actions>
