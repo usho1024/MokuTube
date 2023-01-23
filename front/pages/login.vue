@@ -1,11 +1,7 @@
 <template>
   <user-form-card>
     <template #user-form-card-content>
-      <v-form
-        ref="form"
-        v-model="isValid"
-        @submit.prevent="loginWithAuthModule"
-      >
+      <v-form v-model="isValid" @submit.prevent="loginWithAuthModule">
         <user-form-email :email.sync="input.params.email" />
         <user-form-password :password.sync="input.params.password" />
         <v-btn
