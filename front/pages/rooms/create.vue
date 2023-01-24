@@ -12,12 +12,14 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-text-field
-              v-model="room.name"
-              :counter="30"
-              label="ルーム名を入力する"
-              class="mb-6"
-            />
+            <v-form @submit.prevent="stepUp">
+              <v-text-field
+                v-model="room.name"
+                :counter="30"
+                label="ルーム名を入力する"
+                class="mb-6"
+              />
+            </v-form>
 
             <div class="mb-2">
               <button-step-up :value="room.name" @btnClick="stepUp" />
@@ -32,17 +34,20 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-sheet outlined height="40vh" class="mb-6 pa-5 overflow-auto">
+            <v-sheet
+              height="40vh"
+              class="grey lighten-4 mb-6 pa-5 overflow-auto"
+            >
               <v-row>
                 <v-col
                   v-for="roomImage in roomImages"
-                  :id="`room-image-${roomImage.id}`"
                   :key="`roomImage-${roomImage.id}`"
                   cols="3"
                   class="pa-2"
                 >
                   <card-room-image
                     :room-image="roomImage"
+                    :selected-image-id="room.imageId"
                     @setImage="setImage"
                   />
                 </v-col>
@@ -145,8 +150,7 @@ export default {
   layout: 'room-create',
   data() {
     return {
-      currentStep: 1,
-      activeImage: null,
+      currentStep: 3,
       room: {
         name: null,
         imageId: null,
@@ -228,13 +232,6 @@ export default {
     setImage(imageId, imageName) {
       this.room.imageId = imageId
       this.room.imageName = imageName
-      if (this.activeImage) {
-        const oldEl = document.getElementById(`${this.activeImage}`)
-        oldEl.style.backgroundColor = null
-      }
-      this.activeImage = `room-image-${imageId}`
-      const newEl = document.getElementById(`${this.activeImage}`)
-      newEl.style.backgroundColor = '#82B1FF'
     },
     setBgm(bgmId, bgmName) {
       this.room.bgmId = bgmId
