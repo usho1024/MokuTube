@@ -54,13 +54,23 @@
               />
             </v-form>
 
-            <v-slider v-model="media" thumb-label dense class="mb-3">
-              <template #prepend>
-                <v-icon @click="toggle">
-                  {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
-                </v-icon>
-              </template>
-            </v-slider>
+            <v-row no-gutters class="mb-3">
+              <v-col cols="1">
+                <v-tooltip top>
+                  <template #activator="{ on }">
+                    <v-icon class="mt-1" v-on="on" @click="toggle">
+                      {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
+                    </v-icon>
+                  </template>
+                  <span>クリックでミュートの切り替え</span>
+                </v-tooltip>
+              </v-col>
+
+              <v-col cols="11">
+                <v-slider v-model="media" thumb-label dense />
+              </v-col>
+            </v-row>
+
             <stay-time-clock />
           </v-sheet>
         </v-card>
