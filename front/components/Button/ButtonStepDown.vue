@@ -3,7 +3,7 @@
     outlined
     width="100"
     color="yellow darken-4"
-    @click="$emit('btnClick')"
+    @click="$emit('stepDown')"
   >
     戻る
   </v-btn>

@@ -22,7 +22,7 @@
             </v-form>
 
             <div class="mb-2">
-              <button-step-up :value="room.name" @btnClick="stepUp" />
+              <button-step-up :value="room.name" @stepUp="stepUp" />
               <v-btn outlined exact nuxt color="yellow darken-4" to="/rooms"
                 >ルーム一覧に戻る</v-btn
               >
@@ -60,8 +60,8 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.imageName" @btnClick="stepUp" />
-              <button-step-down @btnClick="stepDown" />
+              <button-step-up :value="room.imageName" @stepUp="stepUp" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -83,8 +83,8 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.bgmName" @btnClick="stepUp" />
-              <button-step-down @btnClick="stepDown" />
+              <button-step-up :value="room.bgmName" @stepUp="stepUp" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -135,7 +135,7 @@
               >
                 O K
               </v-btn>
-              <button-step-down @btnClick="stepDown" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
         </v-stepper>
@@ -150,7 +150,7 @@ export default {
   layout: 'room-create',
   data() {
     return {
-      currentStep: 3,
+      currentStep: 1,
       room: {
         name: null,
         imageId: null,

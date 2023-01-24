@@ -5,7 +5,7 @@
     :disabled="!value"
     color="indigo"
     class="mr-5"
-    @click="$emit('btnClick')"
+    @click="$emit('stepUp')"
   >
     進む
   </v-btn>
