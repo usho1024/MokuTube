@@ -33,7 +33,7 @@ export default {
     goToRooms() {
       this.roomChannel.perform('unsubscribed')
       this.$nextTick(() => {
-        this.$router.push('/rooms')
+        this.$router.replace('/rooms')
       })
     },
   },

@@ -3,7 +3,7 @@ class Api::V1::RoomsController < ApplicationController
 
   def index
     data = {}
-    data[:users] = Room.count_active
+    data[:active_users] = RoomsUser.count
     page_number = params[:page_number].to_i
     case params[:type]
     when 'official'
@@ -11,7 +11,7 @@ class Api::V1::RoomsController < ApplicationController
       data[:count] = data[:rooms].count
     when 'active'
       data[:rooms] = Room.active(page_number)
-      data[:count] = data[:users]
+      data[:count] = Room.count_active
     when 'recent'
       data[:rooms] = Room.recent(page_number)
       data[:count] = Room.count

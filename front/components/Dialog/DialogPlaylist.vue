@@ -1,61 +1,38 @@
 <template>
   <div class="mb-10">
-    <v-btn outlined color="teal darken-2" @click="getPlayList">
+    <v-btn
+      :loading="loading"
+      outlined
+      color="teal darken-2"
+      @click="getPlayList"
+    >
       クリックでBGMリストを表示
     </v-btn>
 
-    <v-dialog v-model="dialogPlaylist" scrollable width="50%">
+    <v-dialog v-model="dialogPlaylist" width="50%">
       <v-card>
         <v-subheader>リストからBGMを選択してください</v-subheader>
-
         <v-divider />
-
-        <v-simple-table height="70vh">
-          <template #default>
-            <tbody>
-              <tr
-                v-for="item in playlist"
-                :id="`${item.snippet.resourceId.videoId}`"
-                :key="`${item.snippet.resourceId.videoId}`"
-              >
-                <td>
-                  <v-img :src="item.snippet.thumbnails.default.url" />
-                </td>
-                <td
-                  class="video-title"
-                  @click="
-                    selectVideo(
-                      item.snippet.resourceId.videoId,
-                      item.snippet.title
-                    )
-                  "
-                >
-                  {{ item.snippet.title }}
-                </td>
-                <td>
-                  <v-btn
-                    icon
-                    large
-                    color="#da1725"
-                    @click="
-                      playVideo(
-                        item.snippet.resourceId.videoId,
-                        item.snippet.title
-                      )
-                    "
-                  >
-                    <v-icon>mdi-youtube</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-
+        <v-sheet height="70vh" class="overflow-y-auto">
+          <card-video
+            v-for="video in playlist"
+            :key="`${video.snippet.resourceId.videoId}`"
+            :video="video"
+            :selected-video-id="selectedVideo.id"
+            @selectVideo="selectVideo"
+            @playVideo="playVideo"
+          />
+        </v-sheet>
         <v-divider />
-
+        <div class="px-6 pt-5 text-caption blue-grey--text text--darken-3">
+          選択中：
+          <span v-if="selectedVideo.title">
+            {{ selectedVideo.title }}
+          </span>
+          <span v-else>未選択</span>
+        </div>
         <v-card-actions>
-          <v-btn color="blue darken-3" text @click="dialogPlaylist = false">
+          <v-btn color="appblue" text @click="dialogPlaylist = false">
             保存して終了
           </v-btn>
         </v-card-actions>
@@ -90,9 +67,9 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      activeVideo: null,
       dialogPlaylist: false,
       dialogPlayVideo: false,
+      loading: false,
       playlist: null,
       url: 'https://www.googleapis.com/youtube/v3/playlistItems',
       params: {
@@ -114,35 +91,24 @@ export default {
   methods: {
     async getPlayList() {
       if (!this.playlist) {
+        this.loading = true
         await axios.get(this.url, { params: this.params }).then((response) => {
           this.playlist = response.data.items
+          this.loading = false
         })
       }
       this.dialogPlaylist = true
+    },
+    selectVideo(id, title) {
+      this.selectedVideo.id = id
+      this.selectedVideo.title = title
+      this.$emit('setBgm', this.selectedVideo.id, this.selectedVideo.title)
     },
     playVideo(id, title) {
       this.playedVideo.id = id
       this.playedVideo.title = title
       this.dialogPlayVideo = true
     },
-    selectVideo(id, title) {
-      this.selectedVideo.id = id
-      this.selectedVideo.title = title
-      this.$emit('setBgm', this.selectedVideo.id, this.selectedVideo.title)
-      if (this.activeVideo) {
-        const oldEl = document.getElementById(`${this.activeVideo}`)
-        oldEl.style.backgroundColor = null
-      }
-      this.activeVideo = id
-      const newEl = document.getElementById(`${this.activeVideo}`)
-      newEl.style.backgroundColor = '#82B1FF'
-    },
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.video-title {
-  cursor: pointer;
-}
-</style>

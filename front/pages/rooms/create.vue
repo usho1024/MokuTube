@@ -12,15 +12,17 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-text-field
-              v-model="room.name"
-              :counter="30"
-              label="ルーム名を入力する"
-              class="mb-6"
-            />
+            <v-form @submit.prevent="stepUp">
+              <v-text-field
+                v-model="room.name"
+                :counter="30"
+                label="ルーム名を入力する"
+                class="mb-6"
+              />
+            </v-form>
 
             <div class="mb-2">
-              <button-step-up :value="room.name" @btnClick="stepUp" />
+              <button-step-up :value="room.name" @stepUp="stepUp" />
               <v-btn outlined exact nuxt color="yellow darken-4" to="/rooms"
                 >ルーム一覧に戻る</v-btn
               >
@@ -32,17 +34,20 @@
           </v-stepper-step>
 
           <v-stepper-content step="2">
-            <v-sheet outlined height="40vh" class="mb-6 pa-5 overflow-auto">
+            <v-sheet
+              height="40vh"
+              class="grey lighten-4 mb-6 pa-5 overflow-auto"
+            >
               <v-row>
                 <v-col
                   v-for="roomImage in roomImages"
-                  :id="`room-image-${roomImage.id}`"
                   :key="`roomImage-${roomImage.id}`"
                   cols="3"
                   class="pa-2"
                 >
                   <card-room-image
                     :room-image="roomImage"
+                    :selected-image-id="room.imageId"
                     @setImage="setImage"
                   />
                 </v-col>
@@ -55,8 +60,8 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.imageName" @btnClick="stepUp" />
-              <button-step-down @btnClick="stepDown" />
+              <button-step-up :value="room.imageName" @stepUp="stepUp" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -78,8 +83,8 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.bgmName" @btnClick="stepUp" />
-              <button-step-down @btnClick="stepDown" />
+              <button-step-up :value="room.bgmName" @stepUp="stepUp" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
 
@@ -130,7 +135,7 @@
               >
                 O K
               </v-btn>
-              <button-step-down @btnClick="stepDown" />
+              <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
         </v-stepper>
@@ -142,10 +147,10 @@
 <script>
 export default {
   name: 'Create',
+  layout: 'room-create',
   data() {
     return {
       currentStep: 1,
-      activeImage: null,
       room: {
         name: null,
         imageId: null,
@@ -217,6 +222,11 @@ export default {
       ],
     }
   },
+  head() {
+    return {
+      title: 'ルーム作成',
+    }
+  },
   methods: {
     stepUp() {
       this.currentStep++
@@ -227,13 +237,6 @@ export default {
     setImage(imageId, imageName) {
       this.room.imageId = imageId
       this.room.imageName = imageName
-      if (this.activeImage) {
-        const oldEl = document.getElementById(`${this.activeImage}`)
-        oldEl.style.backgroundColor = null
-      }
-      this.activeImage = `room-image-${imageId}`
-      const newEl = document.getElementById(`${this.activeImage}`)
-      newEl.style.backgroundColor = '#82B1FF'
     },
     setBgm(bgmId, bgmName) {
       this.room.bgmId = bgmId
@@ -246,7 +249,7 @@ export default {
         bgm_resource: this.room.bgmId,
       }
       await this.$axios.post('/api/v1/rooms', params).then((response) => {
-        this.$router.push(`/rooms/${response.data.id}`)
+        this.$router.replace(`/rooms/${response.data.id}`)
       })
     },
   },

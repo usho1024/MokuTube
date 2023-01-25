@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-x>
+  <v-menu offset-x :close-on-content-click="false">
     <template #activator="{ on: menu }">
       <v-tooltip top color="indigo">
         <template #activator="{ on: tooltip }">

@@ -1,46 +1,26 @@
 <template>
-  <div class="mt-3">
-    <v-card class="mt-5 mx-auto" max-width="600">
-      <v-form ref="form">
-        <v-container>
-          <v-row justify="center">
-            <p cols="12" class="mt-3 display-1 grey--text">
-              ログイン
-            </p>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="12" md="10" sm="10">
-              <v-text-field
-                v-model="email"
-                label="Eメールアドレス"
-              />
-              <p class="caption mb-0" />
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="12" md="10" sm="10">
-              <v-text-field
-                v-model="password"
-                type="password"
-                label="パスワード"
-              />
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="12" md="10" sm="10">
-              <v-btn
-                block
-                class="mr-4 blue white--text"
-                @click="loginWithAuthModule"
-              >
-                ログイン
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
+  <user-form-card>
+    <template #user-form-card-content>
+      <v-form
+        v-model="isValid"
+        :disabled="loading"
+        @submit.prevent="loginWithAuthModule"
+      >
+        <user-form-email :email.sync="input.params.email" />
+        <user-form-password :password.sync="input.params.password" />
+        <v-btn
+          type="submit"
+          :disabled="!isValid || loading"
+          :loading="loading"
+          block
+          color="appblue"
+          class="white--text"
+        >
+          ログインする
+        </v-btn>
       </v-form>
-    </v-card>
-  </div>
+    </template>
+  </user-form-card>
 </template>
 
 <script>
@@ -48,27 +28,28 @@ export default {
   name: 'Login',
   data() {
     return {
-      password: '',
-      email: ''
+      isValid: false,
+      loading: false,
+      input: { params: { email: '', password: '' } },
+    }
+  },
+  head() {
+    return {
+      title: 'ログイン',
     }
   },
   methods: {
     async loginWithAuthModule() {
-      await this.$auth.loginWith('local', {
-        data: {
-          email: this.email,
-          password: this.password
+      this.loading = true
+      await this.$auth.loginWith('local', this.input).then((response) => {
+        const user = {
+          id: response.data.data.id,
+          name: response.data.data.name,
+          avatar: response.data.data.avatar,
         }
+        this.$store.dispatch('getCurrentUser', user)
       })
-        .then(response => {
-          const user = {
-            id: response.data.data.id,
-            name: response.data.data.name,
-            avatar: response.data.data.avatar
-          }
-          this.$store.dispatch('getCurrentUser', user)
-        })
-    }
-  }
+    },
+  },
 }
 </script>
