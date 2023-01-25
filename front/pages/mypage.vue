@@ -89,6 +89,11 @@ export default {
       image_src: require('~/assets/img/meterial-blue.jpeg'),
     }
   },
+  head() {
+    return {
+      title: 'マイページ',
+    }
+  },
   methods: {
     secToTime(rawsec) {
       const min = String(Math.trunc(rawsec / 60) % 60).padStart(2, 0)

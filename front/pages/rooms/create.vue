@@ -222,6 +222,11 @@ export default {
       ],
     }
   },
+  head() {
+    return {
+      title: 'ルーム作成',
+    }
+  },
   methods: {
     stepUp() {
       this.currentStep++

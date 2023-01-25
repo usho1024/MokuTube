@@ -138,6 +138,11 @@ export default {
       inputMessage: '',
     }
   },
+  head() {
+    return {
+      title: this.room.name,
+    }
+  },
   computed: {
     player() {
       return this.$refs.youtube.player

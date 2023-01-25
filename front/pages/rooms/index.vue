@@ -103,6 +103,11 @@ export default {
       pageSize: 30,
     }
   },
+  head() {
+    return {
+      title: 'ルーム一覧',
+    }
+  },
   computed: {
     length() {
       return Math.ceil(this.count / this.pageSize)

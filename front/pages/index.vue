@@ -134,6 +134,12 @@ export default {
       ],
     }
   },
+  head() {
+    return {
+      title: 'MokuTube - 会員登録不要で使えるオンライン自習室',
+      titleTemplate: '',
+    }
+  },
   computed: {
     currentUser() {
       return this.$store.state.currentUser

@@ -33,6 +33,11 @@ export default {
       input: { params: { email: '', password: '' } },
     }
   },
+  head() {
+    return {
+      title: 'ログイン',
+    }
+  },
   methods: {
     async loginWithAuthModule() {
       this.loading = true
