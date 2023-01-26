@@ -42,9 +42,10 @@
           <v-divider />
 
           <v-sheet class="pa-4" height="30%">
-            <v-form class="mb-2" @submit.prevent="speak">
+            <v-form v-model="valid" class="mb-2" @submit.prevent="speak">
               <v-text-field
                 v-model="inputMessage"
+                :rules="messageRules"
                 type="text"
                 label="メッセージを入力する"
                 counter="200"
@@ -136,6 +137,10 @@ export default {
       media: 15,
       isMuted: true,
       inputMessage: '',
+      valid: false,
+      messageRules: [
+        (v) => v.length <= 200 || 'メッセージは200文字以内で入力してください',
+      ],
     }
   },
   head() {
@@ -226,10 +231,12 @@ export default {
       el.scrollTo(0, el.scrollHeight)
     },
     speak() {
-      this.roomChannel.perform('speak', {
-        message: this.inputMessage,
-      })
-      this.inputMessage = ''
+      if (this.inputMessage && this.valid) {
+        this.roomChannel.perform('speak', {
+          message: this.inputMessage,
+        })
+        this.inputMessage = ''
+      }
     },
   },
 }
