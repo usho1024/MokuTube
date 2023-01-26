@@ -12,17 +12,19 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-form @submit.prevent="stepUp">
+            <v-form v-model="valid" @submit.prevent="stepUp">
               <v-text-field
                 v-model="room.name"
+                :rules="nameRules"
                 :counter="30"
                 label="ルーム名を入力する"
                 class="mb-6"
+                required
               />
             </v-form>
 
             <div class="mb-2">
-              <button-step-up :value="room.name" @stepUp="stepUp" />
+              <button-step-up :disabled="!valid" @stepUp="stepUp" />
               <v-btn outlined exact nuxt color="yellow darken-4" to="/rooms"
                 >ルーム一覧に戻る</v-btn
               >
@@ -60,7 +62,7 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.imageName" @stepUp="stepUp" />
+              <button-step-up :disabled="!room.imageName" @stepUp="stepUp" />
               <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
@@ -83,7 +85,7 @@
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.bgmName" @stepUp="stepUp" />
+              <button-step-up :disabled="!room.bgmName" @stepUp="stepUp" />
               <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
@@ -127,6 +129,7 @@
 
             <div class="mb-2">
               <v-btn
+                :disabled="!completed"
                 outlined
                 color="indigo"
                 width="100"
@@ -151,8 +154,13 @@ export default {
   data() {
     return {
       currentStep: 1,
+      valid: false,
+      nameRules: [
+        (v) => !!v || 'ルーム名を入力してください',
+        (v) => v.length <= 30 || 'ルーム名は30文字以内で設定してください',
+      ],
       room: {
-        name: null,
+        name: '',
         imageId: null,
         imageName: null,
         bgmId: null,
@@ -227,9 +235,16 @@ export default {
       title: 'ルーム作成',
     }
   },
+  computed: {
+    completed() {
+      return this.room.name && this.room.imageId && this.room.bgmId || false
+    },
+  },
   methods: {
     stepUp() {
-      this.currentStep++
+      if (this.valid) {
+        this.currentStep++
+      }
     },
     stepDown() {
       this.currentStep--
