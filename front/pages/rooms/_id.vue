@@ -46,7 +46,6 @@
               <v-text-field
                 v-model="inputMessage"
                 :rules="messageRules"
-                type="text"
                 label="メッセージを入力する"
                 counter="200"
                 dense

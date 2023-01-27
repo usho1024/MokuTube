@@ -4,7 +4,8 @@
     :rules="rules"
     label="確認のためパスワードを再入力"
     outlined
-    class="mb-1"
+    hide-details
+    class="mb-8"
     required
   />
 </template>

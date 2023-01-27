@@ -5,7 +5,8 @@
     label="メールアドレスを入力"
     placeholder="your@email.com"
     outlined
-    class="mb-1"
+    hide-details
+    class="mb-8"
     required
   />
 </template>

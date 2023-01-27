@@ -12,13 +12,12 @@
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-form v-model="valid" @submit.prevent="stepUp">
+            <v-form v-model="valid" class="mb-5" @submit.prevent="stepUp">
               <v-text-field
                 v-model="room.name"
                 :rules="nameRules"
                 :counter="30"
                 label="ルーム名を入力する"
-                class="mb-6"
                 required
               />
             </v-form>
@@ -85,7 +84,9 @@
               readonly
               class="mb-3"
             />
-            <div class="mb-10 text-caption">※ルーム内にてBGMは自動でループ再生されます</div>
+            <div class="mb-10 text-caption">
+              ※ルーム内にてBGMは自動でループ再生されます
+            </div>
 
             <div class="mb-2">
               <button-step-up :disabled="!room.bgmName" @stepUp="stepUp" />
