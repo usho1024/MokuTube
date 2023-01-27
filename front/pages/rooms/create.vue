@@ -2,13 +2,13 @@
   <v-container class="pa-0">
     <v-row justify="center">
       <v-col xl="6" md="8">
-        <v-stepper v-model="currentStep" vertical>
+        <v-stepper v-model="currentStep" vertical class="stepper">
           <v-subheader>ルーム作成</v-subheader>
 
           <v-divider />
 
           <v-stepper-step :complete="currentStep > 1" step="1">
-            ルーム名を入力してください（30文字以内）
+            ルーム名を入力してください
           </v-stepper-step>
 
           <v-stepper-content step="1">
@@ -37,8 +37,9 @@
 
           <v-stepper-content step="2">
             <v-sheet
+              outlined
               height="40vh"
-              class="grey lighten-4 mb-6 pa-5 overflow-auto"
+              class="grey lighten-4 mb-5 pa-5 overflow-auto"
             >
               <v-row>
                 <v-col
@@ -56,10 +57,13 @@
               </v-row>
             </v-sheet>
 
-            <div class="mb-10 text-body-1">
-              <div v-if="room.imageName">選択中： {{ room.imageName }}</div>
-              <div v-else>選択中： 未選択</div>
-            </div>
+            <v-text-field
+              :value="room.imageName ? room.imageName : '未選択'"
+              label="選択中"
+              hide-details
+              readonly
+              class="mb-5"
+            />
 
             <div class="mb-2">
               <button-step-up :disabled="!room.imageName" @stepUp="stepUp" />
@@ -74,15 +78,14 @@
           <v-stepper-content step="3">
             <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-3 text-body-1">
-              <div v-if="room.bgmName" class="text-truncate">
-                選択中： {{ room.bgmName }}
-              </div>
-              <div v-else>選択中： 未選択</div>
-            </div>
-            <div class="mb-10 text-body-1">
-              ※ルーム内にてBGMは自動でループ再生されます
-            </div>
+            <v-text-field
+              :value="room.bgmName ? room.bgmName : '未選択'"
+              label="選択中"
+              hide-details
+              readonly
+              class="mb-3"
+            />
+            <div class="mb-10 text-caption">※ルーム内にてBGMは自動でループ再生されます</div>
 
             <div class="mb-2">
               <button-step-up :disabled="!room.bgmName" @stepUp="stepUp" />
@@ -94,37 +97,16 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <div class="mb-10 text-body-1">
-              <v-row>
-                <v-col cols="2">
-                  <div>名前：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div class="text-truncate">
-                    {{ room.name }}
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="2">
-                  <div>イメージ：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div>
-                    {{ room.imageName }}
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="2">
-                  <div>BGM：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div class="text-truncate">
-                    {{ room.bgmName }}
-                  </div>
-                </v-col>
-              </v-row>
+            <div class="mb-10">
+              <v-text-field
+                v-for="item in items"
+                :key="item.value"
+                :value="item.value"
+                :label="item.label"
+                hide-details
+                readonly
+                :class="{ 'mb-4': item.margin }"
+              />
             </div>
 
             <div class="mb-2">
@@ -239,6 +221,25 @@ export default {
     completed() {
       return (this.room.name && this.room.imageId && this.room.bgmId) || false
     },
+    items() {
+      return [
+        {
+          value: this.room.name,
+          label: '名前',
+          margin: true,
+        },
+        {
+          value: this.room.imageName,
+          label: 'イメージ',
+          margin: true,
+        },
+        {
+          value: this.room.bgmName,
+          label: 'BGM',
+          margin: false,
+        },
+      ]
+    },
   },
   methods: {
     stepUp() {
@@ -270,3 +271,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.stepper {
+  max-height: calc(100vh - 128px);
+}
+</style>

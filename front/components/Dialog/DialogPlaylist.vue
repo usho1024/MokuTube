@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-10">
+  <div class="mb-7">
     <v-btn
       :loading="loading"
       outlined
@@ -24,13 +24,13 @@
           />
         </v-sheet>
         <v-divider />
-        <div class="px-6 pt-5 text-caption blue-grey--text text--darken-3">
-          選択中：
-          <span v-if="selectedVideo.title">
-            {{ selectedVideo.title }}
-          </span>
-          <span v-else>未選択</span>
-        </div>
+        <v-text-field
+          :value="selectedVideo.title ? selectedVideo.title : '未選択'"
+          label="選択中"
+          hide-details
+          readonly
+          class="px-6 mt-4 mb-2"
+        />
         <v-card-actions>
           <v-btn color="appblue" text @click="dialogPlaylist = false">
             保存して終了
