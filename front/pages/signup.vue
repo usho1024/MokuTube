@@ -1,7 +1,7 @@
 <template>
   <user-form-card>
     <template #user-form-card-content>
-      <v-form v-model="isValid" :disabled="loading" @submit.prevent="signup">
+      <v-form v-model="valid" :disabled="loading" @submit.prevent="signup">
         <user-form-name :name.sync="input.name" />
         <user-form-email :email.sync="input.email" />
         <user-form-password :password.sync="input.password" />
@@ -10,7 +10,7 @@
         />
         <v-btn
           type="submit"
-          :disabled="!isValid || loading"
+          :disabled="!valid || loading"
           :loading="loading"
           block
           color="appblue"
@@ -29,7 +29,7 @@ export default {
   auth: false,
   data() {
     return {
-      isValid: false,
+      valid: false,
       loading: false,
       input: {
         name: '',

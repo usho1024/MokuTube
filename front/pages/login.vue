@@ -2,7 +2,7 @@
   <user-form-card>
     <template #user-form-card-content>
       <v-form
-        v-model="isValid"
+        v-model="valid"
         :disabled="loading"
         @submit.prevent="loginWithAuthModule"
       >
@@ -10,11 +10,11 @@
         <user-form-password :password.sync="input.params.password" />
         <v-btn
           type="submit"
-          :disabled="!isValid || loading"
+          :disabled="!valid || loading"
           :loading="loading"
           block
           color="appblue"
-          class="white--text"
+          class="white--text mt-3"
         >
           ログインする
         </v-btn>
@@ -28,7 +28,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      isValid: false,
+      valid: false,
       loading: false,
       input: { params: { email: '', password: '' } },
     }

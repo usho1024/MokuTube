@@ -3,8 +3,10 @@
     v-model="setEmail"
     :rules="rules"
     label="メールアドレスを入力"
-    :placeholder="placeholder ? 'your@email.com' : undefined"
+    placeholder="your@email.com"
     outlined
+    class="mb-1"
+    required
   />
 </template>
 
@@ -15,14 +17,10 @@ export default {
       type: String,
       default: '',
     },
-    placeholder: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {
-      rules: [(v) => !!v || '', (v) => /.+@.+\..+/.test(v) || ''],
+      rules: [(v) => !!v || '', (v) => /.+@.+/.test(v) || ''],
     }
   },
   computed: {
