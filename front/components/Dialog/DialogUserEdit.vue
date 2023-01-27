@@ -99,16 +99,13 @@ export default {
       work: this.user.work,
       inputFile: null,
       valid: false,
+      errorMessage: '文字数オーバーです',
       nameRules: [
         (v) => !!v || 'ユーザーネームを入力してください',
-        (v) => v.length <= 30 || 'ユーザーネームは30文字以内で設定してください',
+        (v) => v.length <= 30 || this.errorMessage,
       ],
-      introductionRules: [
-        (v) => v.length <= 300 || '自己紹介文は300文字以内で設定してください',
-      ],
-      workRules: [
-        (v) => v.length <= 30 || '作業内容は30文字以内で設定してください',
-      ],
+      introductionRules: [(v) => v.length <= 300 || this.errorMessage],
+      workRules: [(v) => v.length <= 30 || this.errorMessage],
     }
   },
   computed: {

@@ -156,8 +156,8 @@ export default {
       currentStep: 1,
       valid: false,
       nameRules: [
-        (v) => !!v || 'ルーム名を入力してください',
-        (v) => v.length <= 30 || 'ルーム名は30文字以内で設定してください',
+        (v) => !!v || '',
+        (v) => v.length <= 30 || '文字数オーバーです',
       ],
       room: {
         name: '',
@@ -237,7 +237,7 @@ export default {
   },
   computed: {
     completed() {
-      return this.room.name && this.room.imageId && this.room.bgmId || false
+      return (this.room.name && this.room.imageId && this.room.bgmId) || false
     },
   },
   methods: {

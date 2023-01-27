@@ -138,9 +138,7 @@ export default {
       isMuted: true,
       inputMessage: '',
       valid: false,
-      messageRules: [
-        (v) => v.length <= 200 || 'メッセージは200文字以内で入力してください',
-      ],
+      messageRules: [(v) => v.length <= 200 || ''],
     }
   },
   head() {
