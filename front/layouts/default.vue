@@ -3,6 +3,7 @@
     <app-bar-logged-in v-if="currentUser" />
     <app-bar v-else />
     <v-main>
+      <app-toaster />
       <nuxt />
     </v-main>
     <app-footer />

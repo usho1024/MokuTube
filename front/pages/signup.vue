@@ -69,8 +69,8 @@ export default {
     },
     authFailure({ response }) {
       this.loading = false
-      const messages = response.data.errors.full_messages
-      console.log(messages)
+      const msgs = response.data.errors.full_messages
+      this.$store.dispatch('getToast', { msgs })
     },
   },
 }
