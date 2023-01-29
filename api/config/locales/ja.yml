@@ -5,6 +5,7 @@ ja:
         name: 名前
         email: メールアドレス
         password: パスワード
+        password_confirmation: 再入力されたパスワード
         admin: 管理者フラグ
       room_user:
         work: 作業内容

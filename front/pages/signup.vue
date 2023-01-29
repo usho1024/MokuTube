@@ -3,8 +3,8 @@
     <template #user-form-card-content>
       <v-form v-model="valid" :disabled="loading" @submit.prevent="signup">
         <user-form-name :name.sync="input.name" />
-        <user-form-email :email.sync="input.email" />
-        <user-form-password :password.sync="input.password" />
+        <user-form-email :email.sync="input.email" placeholder />
+        <user-form-password :password.sync="input.password" set-validation />
         <user-form-password-confirm
           :password-confirm.sync="input.password_confirmation"
         />
@@ -50,6 +50,7 @@ export default {
       await this.$axios
         .post('/api/v1/auth', this.input)
         .then(() => this.loginWithAuthModule())
+        .catch((error) => this.authFailure(error))
     },
     async loginWithAuthModule() {
       await this.$auth
@@ -65,6 +66,11 @@ export default {
           this.$store.dispatch('getCurrentUser', user)
           this.$router.replace('/rooms')
         })
+    },
+    authFailure({ response }) {
+      this.loading = false
+      const messages = response.data.errors.full_messages
+      console.log(messages)
     },
   },
 }

@@ -1,14 +1,14 @@
 <template>
   <v-text-field
     v-model="setPassword"
-    :rules="rules"
-    hint="半角英数字6文字以上"
+    :rules="form.rules"
+    :hint="form.hint"
     label="パスワードを入力"
+    :placeholder="form.placeholder"
+    :counter="setValidation"
     :append-icon="toggle.icon"
     :type="toggle.type"
     outlined
-    counter
-    class="mb-1"
     required
     @click:append="show = !show"
   />
@@ -21,11 +21,14 @@ export default {
       type: String,
       default: '',
     },
+    setValidation: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       show: false,
-      rules: [(v) => !!v || '', (v) => /^[\w-]{6,72}$/.test(v) || ''],
     }
   },
   computed: {
@@ -41,6 +44,16 @@ export default {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
       const type = this.show ? 'text' : 'password'
       return { icon, type }
+    },
+    form() {
+      const min = '6文字以上'
+      const msg = `${min}。半角英数字•ﾊｲﾌﾝ•ｱﾝﾀﾞｰﾊﾞｰが使えます`
+      const required = (v) => !!v || ''
+      const format = (v) => /^[\w-]{6,72}$/.test(v) || msg
+      const rules = this.setValidation ? [format] : [required]
+      const hint = this.setValidation ? msg : undefined
+      const placeholder = this.setValidation ? min : undefined
+      return { rules, hint, placeholder }
     },
   },
 }

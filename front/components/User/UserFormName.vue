@@ -6,7 +6,6 @@
     label="ユーザーネームを入力"
     placeholder="あなたの表示名"
     outlined
-    class="mb-1"
     required
   />
 </template>
