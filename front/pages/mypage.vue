@@ -75,6 +75,7 @@ import moment from 'moment'
 
 export default {
   name: 'Mypage',
+  layout: 'logged-in',
   async asyncData({ $axios, store }) {
     let user
     await $axios

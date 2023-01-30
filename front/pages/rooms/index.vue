@@ -75,6 +75,7 @@
 <script>
 export default {
   name: 'RoomsIndex',
+  layout: 'logged-in',
   async asyncData({ $axios }) {
     let rooms, count, activeUsers
     await $axios

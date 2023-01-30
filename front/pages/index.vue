@@ -21,7 +21,7 @@
                   x-large
                   color="teal accent-4"
                   class="mb-3"
-                  @click="getStarted"
+                  @click="guestLogin"
                   >今すぐ使ってみる！</v-btn
                 >
                 <div class="text-subtitle-1 mb-8">
@@ -101,7 +101,7 @@
                 x-large
                 color="teal accent-4"
                 class="mb-3"
-                @click="getStarted"
+                @click="guestLogin"
                 >今すぐ使ってみる！</v-btn
               >
             </section>
@@ -115,6 +115,11 @@
 <script>
 export default {
   name: 'Top',
+  middleware({ store, redirect }) {
+    if (store.$auth.loggedIn) {
+      redirect('/rooms')
+    }
+  },
   auth: false,
   async asyncData({ $axios }) {
     let activeUsers
@@ -146,11 +151,7 @@ export default {
     },
   },
   methods: {
-    getStarted() {
-      if (this.currentUser) {
-        this.$router.push('/rooms')
-      }
-    },
+    guestLogin() {},
   },
 }
 </script>

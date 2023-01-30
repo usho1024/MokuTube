@@ -26,6 +26,11 @@
 <script>
 export default {
   name: 'Signup',
+  middleware({ store, redirect }) {
+    if (store.$auth.loggedIn) {
+      redirect('/rooms')
+    }
+  },
   auth: false,
   data() {
     return {

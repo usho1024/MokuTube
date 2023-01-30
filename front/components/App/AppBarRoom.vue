@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app dense elevation="1" color="white">
-    <app-bar-logo class="mr-10" />
+    <app-bar-logo :room-channel="roomChannel" class="mr-10" />
 
     <v-app-bar-title
       class="text-subtitle-1 grey--text text--darken-1 font-weight-bold"
