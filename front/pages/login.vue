@@ -53,11 +53,15 @@ export default {
         avatar: response.data.data.avatar,
       }
       this.$store.dispatch('getCurrentUser', user)
+      const msgs = ['ログインしました']
+      const color = 'green'
+      this.$store.dispatch('getToast', { msgs, color })
     },
     authFailure({ response }) {
       this.loading = false
       const msgs = response.data.errors
-      this.$store.dispatch('getToast', { msgs })
+      const color = 'red'
+      this.$store.dispatch('getToast', { msgs, color })
     },
   },
 }

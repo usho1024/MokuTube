@@ -7,7 +7,7 @@
     :timeout="toast.timeout"
     :color="toast.color"
   >
-    <div v-for="msg in toast.msgs" :key="msg">・{{ msg }}</div>
+    <div v-for="msg in toast.msgs" :key="msg">{{ msg }}</div>
     <template #action="{ attrs }">
       <v-btn icon v-bind="attrs" text :color="toast.color" @click="resetToast">
         <v-icon>mdi-close-circle-outline</v-icon>

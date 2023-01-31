@@ -2,7 +2,7 @@ export const state = () => ({
   currentUser: null,
   toast: {
     msgs: null,
-    color: 'error',
+    color: null,
     timeout: 4000,
   },
 })

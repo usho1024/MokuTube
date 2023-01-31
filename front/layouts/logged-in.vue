@@ -11,6 +11,6 @@
 
 <script>
 export default {
-  name: 'Default',
+  name: 'LoggedIn',
 }
 </script>

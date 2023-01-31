@@ -47,7 +47,7 @@ export default {
         {
           name: 'ログアウト',
           icon: 'mdi-logout-variant',
-          method: this.logoutWithAuthModule,
+          method: this.logout,
           divider: true,
         },
       ],
@@ -59,9 +59,12 @@ export default {
     },
   },
   methods: {
-    async logoutWithAuthModule() {
+    async logout() {
       await this.$auth.logout().then(() => {
         setTimeout(() => {
+          const msgs = ['ログアウトしました']
+          const color = 'green'
+          this.$store.dispatch('getToast', { msgs, color })
           this.$store.dispatch('getCurrentUser', null)
         }, 100)
       })

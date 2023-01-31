@@ -70,12 +70,16 @@ export default {
           }
           this.$store.dispatch('getCurrentUser', user)
           this.$router.replace('/rooms')
+          const msgs = ['登録が完了しました']
+          const color = 'green'
+          this.$store.dispatch('getToast', { msgs, color })
         })
     },
     authFailure({ response }) {
       this.loading = false
       const msgs = response.data.errors.full_messages
-      this.$store.dispatch('getToast', { msgs })
+      const color = 'red'
+      this.$store.dispatch('getToast', { msgs, color })
     },
   },
 }
