@@ -131,18 +131,18 @@ export default {
       if (this.inputFile) {
         formData.append('user[avatar]', this.inputFile)
       }
-      await this.$axios
-        .patch(`/api/v1/users/${this.user.id}`, formData)
-        .then((response) => {
-          this.$emit('update:user', response.data)
-          const user = {
-            id: response.data.id,
-            name: response.data.name,
-            avatar: response.data.avatar,
-          }
-          this.$store.dispatch('getCurrentUser', user)
-          this.dialog = false
-        })
+      const response = await this.$axios.patch(
+        `/api/v1/users/${this.user.id}`,
+        formData
+      )
+      this.$emit('update:user', response.data)
+      const user = {
+        id: response.data.id,
+        name: response.data.name,
+        avatar: response.data.avatar,
+      }
+      this.$store.dispatch('getCurrentUser', user)
+      this.dialog = false
     },
     resetData() {
       this.name = this.user.name

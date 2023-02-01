@@ -54,26 +54,24 @@ export default {
       this.loading = true
       await this.$axios
         .post('/api/v1/auth', this.input)
-        .then(() => this.loginWithAuthModule())
+        .then(() => this.login())
         .catch((error) => this.authFailure(error))
     },
-    async loginWithAuthModule() {
-      await this.$auth
-        .loginWith('local', {
-          params: { email: this.input.email, password: this.input.password },
-        })
-        .then((response) => {
-          const user = {
-            id: response.data.data.id,
-            name: response.data.data.name,
-            avatar: response.data.data.avatar,
-          }
-          this.$store.dispatch('getCurrentUser', user)
-          this.$router.replace('/rooms')
-          const msgs = ['登録が完了しました']
-          const color = 'green'
-          this.$store.dispatch('getToast', { msgs, color })
-        })
+    async login() {
+      const params = {
+        params: { email: this.input.email, password: this.input.password },
+      }
+      const response = await this.$auth.loginWith('local', params)
+      const user = {
+        id: response.data.data.id,
+        name: response.data.data.name,
+        avatar: response.data.data.avatar,
+      }
+      this.$store.dispatch('getCurrentUser', user)
+      this.$router.replace('/rooms')
+      const msgs = ['登録が完了しました']
+      const color = 'green'
+      this.$store.dispatch('getToast', { msgs, color })
     },
     authFailure({ response }) {
       this.loading = false

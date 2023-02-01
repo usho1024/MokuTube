@@ -92,10 +92,10 @@ export default {
     async getPlayList() {
       if (!this.playlist) {
         this.loading = true
-        await axios.get(this.url, { params: this.params }).then((response) => {
-          this.playlist = response.data.items
-          this.loading = false
-        })
+        const params = { params: this.params }
+        const response = await axios.get(this.url, params)
+        this.playlist = response.data.items
+        this.loading = false
       }
       this.dialogPlaylist = true
     },

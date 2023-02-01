@@ -122,10 +122,7 @@ export default {
   },
   auth: false,
   async asyncData({ $axios }) {
-    let activeUsers
-    await $axios.$get('/api/v1/homes').then((response) => {
-      activeUsers = response
-    })
+    const activeUsers = await $axios.$get('/api/v1/homes')
     return { activeUsers }
   },
   data() {

@@ -105,26 +105,14 @@ export default {
   },
   layout: 'room',
   async asyncData({ $axios, route }) {
-    const chatMessages = []
-    let roomUsers, room
-    await $axios
-      .$get('/api/v1/messages', {
-        params: {
-          id: route.params.id,
-        },
-      })
-      .then((response) => chatMessages.push(...response.reverse()))
-    await $axios
-      .$get('/api/v1/rooms_users', {
-        params: {
-          id: route.params.id,
-        },
-      })
-      .then((response) => (roomUsers = response))
-    await $axios
-      .$get(`/api/v1/rooms/${route.params.id}`)
-      .then((response) => (room = response))
-    return { chatMessages, roomUsers, room }
+    const id = route.params.id
+    const params = { params: { id } }
+    const [room, roomUsers, chatMessages] = await Promise.all([
+      $axios.$get(`/api/v1/rooms/${id}`),
+      $axios.$get('/api/v1/rooms_users', params),
+      $axios.$get('/api/v1/messages', params),
+    ])
+    return { room, roomUsers, chatMessages }
   },
   data() {
     return {

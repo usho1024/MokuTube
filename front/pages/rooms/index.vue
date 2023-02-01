@@ -77,18 +77,11 @@ export default {
   name: 'RoomsIndex',
   layout: 'logged-in',
   async asyncData({ $axios }) {
-    let rooms, count, activeUsers
-    await $axios
-      .$get('/api/v1/rooms', {
-        params: {
-          type: 'official',
-        },
-      })
-      .then((response) => {
-        rooms = response.rooms
-        count = response.count
-        activeUsers = response.active_users
-      })
+    const params = { params: { type: 'official' } }
+    const response = await $axios.$get('/api/v1/rooms', params)
+    const rooms = response.rooms
+    const count = response.count
+    const activeUsers = response.active_users
     return { rooms, count, activeUsers }
   },
   data() {
@@ -116,33 +109,21 @@ export default {
   },
   methods: {
     async getRooms(type) {
-      await this.$axios
-        .get('/api/v1/rooms', {
-          params: {
-            type,
-            page_number: 1,
-          },
-        })
-        .then((response) => {
-          this.rooms = response.data.rooms
-          this.count = response.data.count
-          this.activeUsers = response.data.active_users
-          this.currentTab = type
-        })
+      const params = { params: { type, page_number: 1 } }
+      const response = await this.$axios.get('/api/v1/rooms', params)
+      this.rooms = response.data.rooms
+      this.count = response.data.count
+      this.activeUsers = response.data.active_users
+      this.currentTab = type
     },
     async pageChange(pageNumber) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      await this.$axios
-        .get('/api/v1/rooms', {
-          params: {
-            type: this.currentTab,
-            page_number: pageNumber,
-          },
-        })
-        .then((response) => {
-          this.rooms = response.data.rooms
-          this.activeUsers = response.data.active_users
-        })
+      const params = {
+        params: { type: this.currentTab, page_number: pageNumber },
+      }
+      const response = await this.$axios.get('/api/v1/rooms', params)
+      this.rooms = response.data.rooms
+      this.activeUsers = response.data.active_users
     },
   },
 }

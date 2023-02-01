@@ -1,11 +1,7 @@
 <template>
   <user-form-card>
     <template #user-form-card-content>
-      <v-form
-        v-model="valid"
-        :disabled="loading"
-        @submit.prevent="loginWithAuthModule"
-      >
+      <v-form v-model="valid" :disabled="loading" @submit.prevent="login">
         <user-form-email :email.sync="input.params.email" />
         <user-form-password :password.sync="input.params.password" />
         <v-btn
@@ -39,7 +35,7 @@ export default {
     }
   },
   methods: {
-    async loginWithAuthModule() {
+    async login() {
       this.loading = true
       await this.$auth
         .loginWith('local', this.input)

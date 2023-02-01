@@ -265,9 +265,8 @@ export default {
         name: this.room.name,
         bgm_resource: this.room.bgmId,
       }
-      await this.$axios.post('/api/v1/rooms', params).then((response) => {
-        this.$router.replace(`/rooms/${response.data.id}`)
-      })
+      const response = await this.$axios.post('/api/v1/rooms', params)
+      this.$router.replace(`/rooms/${response.data.id}`)
     },
   },
 }

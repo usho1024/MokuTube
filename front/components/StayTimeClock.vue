@@ -66,9 +66,8 @@ export default {
       return time
     },
     addStayTime() {
-      this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, {
-        stay_time: this.sec,
-      })
+      const params = { stay_time: this.sec }
+      this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, params)
     },
   },
 }
