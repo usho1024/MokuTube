@@ -2,7 +2,7 @@
   <v-btn
     outlined
     width="100"
-    :disabled="!value"
+    :disabled="disabled"
     color="indigo"
     class="mr-5"
     @click="$emit('stepUp')"
@@ -14,9 +14,9 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String,
-      default: null,
+    disabled: {
+      type: Boolean,
+      default: true,
     },
   },
 }

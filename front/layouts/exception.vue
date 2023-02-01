@@ -1,14 +1,16 @@
 <template>
   <v-app>
-    <app-bar-logged-in />
+    <app-bar-exception />
     <v-main>
+      <app-toaster />
       <nuxt />
     </v-main>
+    <app-footer />
   </v-app>
 </template>
 
 <script>
 export default {
-  name: 'RoomCreate',
+  name: 'Exception',
 }
 </script>

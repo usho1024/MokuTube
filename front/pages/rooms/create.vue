@@ -2,27 +2,28 @@
   <v-container class="pa-0">
     <v-row justify="center">
       <v-col xl="6" md="8">
-        <v-stepper v-model="currentStep" vertical>
+        <v-stepper v-model="currentStep" vertical class="stepper">
           <v-subheader>ルーム作成</v-subheader>
 
           <v-divider />
 
           <v-stepper-step :complete="currentStep > 1" step="1">
-            ルーム名を入力してください（30文字以内）
+            ルーム名を入力してください
           </v-stepper-step>
 
           <v-stepper-content step="1">
-            <v-form @submit.prevent="stepUp">
+            <v-form v-model="valid" class="mb-5" @submit.prevent="stepUp">
               <v-text-field
                 v-model="room.name"
+                :rules="nameRules"
                 :counter="30"
                 label="ルーム名を入力する"
-                class="mb-6"
+                required
               />
             </v-form>
 
             <div class="mb-2">
-              <button-step-up :value="room.name" @stepUp="stepUp" />
+              <button-step-up :disabled="!valid" @stepUp="stepUp" />
               <v-btn outlined exact nuxt color="yellow darken-4" to="/rooms"
                 >ルーム一覧に戻る</v-btn
               >
@@ -35,8 +36,9 @@
 
           <v-stepper-content step="2">
             <v-sheet
+              outlined
               height="40vh"
-              class="grey lighten-4 mb-6 pa-5 overflow-auto"
+              class="grey lighten-4 mb-5 pa-5 overflow-auto"
             >
               <v-row>
                 <v-col
@@ -54,13 +56,16 @@
               </v-row>
             </v-sheet>
 
-            <div class="mb-10 text-body-1">
-              <div v-if="room.imageName">選択中： {{ room.imageName }}</div>
-              <div v-else>選択中： 未選択</div>
-            </div>
+            <v-text-field
+              :value="room.imageName ? room.imageName : '未選択'"
+              label="選択中"
+              hide-details
+              readonly
+              class="mb-5"
+            />
 
             <div class="mb-2">
-              <button-step-up :value="room.imageName" @stepUp="stepUp" />
+              <button-step-up :disabled="!room.imageName" @stepUp="stepUp" />
               <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
@@ -72,18 +77,19 @@
           <v-stepper-content step="3">
             <dialog-playlist @setBgm="setBgm" />
 
-            <div class="mb-3 text-body-1">
-              <div v-if="room.bgmName" class="text-truncate">
-                選択中： {{ room.bgmName }}
-              </div>
-              <div v-else>選択中： 未選択</div>
-            </div>
-            <div class="mb-10 text-body-1">
+            <v-text-field
+              :value="room.bgmName ? room.bgmName : '未選択'"
+              label="選択中"
+              hide-details
+              readonly
+              class="mb-3"
+            />
+            <div class="mb-10 text-caption">
               ※ルーム内にてBGMは自動でループ再生されます
             </div>
 
             <div class="mb-2">
-              <button-step-up :value="room.bgmName" @stepUp="stepUp" />
+              <button-step-up :disabled="!room.bgmName" @stepUp="stepUp" />
               <button-step-down @stepDown="stepDown" />
             </div>
           </v-stepper-content>
@@ -92,41 +98,21 @@
             以下の設定でルームを作成します
           </v-stepper-step>
           <v-stepper-content step="4">
-            <div class="mb-10 text-body-1">
-              <v-row>
-                <v-col cols="2">
-                  <div>名前：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div class="text-truncate">
-                    {{ room.name }}
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="2">
-                  <div>イメージ：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div>
-                    {{ room.imageName }}
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="2">
-                  <div>BGM：</div>
-                </v-col>
-                <v-col cols="10">
-                  <div class="text-truncate">
-                    {{ room.bgmName }}
-                  </div>
-                </v-col>
-              </v-row>
+            <div class="mb-10">
+              <v-text-field
+                v-for="item in items"
+                :key="item.value"
+                :value="item.value"
+                :label="item.label"
+                hide-details
+                readonly
+                :class="{ 'mb-4': item.margin }"
+              />
             </div>
 
             <div class="mb-2">
               <v-btn
+                :disabled="!completed"
                 outlined
                 color="indigo"
                 width="100"
@@ -151,8 +137,13 @@ export default {
   data() {
     return {
       currentStep: 1,
+      valid: false,
+      nameRules: [
+        (v) => !!v || '',
+        (v) => v.length <= 30 || '文字数オーバーです',
+      ],
       room: {
-        name: null,
+        name: '',
         imageId: null,
         imageName: null,
         bgmId: null,
@@ -227,9 +218,35 @@ export default {
       title: 'ルーム作成',
     }
   },
+  computed: {
+    completed() {
+      return (this.room.name && this.room.imageId && this.room.bgmId) || false
+    },
+    items() {
+      return [
+        {
+          value: this.room.name,
+          label: '名前',
+          margin: true,
+        },
+        {
+          value: this.room.imageName,
+          label: 'イメージ',
+          margin: true,
+        },
+        {
+          value: this.room.bgmName,
+          label: 'BGM',
+          margin: false,
+        },
+      ]
+    },
+  },
   methods: {
     stepUp() {
-      this.currentStep++
+      if (this.valid) {
+        this.currentStep++
+      }
     },
     stepDown() {
       this.currentStep--
@@ -248,10 +265,15 @@ export default {
         name: this.room.name,
         bgm_resource: this.room.bgmId,
       }
-      await this.$axios.post('/api/v1/rooms', params).then((response) => {
-        this.$router.replace(`/rooms/${response.data.id}`)
-      })
+      const response = await this.$axios.post('/api/v1/rooms', params)
+      this.$router.replace(`/rooms/${response.data.id}`)
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.stepper {
+  max-height: calc(100vh - 128px);
+}
+</style>

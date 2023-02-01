@@ -3,9 +3,10 @@
     v-model="setName"
     :rules="rules"
     :counter="max"
-    label="ユーザー名を入力"
+    label="ユーザーネームを入力"
     placeholder="あなたの表示名"
     outlined
+    required
   />
 </template>
 
@@ -14,24 +15,24 @@ export default {
   props: {
     name: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
-    const max = 30
+  data() {
     return {
-      max,
-      rules: [
-        v => !!v || '',
-        v => (!!v && max >= v.length) || `${max}文字以内で入力してください`
-      ]
+      max: 30,
+      rules: [(v) => !!v || '', (v) => v.length <= this.max || ''],
     }
   },
   computed: {
     setName: {
-      get () { return this.name },
-      set (newVal) { return this.$emit('update:name', newVal) }
-    }
-  }
+      get() {
+        return this.name
+      },
+      set(newVal) {
+        return this.$emit('update:name', newVal)
+      },
+    },
+  },
 }
 </script>

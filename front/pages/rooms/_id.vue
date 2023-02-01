@@ -42,10 +42,10 @@
           <v-divider />
 
           <v-sheet class="pa-4" height="30%">
-            <v-form class="mb-2" @submit.prevent="speak">
+            <v-form v-model="valid" class="mb-2" @submit.prevent="speak">
               <v-text-field
                 v-model="inputMessage"
-                type="text"
+                :rules="messageRules"
                 label="メッセージを入力する"
                 counter="200"
                 dense
@@ -54,22 +54,18 @@
               />
             </v-form>
 
-            <v-row no-gutters class="mb-3">
-              <v-col cols="1">
+            <v-slider v-model="media" thumb-label dense>
+              <template #prepend>
                 <v-tooltip top>
                   <template #activator="{ on }">
-                    <v-icon class="mt-1" v-on="on" @click="toggle">
+                    <v-icon v-on="on" @click="toggle">
                       {{ isMuted ? 'mdi-volume-off' : 'mdi-volume-high' }}
                     </v-icon>
                   </template>
                   <span>クリックでミュートの切り替え</span>
                 </v-tooltip>
-              </v-col>
-
-              <v-col cols="11">
-                <v-slider v-model="media" thumb-label dense />
-              </v-col>
-            </v-row>
+              </template>
+            </v-slider>
 
             <stay-time-clock />
           </v-sheet>
@@ -109,26 +105,14 @@ export default {
   },
   layout: 'room',
   async asyncData({ $axios, route }) {
-    const chatMessages = []
-    let roomUsers, room
-    await $axios
-      .$get('/api/v1/messages', {
-        params: {
-          id: route.params.id,
-        },
-      })
-      .then((response) => chatMessages.push(...response.reverse()))
-    await $axios
-      .$get('/api/v1/rooms_users', {
-        params: {
-          id: route.params.id,
-        },
-      })
-      .then((response) => (roomUsers = response))
-    await $axios
-      .$get(`/api/v1/rooms/${route.params.id}`)
-      .then((response) => (room = response))
-    return { chatMessages, roomUsers, room }
+    const id = route.params.id
+    const params = { params: { id } }
+    const [room, roomUsers, chatMessages] = await Promise.all([
+      $axios.$get(`/api/v1/rooms/${id}`),
+      $axios.$get('/api/v1/rooms_users', params),
+      $axios.$get('/api/v1/messages', params),
+    ])
+    return { room, roomUsers, chatMessages }
   },
   data() {
     return {
@@ -136,6 +120,8 @@ export default {
       media: 15,
       isMuted: true,
       inputMessage: '',
+      valid: false,
+      messageRules: [(v) => v.length <= 200 || ''],
     }
   },
   head() {
@@ -226,10 +212,12 @@ export default {
       el.scrollTo(0, el.scrollHeight)
     },
     speak() {
-      this.roomChannel.perform('speak', {
-        message: this.inputMessage,
-      })
-      this.inputMessage = ''
+      if (this.inputMessage && this.valid) {
+        this.roomChannel.perform('speak', {
+          message: this.inputMessage,
+        })
+        this.inputMessage = ''
+      }
     },
   },
 }

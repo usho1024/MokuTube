@@ -12,7 +12,7 @@
         <v-divider />
 
         <v-sheet class="pa-5">
-          <v-form>
+          <v-form v-model="valid">
             <v-row justify="center" class="my-5">
               <v-avatar size="100">
                 <img :src="url" />
@@ -37,13 +37,16 @@
 
             <v-text-field
               v-model="name"
+              :rules="nameRules"
               counter="30"
               label="ユーザーネーム"
               class="mb-5"
+              required
             />
 
             <v-textarea
               v-model="introduction"
+              :rules="introductionRules"
               counter="300"
               label="自己紹介文"
               class="mb-5"
@@ -51,6 +54,7 @@
 
             <v-text-field
               v-model="work"
+              :rules="workRules"
               counter="30"
               label="作業内容"
               class="mb-2"
@@ -62,10 +66,10 @@
 
         <v-card-actions>
           <v-btn
-            dark
+            :disabled="!valid"
             color="appblue"
             width="100"
-            class="mr-3"
+            class="mr-3 white--text"
             @click="updateUser"
           >
             更新する
@@ -94,6 +98,14 @@ export default {
       introduction: this.user.introduction,
       work: this.user.work,
       inputFile: null,
+      valid: false,
+      errorMessage: '文字数オーバーです',
+      nameRules: [
+        (v) => !!v || 'ユーザーネームを入力してください',
+        (v) => v.length <= 30 || this.errorMessage,
+      ],
+      introductionRules: [(v) => v.length <= 300 || this.errorMessage],
+      workRules: [(v) => v.length <= 30 || this.errorMessage],
     }
   },
   computed: {
@@ -119,18 +131,18 @@ export default {
       if (this.inputFile) {
         formData.append('user[avatar]', this.inputFile)
       }
-      await this.$axios
-        .patch(`/api/v1/users/${this.user.id}`, formData)
-        .then((response) => {
-          this.$emit('update:user', response.data)
-          const user = {
-            id: response.data.id,
-            name: response.data.name,
-            avatar: response.data.avatar,
-          }
-          this.$store.dispatch('getCurrentUser', user)
-          this.dialog = false
-        })
+      const response = await this.$axios.patch(
+        `/api/v1/users/${this.user.id}`,
+        formData
+      )
+      this.$emit('update:user', response.data)
+      const user = {
+        id: response.data.id,
+        name: response.data.name,
+        avatar: response.data.avatar,
+      }
+      this.$store.dispatch('getCurrentUser', user)
+      this.dialog = false
     },
     resetData() {
       this.name = this.user.name

@@ -5,6 +5,7 @@
     label="メールアドレスを入力"
     :placeholder="placeholder ? 'your@email.com' : undefined"
     outlined
+    required
   />
 </template>
 

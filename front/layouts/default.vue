@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <app-bar-logged-in v-if="currentUser" />
-    <app-bar v-else />
+    <app-bar />
     <v-main>
+      <app-toaster />
       <nuxt />
     </v-main>
     <app-footer />
@@ -12,10 +12,5 @@
 <script>
 export default {
   name: 'Default',
-  computed: {
-    currentUser() {
-      return this.$store.state.currentUser
-    },
-  },
 }
 </script>
