@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_15_024130) do
+ActiveRecord::Schema.define(version: 2023_02_02_123546) do
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "room_id", null: false
@@ -66,14 +66,14 @@ ActiveRecord::Schema.define(version: 2023_01_15_024130) do
     t.string "unconfirmed_email"
     t.string "name", null: false
     t.string "email", null: false
-    t.text "introduction"
+    t.string "introduction", default: "", null: false
     t.boolean "guest", default: false, null: false
     t.boolean "is_deleated", default: false, null: false
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
-    t.string "work"
+    t.string "work", default: "", null: false
     t.integer "total_stay_time", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -47,7 +47,7 @@
             <v-textarea
               v-model="introduction"
               :rules="introductionRules"
-              counter="300"
+              counter="160"
               label="自己紹介文"
               class="mb-5"
             />
@@ -104,7 +104,7 @@ export default {
         (v) => !!v || 'ユーザーネームを入力してください',
         (v) => v.length <= 30 || this.errorMessage,
       ],
-      introductionRules: [(v) => v.length <= 300 || this.errorMessage],
+      introductionRules: [(v) => v.length <= 160 || this.errorMessage],
       workRules: [(v) => v.length <= 30 || this.errorMessage],
     }
   },
