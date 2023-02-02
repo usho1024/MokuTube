@@ -15,6 +15,8 @@
           ログインする
         </v-btn>
       </v-form>
+      <div class="text-center text-caption my-3">もしくは</div>
+      <button-guest-login block />
     </template>
   </user-form-card>
 </template>

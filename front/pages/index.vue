@@ -15,16 +15,9 @@
                   独学、だけどあなたはひとりじゃない。
                 </p>
                 <p class="text-h5 mb-10">
-                  MokuTube（もくつべ）は会員登録不要で使えるオンライン自習室サービスです
+                  MokuTube（もくつべ）は会員登録不要ですぐに使えるオンライン自習室サービスです
                 </p>
-                <v-btn
-                  x-large
-                  color="teal accent-4"
-                  :loading="loading"
-                  class="mb-3"
-                  @click="guestLogin"
-                  >今すぐ使ってみる！</v-btn
-                >
+                <button-guest-login x-large class="mb-3" />
                 <div class="text-subtitle-1 mb-8">
                   <div>※パソコンからのみご利用いただけます</div>
                   <div>※ゲスト会員の有効期限は登録後24時間です</div>
@@ -97,15 +90,7 @@
 
             <section class="mb-16">
               <p class="mb-8">さあ、あなたもMokuTuberになりませんか？</p>
-              <v-btn
-                dark
-                x-large
-                color="teal accent-4"
-                :loading="loading"
-                class="mb-3"
-                @click="guestLogin"
-                >今すぐ使ってみる！</v-btn
-              >
+              <button-guest-login x-large class="mb-16" />
             </section>
           </v-sheet>
         </v-card>
@@ -136,8 +121,6 @@ export default {
         'ルームの滞在時間が自動で記録されるので勉強時間の見える化ができます',
         '勉強に疲れたと思ったらルーム内のBGM視聴機能やチャット機能を使って\nリフレッシュしてみましょう',
       ],
-      guest: { id: '', pass: '' },
-      loading: false,
     }
   },
   head() {
@@ -149,62 +132,6 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser
-    },
-    guestUser() {
-      return {
-        name: `ゲスト${this.guest.id}`,
-        email: `${this.guest.id}@mokutube.guest`,
-        password: this.guest.pass,
-        password_confirmation: this.guest.pass,
-        guest: true,
-      }
-    },
-  },
-  methods: {
-    getRandomStr() {
-      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-      let [guestId, guestPass] = ['', '']
-      for (let i = 0; i < 8; i++) {
-        guestId += chars[Math.floor(Math.random() * chars.length)]
-        guestPass += chars[Math.floor(Math.random() * chars.length)]
-      }
-      ;[this.guest.id, this.guest.pass] = [guestId, guestPass]
-    },
-    async guestLogin() {
-      this.loading = true
-      this.getRandomStr()
-      await this.$axios
-        .post('/api/v1/auth', this.guestUser)
-        .then(() => this.login())
-        .catch(() => this.authFailure())
-    },
-    async login() {
-      const params = {
-        params: {
-          email: this.guestUser.email,
-          password: this.guestUser.password,
-        },
-      }
-      const response = await this.$auth.loginWith('local', params)
-      const user = {
-        id: response.data.data.id,
-        name: response.data.data.name,
-        avatar: response.data.data.avatar,
-      }
-      this.$store.dispatch('getCurrentUser', user)
-      this.$router.replace('/rooms')
-      const msgs = ['ゲストユーザーでログインしました']
-      const color = 'green'
-      this.$store.dispatch('getToast', { msgs, color })
-    },
-    authFailure() {
-      this.loading = false
-      const msgs = [
-        'ユーザーの作成に失敗しました。',
-        'お手数ですが再度ゲストログインボタンをクリックしてください。',
-      ]
-      const color = 'red'
-      this.$store.dispatch('getToast', { msgs, color })
     },
   },
 }
