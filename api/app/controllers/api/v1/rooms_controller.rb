@@ -1,5 +1,6 @@
 class Api::V1::RoomsController < ApplicationController
-  before_action :authenticate_user!
+  include Common
+  before_action :authenticate_user!, :reject_expired_user
 
   def index
     data = {}

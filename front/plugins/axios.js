@@ -1,9 +1,9 @@
 export default ({ $axios, isDev }) => {
   $axios.onRequest((config) => {
-    config.headers.client = window.localStorage.getItem('client')
-    config.headers['access-token'] = window.localStorage.getItem('access-token')
-    config.headers.uid = window.localStorage.getItem('uid')
-    config.headers['token-type'] = window.localStorage.getItem('token-type')
+    config.headers.client = localStorage.getItem('client')
+    config.headers['access-token'] = localStorage.getItem('access-token')
+    config.headers.uid = localStorage.getItem('uid')
+    config.headers['token-type'] = localStorage.getItem('token-type')
     if (isDev) {
       console.log(config)
     }
