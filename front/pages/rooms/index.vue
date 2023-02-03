@@ -117,7 +117,7 @@ export default {
       this.currentTab = type
     },
     async pageChange(pageNumber) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      scrollTo({ top: 0, behavior: 'smooth' })
       const params = {
         params: { type: this.currentTab, page_number: pageNumber },
       }

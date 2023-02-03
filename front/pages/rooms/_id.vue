@@ -137,9 +137,9 @@ export default {
       return this.$store.state.currentUser
     },
     getWebSocketURL() {
-      const uid = window.localStorage.getItem('uid')
-      const token = window.localStorage.getItem('access-token')
-      const client = window.localStorage.getItem('client')
+      const uid = localStorage.getItem('uid')
+      const token = localStorage.getItem('access-token')
+      const client = localStorage.getItem('client')
       return `ws://localhost:3000/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },
