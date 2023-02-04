@@ -41,7 +41,7 @@
               </p>
               <p>
                 <v-icon class="mr-3">mdi-account-tag</v-icon>
-                <span v-if="user.guest"
+                <span v-if="user.email.includes('@mokutube.guest')"
                   >ゲストユーザー
                   <v-tooltip top>
                     <template #activator="{ on }">

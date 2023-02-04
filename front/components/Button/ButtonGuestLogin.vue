@@ -35,7 +35,6 @@ export default {
         email: `${this.guest.id}@mokutube.guest`,
         password: this.guest.pass,
         password_confirmation: this.guest.pass,
-        guest: true,
       }
     },
   },
