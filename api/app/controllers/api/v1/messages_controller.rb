@@ -1,5 +1,6 @@
 class Api::V1::MessagesController < ApplicationController
-  before_action :authenticate_user!
+  include Common
+  before_action :authenticate_user!, :reject_expired_user
 
   def index
     messages = Message.where(room_id: params[:id]).limit(50).reverse_order.includes(:user).reverse

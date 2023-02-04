@@ -15,15 +15,9 @@
                   独学、だけどあなたはひとりじゃない。
                 </p>
                 <p class="text-h5 mb-10">
-                  MokuTube（もくつべ）は会員登録不要で使えるオンライン自習室サービスです
+                  MokuTube（もくつべ）は会員登録不要ですぐに使えるオンライン自習室サービスです
                 </p>
-                <v-btn
-                  x-large
-                  color="teal accent-4"
-                  class="mb-3"
-                  @click="guestLogin"
-                  >今すぐ使ってみる！</v-btn
-                >
+                <button-guest-login x-large class="mb-3" />
                 <div class="text-subtitle-1 mb-8">
                   <div>※パソコンからのみご利用いただけます</div>
                   <div>※ゲスト会員の有効期限は登録後24時間です</div>
@@ -96,14 +90,7 @@
 
             <section class="mb-16">
               <p class="mb-8">さあ、あなたもMokuTuberになりませんか？</p>
-              <v-btn
-                dark
-                x-large
-                color="teal accent-4"
-                class="mb-3"
-                @click="guestLogin"
-                >今すぐ使ってみる！</v-btn
-              >
+              <button-guest-login x-large class="mb-16" />
             </section>
           </v-sheet>
         </v-card>
@@ -146,9 +133,6 @@ export default {
     currentUser() {
       return this.$store.state.currentUser
     },
-  },
-  methods: {
-    guestLogin() {},
   },
 }
 </script>

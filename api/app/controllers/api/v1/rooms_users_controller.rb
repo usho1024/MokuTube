@@ -1,5 +1,6 @@
 class Api::V1::RoomsUsersController < ApplicationController
-  before_action :authenticate_user!
+  include Common
+  before_action :authenticate_user!, :reject_expired_user
 
   def index
     room_users = RoomsUser.where(room_id: params[:id]).includes(:user)

@@ -30,7 +30,7 @@
           <v-sheet
             id="chat-list"
             class="overflow-y-auto grey lighten-5 text-caption font-weight-medium pt-4"
-            height="70%"
+            height="75%"
           >
             <list-message
               v-for="(message, i) in chatMessages"
@@ -41,8 +41,8 @@
 
           <v-divider />
 
-          <v-sheet class="pa-4" height="30%">
-            <v-form v-model="valid" class="mb-2" @submit.prevent="speak">
+          <v-sheet class="pa-4" height="25%">
+            <v-form v-model="valid" class="mb-3" @submit.prevent="speak">
               <v-text-field
                 v-model="inputMessage"
                 :rules="messageRules"
@@ -54,7 +54,7 @@
               />
             </v-form>
 
-            <v-slider v-model="media" thumb-label dense>
+            <v-slider v-model="media" thumb-label dense class="mb-3">
               <template #prepend>
                 <v-tooltip top>
                   <template #activator="{ on }">
@@ -137,9 +137,9 @@ export default {
       return this.$store.state.currentUser
     },
     getWebSocketURL() {
-      const uid = window.localStorage.getItem('uid')
-      const token = window.localStorage.getItem('access-token')
-      const client = window.localStorage.getItem('client')
+      const uid = localStorage.getItem('uid')
+      const token = localStorage.getItem('access-token')
+      const client = localStorage.getItem('client')
       return `ws://localhost:3000/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },

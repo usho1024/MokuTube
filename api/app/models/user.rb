@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
       maximum: 30,
       allow_blank: true
     }
-  validates :introduction, length: { maximum: 300 }
+  validates :introduction, length: { maximum: 160 }
   validates :work, length: { maximum: 30 }
 
   scope :admin_room, -> { first.rooms.includes([:room_image]) }

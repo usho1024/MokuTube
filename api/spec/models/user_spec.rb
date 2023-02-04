@@ -42,8 +42,8 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context '自己紹介文が300文字を超過する場合' do
-      let(:user) { build(:user, introduction: "#{'い' * 301}") }
+    context '自己紹介文が160文字を超過する場合' do
+      let(:user) { build(:user, introduction: "#{'い' * 161}") }
 
       it 'い*301は無効になること' do
         expect(user).to be_invalid
