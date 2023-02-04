@@ -50,7 +50,7 @@
                   <v-pagination
                     v-model="page"
                     :length="length"
-                    total-visible="10"
+                    total-visible="7"
                     @input="pageChange"
                   ></v-pagination>
                 </div>
@@ -115,6 +115,7 @@ export default {
       this.count = response.data.count
       this.activeUsers = response.data.active_users
       this.currentTab = type
+      this.page = 1
     },
     async pageChange(pageNumber) {
       scrollTo({ top: 0, behavior: 'smooth' })
