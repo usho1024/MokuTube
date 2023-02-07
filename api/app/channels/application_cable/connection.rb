@@ -12,7 +12,7 @@ module ApplicationCable
       uid = request.params[:uid]
       token = request.params[:token]
       client = request.params[:client]
-      user = User.find_by(uid: uid)
+      user = User.find_by(uid:)
       if user && user.valid_token?(token, client)
         user
       else

@@ -16,7 +16,7 @@ RSpec.describe "Api::V1::Users", type: :request do
   describe "PATCH /update" do
     context "正常テスト" do
       it "ユーザーの情報を更新できること" do
-        patch "/api/v1/users/#{user.id}", headers: auth_tokens, params: { user: {name: "hoge"}  }
+        patch "/api/v1/users/#{user.id}", headers: auth_tokens, params: { user: { name: "hoge" } }
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)
         expect(json["name"]).to eq("hoge")
@@ -32,7 +32,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       let!(:user2) { create(:user) }
 
       it "不正なパラメーターが送信されたら401を返すこと" do
-        patch "/api/v1/users/#{user2.id}", headers: auth_tokens, params: { user: {name: "hoge"}  }
+        patch "/api/v1/users/#{user2.id}", headers: auth_tokens, params: { user: { name: "hoge" } }
         expect(response.status).to eq(401)
       end
     end

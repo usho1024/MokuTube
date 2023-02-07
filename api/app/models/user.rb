@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
   mount_uploader :avatar, AvatarUploader
@@ -10,10 +10,10 @@ class User < ActiveRecord::Base
   has_many :messages
 
   validates :name, presence: true,
-    length: {
-      maximum: 30,
-      allow_blank: true
-    }
+                   length: {
+                     maximum: 30,
+                     allow_blank: true
+                   }
   validates :introduction, length: { maximum: 160 }
   validates :work, length: { maximum: 30 }
 

@@ -5,7 +5,7 @@
     user_id: 1,
     seat_number: 1,
     x_coord: 0,
-    y_coord: 0,
+    y_coord: 0
   )
 end
 
