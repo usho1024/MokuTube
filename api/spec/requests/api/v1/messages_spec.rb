@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Messages", type: :request do
-  let(:room_image) { create(:room_image) }
-  let(:user) { create(:user) }
-  let(:room) { create(:room, room_image:, user:) }
-  let(:auth_tokens) { sign_in(user) }
+  let!(:user) { create(:user) }
+  let!(:room_image) { create(:room_image) }
+  let!(:room) { create(:room, room_image:, user:) }
+  let!(:auth_tokens) { sign_in(user) }
 
   describe "GET /index" do
     it "ルームのチャットメッセージ（10件）を取得できること" do
