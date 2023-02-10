@@ -9,14 +9,14 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user == current_user && params.key?(:stay_time)
-      @user.total_stay_time += params[:stay_time]
+      @user.total_stay_time += params[:stay_time].to_i
       @user.save
       render status: :ok
     elsif @user == current_user
       @user.update(user_params)
       render json: @user
     else
-      render status: 401
+      render status: :unauthorized
     end
   end
 
