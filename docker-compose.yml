@@ -5,7 +5,7 @@ services:
     image: mysql:8.0.31
     environment:
       TZ: UTC
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_ROOT_PASSWORD: rootpassword
     volumes:
       - "./api/tmp/db:/var/lib/mysql"
 
@@ -13,31 +13,31 @@ services:
     build:
       context: ./api
       args:
-        WORKDIR: $WORKDIR
+        WORKDIR: app
     environment:
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      API_DOMAIN: "localhost:$FRONT_PORT"
+      MYSQL_ROOT_PASSWORD: rootpassword
+      API_DOMAIN: "localhost:8080"
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
-      - "./api:/$WORKDIR"
+      - "./api:/app"
     depends_on:
       - db
     ports:
-      - "$API_PORT:3000"
+      - "3000:3000"
 
   front:
     build:
       context: ./front
       args:
-        WORKDIR: $WORKDIR
-        API_URL: "http://localhost:$API_PORT"
+        WORKDIR: app
+        API_URL: "http://localhost:3000"
     command: yarn run dev
     environment:
       API_KEY: $API_KEY
     volumes:
-      - "./front:/$WORKDIR"
+      - "./front:/app"
     ports:
-      - "$FRONT_PORT:3000"
+      - "8080:3000"
     depends_on:
       - api
