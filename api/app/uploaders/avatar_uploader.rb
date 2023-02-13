@@ -4,8 +4,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  # storage :file
-  storage :fog
+  if Rails.env.production?
+    storage :fog # 本番環境のみ
+  else
+    storage :file # 本番環境以外
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -15,7 +18,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url(*_args)
-    "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
+    "https://mokutube.s3.ap-northeast-1.amazonaws.com/images/" + [version_name, "default.png"].compact.join('_')
   end
 
   # Process files as they are uploaded:
