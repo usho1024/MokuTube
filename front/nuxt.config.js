@@ -125,5 +125,6 @@ export default {
   build: {},
   publicRuntimeConfig: {
     apiKey: process.env.API_KEY,
+    apiDomain: process.env.API_DOMAIN,
   },
 }

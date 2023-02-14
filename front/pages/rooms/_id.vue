@@ -140,7 +140,8 @@ export default {
       const uid = localStorage.getItem('uid')
       const token = localStorage.getItem('access-token')
       const client = localStorage.getItem('client')
-      return `ws://localhost:3000/cable?uid=${uid}&token=${token}&client=${client}`
+      const apiDomain = this.$config.apiDomain
+      return `ws://${apiDomain}/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },
   watch: {
