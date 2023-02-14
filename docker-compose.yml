@@ -35,7 +35,7 @@ services:
     command: yarn run dev
     environment:
       API_KEY: $API_KEY
-      API_DOMAIN: $API_DOMAIN
+      NODE_ENV: $NODE_ENV
     volumes:
       - "./front:/app"
     ports:

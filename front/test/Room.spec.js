@@ -15,6 +15,11 @@ describe('RoomPage', () => {
           },
         }
       },
+      computed: {
+        apiDomain() {
+          return 'localhost:3000'
+        },
+      },
       methods: {
         playVideo() {},
         mute() {},

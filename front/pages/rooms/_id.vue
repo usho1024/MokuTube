@@ -133,15 +133,17 @@ export default {
     player() {
       return this.$refs.youtube.player
     },
-    currentUser() {
-      return this.$store.state.currentUser
+    // TODO あとで修正
+    apiDomain() {
+      return this.$config.nodeEnv === 'production'
+        ? 'AWSのグローバルIP'
+        : 'localhost:3000'
     },
     getWebSocketURL() {
       const uid = localStorage.getItem('uid')
       const token = localStorage.getItem('access-token')
       const client = localStorage.getItem('client')
-      const apiDomain = this.$config.apiDomain
-      return `ws://${apiDomain}/cable?uid=${uid}&token=${token}&client=${client}`
+      return `ws://${this.apiDomain}/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },
   watch: {
