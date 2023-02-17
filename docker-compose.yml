@@ -5,18 +5,16 @@ services:
     image: mysql:8.0.31
     environment:
       TZ: UTC
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
     volumes:
       - "./api/tmp/db:/var/lib/mysql"
 
   api:
-    build:
-      context: ./api
-      args:
-        WORKDIR: app
+    build: ./api
+    command: rails s -b 0.0.0.0
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      API_DOMAIN: "localhost:8080"
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      API_DOMAIN: $API_DOMAIN
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
@@ -30,8 +28,7 @@ services:
     build:
       context: ./front
       args:
-        WORKDIR: app
-        API_URL: "http://localhost:3000"
+        API_URL: $API_URL
     command: yarn run dev
     environment:
       API_KEY: $API_KEY
