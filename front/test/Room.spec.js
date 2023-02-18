@@ -16,7 +16,7 @@ describe('RoomPage', () => {
         }
       },
       computed: {
-        apiDomain() {
+        wsDomain() {
           return 'localhost:3000'
         },
       },

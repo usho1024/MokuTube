@@ -56,5 +56,3 @@ YouTube上にある作業用BGMを流しながらゆるっと気軽に参加で�
 - VSCode
 - Docker/docker-compose
 - MacBook Air (M1, 2020)
-
-あ
