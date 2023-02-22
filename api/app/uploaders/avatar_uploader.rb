@@ -5,9 +5,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   if Rails.env.production?
-    storage :fog # 本番環境のみ
+    storage :fog
   else
-    storage :file # 本番環境以外
+    storage :file
   end
 
   # Override the directory where uploaded files will be stored.
@@ -17,9 +17,13 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  # TODO ドメインをAWSのグローバルIPに変える
   def default_url(*_args)
-    "https://mokutube.s3.ap-northeast-1.amazonaws.com/images/" + [version_name, "default.png"].compact.join('_')
+    if Rails.env.production?
+      # TODO ドメインあとで修正？
+      "https://mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
+    else
+      "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
+    end
   end
 
   # Process files as they are uploaded:
