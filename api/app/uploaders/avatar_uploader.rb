@@ -20,7 +20,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url(*_args)
     if Rails.env.production?
       # TODO ドメインあとで修正？
-      "https://mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
+      "https://api.mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
     else
       "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
     end

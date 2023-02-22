@@ -140,7 +140,7 @@ export default {
       const uid = localStorage.getItem('uid')
       const token = localStorage.getItem('access-token')
       const client = localStorage.getItem('client')
-      return `ws://${this.wsDomain}/cable?uid=${uid}&token=${token}&client=${client}`
+      return `${this.wsUrl}/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },
   watch: {

@@ -14,7 +14,7 @@ services:
     command: rails s -b 0.0.0.0
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      API_DOMAIN: $API_DOMAIN
+      FRONT_DOMAIN: $FRONT_DOMAIN
       AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
@@ -29,7 +29,7 @@ services:
     command: yarn dev
     environment:
       BASE_URL: $BASE_URL
-      WS_DOMAIN: $WS_DOMAIN
+      WS_URL: $WS_URL
       API_KEY: $API_KEY
       NODE_ENV: $NODE_ENV
     volumes:

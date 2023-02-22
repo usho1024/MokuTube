@@ -20,4 +20,4 @@ RUN apk update && \
     bundle install -j4 && \
     apk del build-dependencies
 
-COPY . .
+COPY . ./

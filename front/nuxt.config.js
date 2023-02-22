@@ -125,6 +125,6 @@ export default {
   build: {},
   publicRuntimeConfig: {
     apiKey: process.env.API_KEY,
-    wsDomain: process.env.WS_DOMAIN,
+    wsUrl: process.env.WS_URL,
   },
 }
