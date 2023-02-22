@@ -14,7 +14,7 @@ export default {
   },
   data() {
     return {
-      image_src: require('~/assets/img/logo.svg'),
+      image_src: require('~/assets/img/logo.png'),
     }
   },
   methods: {
