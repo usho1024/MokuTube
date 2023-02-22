@@ -133,8 +133,8 @@ export default {
     player() {
       return this.$refs.youtube.player
     },
-    wsDomain() {
-      return this.$config.wsDomain
+    wsUrl() {
+      return this.$config.wsUrl
     },
     getWebSocketURL() {
       const uid = localStorage.getItem('uid')
