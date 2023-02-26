@@ -7,7 +7,8 @@ ENV LANG=C.UTF-8 \
     HOST=0.0.0.0 \
     # Nodeのバージョンが高すぎることによるエラーが出るため下記を追加
     # 参考：https://github.com/webpack/webpack/issues/14532
-    NODE_OPTIONS=--openssl-legacy-provider
+    NODE_OPTIONS=--openssl-legacy-provider \
+    NODE_ENV=production
 
 WORKDIR /app
 

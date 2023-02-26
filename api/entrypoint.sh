@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/ash
 
-sudo service nginx start
+rc-service nginx start
 cd /app
 bin/setup
-bundle exec pumactl start -e production 
+bundle exec pumactl start

@@ -28,8 +28,6 @@ services:
     build: ./front
     command: yarn dev
     environment:
-      BASE_URL: $BASE_URL
-      WS_URL: $WS_URL
       API_KEY: $API_KEY
       NODE_ENV: $NODE_ENV
     volumes:

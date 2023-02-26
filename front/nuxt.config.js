@@ -1,4 +1,9 @@
 export default {
+  env: {
+    WS_URL: process.env.WS_URL || 'ws://localhost:3000',
+    API_KEY: process.env.API_KEY || '',
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -48,8 +53,15 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  // TODO httpsに修正
   axios: {
-    baseURL: process.env.BASE_URL,
+    baseURL:
+      process.env.NODE_ENV === 'production'
+        ? 'http://api.mokutube.net'
+        : 'http://localhost:3000',
+    // credentials: true（デフォルト：false）がないと本番環境でCORSエラーが出る
+    // 開発環境はCORS制限が緩いためなくてもCORSエラーは出ないとのこと
+    credentials: true,
   },
 
   auth: {
@@ -123,8 +135,4 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  publicRuntimeConfig: {
-    apiKey: process.env.API_KEY,
-    wsUrl: process.env.WS_URL,
-  },
 }

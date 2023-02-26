@@ -112,6 +112,5 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   ActionCable.server.config.disable_request_forgery_protection = true
-  # TODO ドメインあとで修正？
-  config.action_cable.allowed_request_origins = ['https://mokutube.net']
+  config.action_cable.allowed_request_origins = ENV.fetch("FRONT_DOMAIN", nil)
 end

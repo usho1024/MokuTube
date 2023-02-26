@@ -2,11 +2,14 @@
 # 参考：https://stackoverflow.com/questions/73398714/docker-fails-when-building-on-m1-macs-exec-usr-local-bin-docker-entrypoint-sh
 FROM --platform=linux/amd64 ruby:3.1.2-alpine3.16
 
-ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git imagemagick nginx sudo"
+ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git imagemagick nginx openrc"
 ARG DEV_PACKAGES="build-base curl-dev"
 
 ENV LANG=C.UTF-8 \
-    TZ=Asia/Tokyo
+    TZ=Asia/Tokyo \
+    RAILS_ENV=production \
+    RAILS_LOG_TO_STDOUT=true \
+    COOKIES_SAME_SITE=none
 
 WORKDIR /app
 
@@ -27,6 +30,6 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
-CMD ["/app/entrypoint.sh"]
+CMD ["./entrypoint.sh"]

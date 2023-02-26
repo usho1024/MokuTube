@@ -134,7 +134,7 @@ export default {
       return this.$refs.youtube.player
     },
     wsUrl() {
-      return this.$config.wsUrl
+      return process.env.WS_URL
     },
     getWebSocketURL() {
       const uid = localStorage.getItem('uid')
