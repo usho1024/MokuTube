@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0.31
+    environment:
+      TZ: UTC
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    volumes:
+      - "./api/tmp/db:/var/lib/mysql"
+
+  api:
+    build: ./api
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s"
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      FRONT_DOMAIN: $FRONT_DOMAIN
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    volumes:
+      - "./api:/app"
+      - "./nginx/public-data:/app/public"
+      - "./nginx/tmp-data:/app/tmp"
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - "./nginx/public-data:/app/public"
+      - "./nginx/tmp-data:/app/tmp"
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  front:
+    build: ./front
+    command: yarn dev
+    environment:
+      API_KEY: $API_KEY
+      NODE_ENV: $NODE_ENV
+    volumes:
+      - "./front:/app"
+    ports:
+      - "8080:3000"
+    depends_on:
+      - nginx

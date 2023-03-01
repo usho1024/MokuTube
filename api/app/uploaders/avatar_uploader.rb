@@ -22,7 +22,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
       # TODO httpsに修正
       "http://api.mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
     else
-      "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
+      "http://localhost/images/" + [version_name, "default.png"].compact.join('_')
     end
   end
 
