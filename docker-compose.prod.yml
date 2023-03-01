@@ -19,16 +19,16 @@ services:
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
       - "./api:/app"
-      - "./nginx/public-data:/app/public"
-      - "./nginx/tmp-data:/app/tmp"
+      - "public-data:/app/public"
+      - "tmp-data:/app/tmp"
     depends_on:
       - db
 
   nginx:
     build: ./nginx
     volumes:
-      - "./nginx/public-data:/app/public"
-      - "./nginx/tmp-data:/app/tmp"
+      - "public-data:/app/public"
+      - "tmp-data:/app/tmp"
     ports:
       - "80:80"
     depends_on:
@@ -46,3 +46,7 @@ services:
       - "8080:3000"
     depends_on:
       - nginx
+
+volumes:
+  public-data:
+  tmp-data:
