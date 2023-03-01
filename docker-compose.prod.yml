@@ -11,7 +11,7 @@ services:
 
   api:
     build: ./api
-    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s"
+    command: bundle exec puma -C config/puma.rb
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       FRONT_DOMAIN: $FRONT_DOMAIN
