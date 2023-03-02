@@ -21,6 +21,8 @@ services:
       - "./api:/app"
       - "public-data:/app/public"
       - "tmp-data:/app/tmp"
+    ports: # なくても問題ないが一貫性を持たせるため明示的に定義
+      - "3000:3000"
     depends_on:
       - db
 
@@ -29,7 +31,7 @@ services:
     volumes:
       - "public-data:/app/public"
       - "tmp-data:/app/tmp"
-    ports:
+    ports: # なくても問題ないが一貫性を持たせるため明示的に定義
       - "80:80"
     depends_on:
       - api
