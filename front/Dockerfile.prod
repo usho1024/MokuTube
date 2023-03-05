@@ -2,13 +2,16 @@
 # 参考：https://stackoverflow.com/questions/73398714/docker-fails-when-building-on-m1-macs-exec-usr-local-bin-docker-entrypoint-sh
 FROM --platform=linux/amd64 node:18.12-alpine3.16
 
+ARG API_KEY
+
 ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo \
     HOST=0.0.0.0 \
     # Nodeのバージョンが高すぎることによるエラーが出るため下記を追加
     # 参考：https://github.com/webpack/webpack/issues/14532
     NODE_OPTIONS=--openssl-legacy-provider \
-    NODE_ENV=production
+    NODE_ENV=production \
+    API_KEY=${API_KEY}
 
 WORKDIR /app
 

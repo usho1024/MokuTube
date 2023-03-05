@@ -27,7 +27,7 @@ services:
       - db
 
   nginx:
-    build: ./nginx
+    build: ./api/nginx
     volumes:
       - "public-data:/app/public"
       - "tmp-data:/app/tmp"

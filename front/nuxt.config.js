@@ -1,6 +1,5 @@
 export default {
   env: {
-    WS_URL: process.env.WS_URL || 'ws://localhost',
     API_KEY: process.env.API_KEY || '',
   },
 
@@ -58,7 +57,7 @@ export default {
     baseURL:
       process.env.NODE_ENV === 'production'
         ? 'http://api.mokutube.net'
-        : 'http://localhost',
+        : 'http://localhost:3000',
     // credentials: true（デフォルト：false）がないと本番環境でCORSエラーが出る
     // 開発環境はCORS制限が緩いためなくてもCORSエラーは出ないとのこと
     credentials: true,

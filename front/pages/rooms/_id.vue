@@ -133,8 +133,11 @@ export default {
     player() {
       return this.$refs.youtube.player
     },
+    // TODO wssに修正
     wsUrl() {
-      return process.env.WS_URL
+      return process.env.NODE_ENV === 'production'
+        ? 'ws://api.mokutube.net'
+        : 'ws://localhost:3000'
     },
     getWebSocketURL() {
       const uid = localStorage.getItem('uid')

@@ -17,7 +17,7 @@ describe('RoomPage', () => {
       },
       computed: {
         wsUrl() {
-          return 'ws://localhost'
+          return 'ws://localhost:3000'
         },
       },
       methods: {

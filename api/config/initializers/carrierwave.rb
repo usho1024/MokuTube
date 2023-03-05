@@ -3,7 +3,7 @@ require 'carrierwave/storage/file'
 require 'carrierwave/storage/fog'
 
 CarrierWave.configure do |config|
-  config.asset_host = 'http://localhost' if Rails.env.development?
+  config.asset_host = 'http://localhost:3000' if Rails.env.development?
 
   config.storage :fog
   config.fog_provider = 'fog/aws'
