@@ -19,8 +19,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url(*_args)
     if Rails.env.production?
-      # TODO httpsに修正
-      "http://api.mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
+      "https://api.mokutube.net/images/" + [version_name, "default.png"].compact.join('_')
     else
       "http://localhost:3000/images/" + [version_name, "default.png"].compact.join('_')
     end

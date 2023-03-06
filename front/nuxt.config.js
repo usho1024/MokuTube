@@ -52,11 +52,10 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  // TODO httpsに修正
   axios: {
     baseURL:
       process.env.NODE_ENV === 'production'
-        ? 'http://api.mokutube.net'
+        ? 'https://api.mokutube.net'
         : 'http://localhost:3000',
     // credentials: true（デフォルト：false）がないと本番環境でCORSエラーが出る
     // 開発環境はCORS制限が緩いためなくてもCORSエラーは出ないとのこと
