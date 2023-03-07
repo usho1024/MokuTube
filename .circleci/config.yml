@@ -46,6 +46,8 @@ workflows:
           branches:
             only: main
       - test:
+        requires:
+          - build
         filters:
           branches:
             only: main
