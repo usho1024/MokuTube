@@ -14,7 +14,7 @@ ENV LANG=C.UTF-8 \
 
 WORKDIR /app
 
-COPY Gemfile* /app
+COPY Gemfile* ./
 
 RUN apk update && \
     apk upgrade && \
@@ -23,7 +23,7 @@ RUN apk update && \
     bundle install -j4 && \
     apk del build-dependencies
 
-COPY . /app
+COPY . ./
 
 RUN mkdir -p tmp/pids && \
     mkdir -p tmp/sockets
