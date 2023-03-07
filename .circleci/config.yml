@@ -39,15 +39,10 @@ jobs:
           command: docker-compose down
 
 workflows:
-  test_and_deploy:
+  build_and_test_and_deploy:
     jobs:
       - build
-        # filters:
-        #   branches:
-        #     only: main
       - test:
         requires:
           - build
-        # filters:
-        #   branches:
-        #     only: main
+
