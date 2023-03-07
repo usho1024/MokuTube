@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@7.3.0
+  aws-ecr: circleci/aws-ecr@8.2.1
   # aws-ecs: circleci/aws-ecs@1.2.0
 
 jobs:
@@ -50,7 +50,7 @@ workflows:
             - build
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-api'
-            account-url:                  AWS_ECR_ACCOUNT_URL
+            registry-id:                  AWS_ECR_REGISTRY_ID
             region:                       AWS_REGION
             repo:                         ${REPO_NAME_API}
             tag:                          "${CIRCLE_SHA1}"
@@ -65,7 +65,7 @@ workflows:
                   - main
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-front'
-            account-url:                  AWS_ECR_ACCOUNT_URL
+            registry-id:                  AWS_ECR_REGISTRY_ID
             region:                       AWS_REGION
             repo:                         ${REPO_NAME_FRONT}
             tag:                          "${CIRCLE_SHA1}"
