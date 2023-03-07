@@ -1,14 +1,12 @@
 FROM ruby:3.1.2-alpine3.16
 
-ARG WORKDIR
 ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git imagemagick"
 ARG DEV_PACKAGES="build-base curl-dev"
 
-ENV HOME=/${WORKDIR} \
-    LANG=C.UTF-8 \
+ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo
 
-WORKDIR ${HOME}
+WORKDIR /app
 
 COPY Gemfile* ./
 
@@ -22,6 +20,7 @@ RUN apk update && \
     bundle install -j4 && \
     apk del build-dependencies
 
-COPY . .
+COPY . ./
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# puma.sockを配置するディレクトリを作成
+RUN mkdir -p tmp/sockets

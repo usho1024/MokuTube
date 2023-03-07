@@ -76,7 +76,7 @@ export default {
         part: 'snippet',
         playlistId: 'PLY1HAIrAzeUxbdEYv8vM98Vx0_L9kEM_G',
         maxResults: '50',
-        key: this.$config.apiKey,
+        key: process.env.API_KEY,
       },
       playedVideo: {
         id: null,

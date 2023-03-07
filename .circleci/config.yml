@@ -41,7 +41,11 @@ jobs:
 workflows:
   build_=>_test:
     jobs:
-      - build
+      - build:
+        filters:
+          branches:
+            only: main
       - test:
-          requires:
-            - build
+        filters:
+          branches:
+            only: main

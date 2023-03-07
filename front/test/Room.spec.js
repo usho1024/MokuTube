@@ -15,6 +15,11 @@ describe('RoomPage', () => {
           },
         }
       },
+      computed: {
+        wsUrl() {
+          return 'ws://localhost:3000'
+        },
+      },
       methods: {
         playVideo() {},
         mute() {},

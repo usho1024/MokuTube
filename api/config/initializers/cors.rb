@@ -7,11 +7,13 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ENV["API_DOMAIN"] || ""
+    origins ENV["FRONT_DOMAIN"] || ""
 
     resource '*',
       headers: :any,
       expose: %w[access-token expiry token-type uid client],
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      # このオプションがないと本番環境でCORSエラーが出る
+      credentials: true
   end
 end

@@ -11,7 +11,7 @@ services:
 
   api:
     build: ./api
-    command: rails s -b 0.0.0.0
+    command: bundle exec puma -C config/puma.rb
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       FRONT_DOMAIN: $FRONT_DOMAIN
@@ -19,10 +19,22 @@ services:
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
       - "./api:/app"
+      - "public-data:/app/public"
+      - "tmp-data:/app/tmp"
+    ports: # なくても問題ないが一貫性を持たせるため明示的に定義
+      - "3000:3000"
     depends_on:
       - db
-    ports:
-      - "3000:3000"
+
+  nginx:
+    build: ./api/nginx
+    volumes:
+      - "public-data:/app/public"
+      - "tmp-data:/app/tmp"
+    ports: # なくても問題ないが一貫性を持たせるため明示的に定義
+      - "80:80"
+    depends_on:
+      - api
 
   front:
     build: ./front
@@ -35,4 +47,8 @@ services:
     ports:
       - "8080:3000"
     depends_on:
-      - api
+      - nginx
+
+volumes:
+  public-data:
+  tmp-data:

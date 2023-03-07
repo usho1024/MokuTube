@@ -1,0 +1,36 @@
+# M1Macでビルドするとデプロイ時にフォーマットエラーが出るため、プラットフォームを指定する必要がある
+# 参考：https://stackoverflow.com/questions/73398714/docker-fails-when-building-on-m1-macs-exec-usr-local-bin-docker-entrypoint-sh
+FROM --platform=linux/amd64 ruby:3.1.2-alpine3.16
+
+ARG RUNTIME_PACKAGES="nodejs tzdata mysql-dev mysql-client git imagemagick"
+ARG DEV_PACKAGES="build-base curl-dev"
+
+ENV LANG=C.UTF-8 \
+    TZ=Asia/Tokyo \
+    RAILS_ENV=production \
+    RAILS_LOG_TO_STDOUT=true \
+    COOKIES_SAME_SITE=none
+
+WORKDIR /app
+
+COPY Gemfile* ./
+
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache ${RUNTIME_PACKAGES} && \
+    apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
+    bundle install -j4 && \
+    apk del build-dependencies
+
+COPY . ./
+
+RUN mkdir -p tmp/pids && \
+    mkdir -p tmp/sockets
+
+# nginxコンテナからrailsコンテナのsockファイルが見えるようにする
+VOLUME /app/public
+VOLUME /app/tmp
+
+RUN chmod +x ./entrypoint.sh
+
+CMD ["./entrypoint.sh"]

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :messages, only: [:index]
       resources :rooms_users, only: [:index]
       resources :rooms, only: [:index, :show, :create]
+      get :health_check, to: 'health_check#index'
     end
   end
 end

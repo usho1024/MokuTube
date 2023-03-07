@@ -1,0 +1,12 @@
+# M1Macでビルドするとデプロイ時にフォーマットエラーが出るため、プラットフォームを指定する必要がある
+# 参考：https://stackoverflow.com/questions/73398714/docker-fails-when-building-on-m1-macs-exec-usr-local-bin-docker-entrypoint-sh
+FROM --platform=linux/amd64 nginx:stable-alpine
+
+# インクルード用のディレクトリ内を削除
+RUN rm -f /etc/nginx/conf.d/*
+
+# Nginxの設定ファイルをコンテナにコピー
+COPY nginx.conf /etc/nginx/conf.d/app.conf
+
+# ビルド完了後にNginxを起動
+CMD /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf

@@ -133,14 +133,16 @@ export default {
     player() {
       return this.$refs.youtube.player
     },
-    currentUser() {
-      return this.$store.state.currentUser
+    wsUrl() {
+      return process.env.NODE_ENV === 'production'
+        ? 'wss://api.mokutube.net'
+        : 'ws://localhost:3000'
     },
     getWebSocketURL() {
       const uid = localStorage.getItem('uid')
       const token = localStorage.getItem('access-token')
       const client = localStorage.getItem('client')
-      return `ws://localhost:3000/cable?uid=${uid}&token=${token}&client=${client}`
+      return `${this.wsUrl}/cable?uid=${uid}&token=${token}&client=${client}`
     },
   },
   watch: {
