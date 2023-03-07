@@ -22,10 +22,10 @@ RUN apk update && \
     apk upgrade && \
     apk add --no-cache make gcc g++ python3
 
-COPY package*.json ./
+COPY package*.json /app
 RUN yarn install
 
-COPY . ./
+COPY . /app
 
 RUN yarn build
 
