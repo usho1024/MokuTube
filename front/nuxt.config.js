@@ -21,10 +21,18 @@ export default {
       { hid: 'og:site_name', property: 'og:site_name', content: 'MokuTube' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://mokutube.net' },
-      { hid: 'og:title', property: 'og:title', content: 'MokuTube ~オンライン自習室~' },
-      { hid: 'og:description', property: 'og:description', content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です' },
-      { hid: 'og:image', property: 'og:image', content: '~/front/assets/img/room/thumb/cafe.png' },
-      { name: 'twitter:card', content: 'summary' } // twitterの画像サイズ
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'MokuTube ~オンライン自習室~',
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です',
+      },
+      { hid: 'og:image', property: 'og:image', content: '/cafe.png' },
+      { name: 'twitter:card', content: 'summary' }, // twitterの画像サイズ
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
