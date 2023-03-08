@@ -1,11 +1,12 @@
-export default ({ $axios }) => {
+export default ({ $axios, isDev }) => {
   $axios.onRequest((config) => {
     config.headers.client = localStorage.getItem('client')
     config.headers['access-token'] = localStorage.getItem('access-token')
     config.headers.uid = localStorage.getItem('uid')
     config.headers['token-type'] = localStorage.getItem('token-type')
-    // TODO あとでisDevに直す
-    console.log(config)
+    if (isDev) {
+      console.log(config)
+    }
   })
 
   $axios.onResponse((response) => {
@@ -15,8 +16,9 @@ export default ({ $axios }) => {
       localStorage.setItem('uid', response.headers.uid)
       localStorage.setItem('token-type', response.headers['token-type'])
     }
-    // TODO あとでisDevに直す
-    console.log(response)
+    if (isDev) {
+      console.log(response)
+    }
   })
 
   $axios.onError((e) => {
