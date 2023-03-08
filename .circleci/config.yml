@@ -53,7 +53,7 @@ workflows:
             registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_API}
             path:                         './api'
-            dockerfile:                   ./Dockerfile.prod
+            dockerfile:                   api/Dockerfile.prod
             extra-build-args:             '--build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY'
             # requires:
             #   - test
@@ -66,7 +66,7 @@ workflows:
             registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_FRONT}
             path:                         './front'
-            dockerfile:                   ./Dockerfile.prod
+            dockerfile:                   front/Dockerfile.prod
             extra-build-args:             '--build-arg API_KEY=$API_KEY'
             # requires:
             #   - test
