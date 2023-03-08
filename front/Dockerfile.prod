@@ -14,7 +14,7 @@ ENV LANG=C.UTF-8 \
     NODE_ENV=production \
     API_KEY=${API_KEY}
 
-WORKDIR /front
+WORKDIR /app/front
 
 # ベースイメージにalpine-nodeを使う場合、node-gyp関連のエラーが出るため下記を追加
 # 参考：https://github.com/mhart/alpine-node#example-dockerfile-for-your-own-nodejs-project
