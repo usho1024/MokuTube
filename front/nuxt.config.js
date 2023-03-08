@@ -11,13 +11,20 @@ export default {
     title: 'NowLoading',
     titleTemplate: '%s - MokuTube',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ja',
+      prefix: 'og: http://ogp.me/ns#',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'MokuTube' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://mokutube.net' },
+      { hid: 'og:title', property: 'og:title', content: 'MokuTube ~オンライン自習室~' },
+      { hid: 'og:description', property: 'og:description', content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です' },
+      { hid: 'og:image', property: 'og:image', content: '~/front/assets/img/room/thumb/cafe.png' },
+      { name: 'twitter:card', content: 'summary' } // twitterの画像サイズ
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
