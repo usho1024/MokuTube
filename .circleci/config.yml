@@ -59,8 +59,7 @@ workflows:
             #   - test
             filters:
               branches:
-                only:
-                  - main
+                only: main
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-front'
             registry-id:                  AWS_ECR_REGISTRY_ID
@@ -72,8 +71,7 @@ workflows:
             #   - test
             filters:
               branches:
-                only:
-                  - main
+                only: main
       # - aws-ecs/deploy-service-update:
       #       family:                       ${FAMILY_NAME_API}
       #       service-name:                 ${SERVICE_NAME_API}
