@@ -24,14 +24,14 @@ export default {
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'MokuTube ~オンライン自習室~',
+        content: 'MokuTube（もくつべ）',
       },
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です',
+        content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です。',
       },
-      { hid: 'og:image', property: 'og:image', content: '/cafe.png' },
+      { hid: 'og:image', property: 'og:image', content: 'https://mokutube.net/ogp.png' },
       { name: 'twitter:card', content: 'summary' }, // twitterの画像サイズ
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
