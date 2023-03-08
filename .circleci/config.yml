@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  aws-ecr: circleci/aws-ecr@7.3.0
+  aws-ecr: circleci/aws-ecr@8.2.1
   # aws-ecs: circleci/aws-ecs@1.2.0
 
 jobs:
@@ -50,12 +50,12 @@ workflows:
             - build
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-api'
-            account-url:                  AWS_ECR_ACCOUNT_URL
-            region:                       AWS_REGION
+            registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_API}
             path:                         './api'
             dockerfile:                   'Dockerfile.prod'
             extra-build-args:             '--build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY'
+            working_directory: ~/api
             requires:
               - test
             filters:
@@ -64,12 +64,12 @@ workflows:
                   - main
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-front'
-            account-url:                  AWS_ECR_ACCOUNT_URL
-            region:                       AWS_REGION
+            registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_FRONT}
             path:                         './front'
             dockerfile:                   'Dockerfile.prod'
             extra-build-args:             '--build-arg API_KEY=$API_KEY'
+            working_directory: ~/front
             requires:
               - test
             filters:
