@@ -27,9 +27,6 @@ RUN yarn install
 
 COPY ./front ./
 
-RUN pwd && \
-    ls -a
-
 RUN yarn build
 
 EXPOSE 3000
