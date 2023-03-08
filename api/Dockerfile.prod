@@ -12,9 +12,9 @@ ENV LANG=C.UTF-8 \
     RAILS_LOG_TO_STDOUT=true \
     COOKIES_SAME_SITE=none
 
-WORKDIR /app
+WORKDIR /api
 
-COPY Gemfile* .
+COPY Gemfile* ./
 
 RUN apk update && \
     apk upgrade && \
@@ -23,7 +23,7 @@ RUN apk update && \
     bundle install -j4 && \
     apk del build-dependencies
 
-COPY . .
+COPY . ./
 
 RUN mkdir -p tmp/pids && \
     mkdir -p tmp/sockets
