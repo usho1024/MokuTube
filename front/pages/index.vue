@@ -12,7 +12,7 @@
             <v-row align="center" justify="center" :style="{ height: '450px' }">
               <v-col cols="12" class="text-center">
                 <p class="text-h4 mt-15 mb-10">
-                  独学、だけどあなたはひとりじゃない。
+                  独学、だけどあなたはひとりじゃない。！
                 </p>
                 <p class="text-h5 mb-10">
                   MokuTube（もくつべ）は会員登録不要ですぐに使えるオンライン自習室サービスです
