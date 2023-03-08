@@ -27,7 +27,8 @@ RUN yarn install
 
 COPY . ./
 
-RUN ls -a && \
+RUN pwd && \
+    ls -a && \
     yarn build
 
 EXPOSE 3000
