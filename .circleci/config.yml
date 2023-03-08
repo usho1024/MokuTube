@@ -3,60 +3,48 @@ orbs:
   aws-ecr: circleci/aws-ecr@8.2.1
   # aws-ecs: circleci/aws-ecs@1.2.0
 
-# jobs:
-#   build:
-#     machine:
-#       image: ubuntu-2004:2022.10.1
-#     steps:
-#       - checkout
-#       - run:
-#           name: docker-compose build
-#           command: docker-compose build
-#   test:
-#     machine:
-#       image: ubuntu-2004:2022.10.1
-#     steps:
-#       - checkout
-#       - run:
-#           name: docker-compose up -d
-#           command: docker-compose up -d
-#       - run:
-#           name: docker-compose run api rails db:create RAILS_ENV=test
-#           command: docker-compose run api rails db:create RAILS_ENV=test
-#       - run:
-#           name: docker-compose run api rails db:migrate RAILS_ENV=test
-#           command: docker-compose run api rails db:migrate RAILS_ENV=test
-#       # api側テスト
-#       - run:
-#           name: docker-compose run api rspec
-#           command: docker-compose run api rspec
-#       - run:
-#           name: docker-compose run front yarn install
-#           command: docker-compose run front yarn install
-#       # front側テスト
-#       - run:
-#           name: docker-compose run front yarn test
-#           command: docker-compose run front yarn test
-#       - run:
-#           name: docker-compose down
-#           command: docker-compose down
+jobs:
+  test:
+    machine:
+      image: ubuntu-2004:2022.10.1
+    steps:
+      - checkout
+      - run:
+          name: docker-compose up -d
+          command: docker-compose up -d
+      - run:
+          name: docker-compose run api rails db:create RAILS_ENV=test
+          command: docker-compose run api rails db:create RAILS_ENV=test
+      - run:
+          name: docker-compose run api rails db:migrate RAILS_ENV=test
+          command: docker-compose run api rails db:migrate RAILS_ENV=test
+      # api側テスト
+      - run:
+          name: docker-compose run api rspec
+          command: docker-compose run api rspec
+      - run:
+          name: docker-compose run front yarn install
+          command: docker-compose run front yarn install
+      # front側テスト
+      - run:
+          name: docker-compose run front yarn test
+          command: docker-compose run front yarn test
+      - run:
+          name: docker-compose down
+          command: docker-compose down
 
 workflows:
-  build_and_test_and_deploy:
+  test_and_deploy:
     jobs:
-      # - build
-      # - test:
-      #     requires:
-      #       - build
+      - test
       - aws-ecr/build-and-push-image:
             name:                         'build-and-push-api'
             registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_API}
-            # path:                         './api'
             dockerfile:                   api/Dockerfile.prod
             extra-build-args:             '--build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY'
-            # requires:
-            #   - test
+            requires:
+              - test
             filters:
               branches:
                 only: main
@@ -64,11 +52,10 @@ workflows:
             name:                         'build-and-push-front'
             registry-id:                  AWS_ECR_REGISTRY_ID
             repo:                         ${REPO_NAME_FRONT}
-            # path:                         './front'
             dockerfile:                   front/Dockerfile.prod
             extra-build-args:             '--build-arg API_KEY=$API_KEY'
-            # requires:
-            #   - test
+            requires:
+              - test
             filters:
               branches:
                 only: main
