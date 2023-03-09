@@ -12,7 +12,7 @@ export default {
     titleTemplate: '%s - MokuTube',
     htmlAttrs: {
       lang: 'ja',
-      prefix: 'og: http://ogp.me/ns#',
+      prefix: 'og: https://ogp.me/ns#',
     },
     meta: [
       { charset: 'utf-8' },
