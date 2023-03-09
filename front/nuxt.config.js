@@ -32,7 +32,7 @@ export default {
         content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です。',
       },
       { hid: 'og:image', property: 'og:image', content: 'https://mokutube.net/ogp.png' },
-      { name: 'twitter:card', content: 'summary' }, // twitterの画像サイズ
+      { name: 'twitter:card', content: 'summary_large_image' }, // twitterの画像サイズ
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
   },
