@@ -8,7 +8,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'NowLoading',
+    title: 'MokuTube',
     titleTemplate: '%s - MokuTube',
     htmlAttrs: {
       lang: 'ja',
@@ -17,7 +17,12 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'MokuTube（もくつべ）は会員登録不要ですぐに使えるオンライン自習室サービスです。最短3クリックで始めることができます。さあ、あなたもMokuTuberになりませんか？',
+      },
       { hid: 'og:site_name', property: 'og:site_name', content: 'MokuTube' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://mokutube.net' },
@@ -29,9 +34,14 @@ export default {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'MokuTubeは誰でも気軽に使えるオンライン自習室です。',
+        content:
+          'MokuTube（もくつべ）は会員登録不要ですぐに使えるオンライン自習室サービスです。',
       },
-      { hid: 'og:image', property: 'og:image', content: 'https://mokutube.net/ogp.png' },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://mokutube.net/ogp.png',
+      },
       { name: 'twitter:card', content: 'summary_large_image' }, // twitterの画像サイズ
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
