@@ -1,6 +1,7 @@
 export default {
   env: {
     API_KEY: process.env.API_KEY || '',
+    GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID || '',
   },
 
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -74,6 +75,13 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/i18n',
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: process.env.GOOGLE_ANALYTICS_ID,
+        debug: false,
+      },
+    ],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

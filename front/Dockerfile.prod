@@ -4,6 +4,7 @@
 FROM node:18.12-alpine3.16
 
 ARG API_KEY
+ARG GOOGLE_ANALYTICS_ID
 
 ENV LANG=C.UTF-8 \
     TZ=Asia/Tokyo \
@@ -12,7 +13,8 @@ ENV LANG=C.UTF-8 \
     # 参考：https://github.com/webpack/webpack/issues/14532
     NODE_OPTIONS=--openssl-legacy-provider \
     NODE_ENV=production \
-    API_KEY=${API_KEY}
+    API_KEY=${API_KEY} \
+    GOOGLE_ANALYTICS_ID=${GOOGLE_ANALYTICS_ID}
 
 WORKDIR /app
 

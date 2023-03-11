@@ -52,7 +52,7 @@ workflows:
           registry-id: AWS_ECR_REGISTRY_ID
           repo: ${REPO_NAME_FRONT}
           dockerfile: front/Dockerfile.prod
-          extra-build-args: "--build-arg API_KEY=$API_KEY"
+          extra-build-args: "--build-arg API_KEY=$API_KEY --build-arg GOOGLE_ANALYTICS_ID=$GOOGLE_ANALYTICS_ID"
           requires:
             - test
           filters:
