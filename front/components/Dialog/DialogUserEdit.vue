@@ -66,6 +66,7 @@
 
         <v-card-actions>
           <v-btn
+            :loading="loading"
             :disabled="!valid"
             color="appblue"
             width="100"
@@ -93,6 +94,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       dialog: false,
       name: this.user.name,
       introduction: this.user.introduction,
@@ -124,6 +126,7 @@ export default {
   },
   methods: {
     async updateUser() {
+      this.loading = true
       const formData = new FormData()
       formData.append('user[name]', this.name)
       formData.append('user[introduction]', this.introduction)
@@ -142,6 +145,7 @@ export default {
         avatar: response.data.avatar,
       }
       this.$store.dispatch('getCurrentUser', user)
+      this.loading = false
       this.dialog = false
     },
     resetData() {
