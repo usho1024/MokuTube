@@ -62,11 +62,16 @@ export default {
     async logout() {
       await this.$auth.logout().then(() => {
         setTimeout(() => {
+          if (this.$route.name !== 'index') {
+            this.$router.push('/')
+          }
+        }, 200)
+        setTimeout(() => {
           const msgs = ['ログアウトしました']
           const color = 'green'
           this.$store.dispatch('getToast', { msgs, color })
           this.$store.dispatch('getCurrentUser', null)
-        }, 100)
+        }, 300)
       })
     },
     goToMypage() {

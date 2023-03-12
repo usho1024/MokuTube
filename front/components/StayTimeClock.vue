@@ -66,8 +66,10 @@ export default {
       return time
     },
     addStayTime() {
-      const params = { stay_time: this.sec }
-      this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, params)
+      if (this.$auth.loggedIn) {
+        const params = { stay_time: this.sec }
+        this.$axios.patch(`/api/v1/users/${this.currentUser.id}`, params)
+      }
     },
   },
 }
