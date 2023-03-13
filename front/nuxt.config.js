@@ -41,7 +41,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://mokutube.net/ogp.png',
+        content: 'https://mokutube.net/ogp2.png',
       },
       { name: 'twitter:card', content: 'summary_large_image' }, // twitterの画像サイズ
     ],
