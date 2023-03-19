@@ -1,54 +1,89 @@
-## 【テーマ】
+![f179f0ef-1916-cdf3-f5c1-96198160c3df](https://user-images.githubusercontent.com/89927015/226163365-cff802e5-c7a2-42d6-8f53-1cbbacfe2c23.png)
 
-### サービス名
-MokuTube（もくつべ）
+## サービス概要
+MokuTubeはYouTube上にある作業用BGMを流しながらゆるっと気軽に参加できるオンライン自習室サービスです。</br>
+**“もくもく会をもっとカジュアルに“** がコンセプトです。</br>
+基本的には登録不要ですべての機能を使うことができます（ゲストは24時間だけ有効）。</br>
+自習室内では常にWebSocketによるリアルタイム通信が行われるので、家にいながら本当の自習室にいるかのような没入感が味わえます。
 
-### 概要
-YouTube上にある作業用BGMを流しながらゆるっと気軽に参加できるオンライン自習室サービスです。<br>
-“もくもく会をもっとカジュアルに“がコンセプトです。
+### 使い方
+1. ゲストログイン OR ログイン
+1. ルーム一覧からルームを選んで入室
+1. 着席する
 
-### テーマを選んだ理由
-独学をしている人たちともっと手軽にもくもく会ができる場所がほしいと思ったからです。<br>
-独学者にとってモチベーションの維持は大きな苦労のひとつです。<br>
-そこで誰でも簡単に参加できる仮想自習室があれば、独学のモチベーションの維持・向上に役立てるのではないかと考えました。<br>
-また、独学を始めてから作業用BGMを流して勉強するのが日常になっていたので、この勉強法を広めたかったという思いもあります。
+基本的にこれだけです。</br>
+最短3クリックで使えるようになっています。
 
-## 【機能一覧】
+### ターゲット層
+勉強のモチベーションを上げたい独学者（プログラミングに限らず）
 
-### 基本機能
-- 新規登録/ログイン/ゲストログイン
-- ゲストユーザーは24時間でアカウントが使えなくなる
-- ルームの作成とBGMの設定
-- リアルタイム座席移動機能
-- ルームにいるユーザー同士のリアルタイムチャット
-- ユーザー情報の編集（名前、自己紹介、作業内容）
-- ユーザーがルームに滞在している時間の表示
-- ユーザーの総利用時間の表示
-- 現状はPCのみ対応の予定（画面サイズと自動再生の都合上）
+### サービスの詳細についてはこちらのQiita記事をご覧ください！
+[【個人開発】独学が捗る！オンライン自習室サービスを作りました](https://www.google.co.jp/)
 
-## 【使用技術一覧】
+## 主な機能
+- ルーム内
+  - リアルタイムな座席情報の共有
+  - ルームにいるユーザー同士のリアルタイムチャット
+  - BGMの視聴
+  - 滞在時間の計測（ストップウォッチ）
+- ルーム一覧
+  - ルームのソート（公式ルーム、ユーザーが多い順、作成日時が新しい順）
+  - 動的なページネーション
+  - 現在の着席ユーザー人数の表示
+- ルームの作成
+  - 10種類のアイソメトリックイラストからルームイメージを選択（iStockの素材を使用）
+  - YouTube Data APIによる再生リストの自動取得
+  - BGMの試聴
+- 認証関係、マイページ
+  - トークンベースの認証
+      - 新規会員登録
+      - 一般会員ログイン
+      - ゲストログイン（24時間だけ有効）
+  - ユーザーの詳細情報の閲覧
+  - ユーザーの登録情報の編集
 
+## 使用技術一覧
 ### フロントエンド
-- HTML / CSS
-- JavaScript
 - Nuxt.js 2.15.8（SPAモード）
-- Vuetify (UIフレームワーク)
-- Jest（テスト）
-- eslint/Prettier(コード解析ツール)
+- Vuetify
+- Jest
+- ESLint
+- Prettier
+- 主要なpackage
+    - @nuxtjs/axios 
+    - @nuxtjs/auth（認証関係）
+    - @nuxtjs/google-gtag（Googleアナリティクス用）
+    - @nuxtjs/moment（表示日時のフォーマット）
+    - actioncable（RailsのActionCableとの提携）
+    - vue-youtube（YouTubeIFramePlayerAPIのVue用ラッパー）
+    - vuex-persistedstate（Vuexデータの永続化）
 
 ### バックエンド
 - Ruby 3.1.2
-- Ruby on Rails 6.1.7(APIモード)
-- RSpec（テスト）
-- RuboCop(コード解析ツール)
+- Rails 6.1.7（APIモード）
+- RSpec
+- RuboCop
 - MySQL 8.0.31
+- Nginx
+- 主要なGem
+    - rack-cors
+    - devise_token_auth（アクセストークンの発行）
+    - carrierwave（画像アップロード）
 
 ### インフラ
-- AWS（ECR / ECS(Fargate) / VPC / Route53 / ALB / RDS / S3 / ACM / SSM / CloudWatch / CodeBuild）
+- AWS（ECS Fargate, ECR, Route53, ACM, ALB, RDS, S3）
 - CircleCI
-- Terraform(インフラのコード管理)
 
 ### 開発環境
 - VSCode
-- Docker/docker-compose
+- Docker（docker-compose）
 - MacBook Air (M1, 2020)
+
+## ER図
+![MokuTube drawio](https://user-images.githubusercontent.com/89927015/226162816-f6895e28-f460-446c-9ab4-1f2aa7cfad74.png)
+
+## インフラ構成図
+![インフラ構成図 drawio](https://user-images.githubusercontent.com/89927015/226162808-885658ba-c9b4-422b-a956-114d62fbe97b.png)
+
+## 画面遷移図
+https://www.figma.com/file/pVENDmlMDRL8bmqPZAZLgh/MokuTube?node-id=0%3A1&t=O7xDJdwuVfVuppbw-1
