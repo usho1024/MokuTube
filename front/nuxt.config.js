@@ -45,7 +45,13 @@ export default {
       },
       { name: 'twitter:card', content: 'summary_large_image' }, // twitterの画像サイズ
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
